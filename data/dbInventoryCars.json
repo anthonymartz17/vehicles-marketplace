@@ -1,0 +1,37 @@
+
+ {
+    "cars":[
+              {
+                 "id": 1,
+                 "dealerId":"dealer-1",
+                 "condition":"used",
+                 "make":"Toyota",
+                 "model":"RAV4",
+                 "style":"XLE",
+                 "type":"SUV",
+                 "images":[
+                              "./assets/images/1-blue-rav4.png","./assets/images/2-blue-rav4.png"
+                 ],
+                 "doors":5,
+                 "passengers":5,
+                 "year":2017,
+                 "fuel":"Gasoline",
+                 "price":23300,
+                 "engine":"176 hp 2.5L I4",
+                 "transmition":"Automatic",
+                 "mileage":28920,
+                 "exterior":"Blue",
+                 "Interior":"Black",
+                 "vin":"A1B2C3D4E5F6G7HI9",
+                 "owners":1,
+                 "accidents":0,
+                 "accesories":[
+                                  "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+                 ],
+                 "description":"orem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem labore modi reprehenderit optio, omnis deserunt quae error cum iste molestiae, aperiam dolores? Aliquid sequi neque nemo in aspernatur asperiores sapiente tenetur totam, nisi beatae, quia quasi! Possimus vel nisi aut iure rerum repellendus, officiis odio dolor a? Doloribus, pariatur vero."
+
+              }
+
+    ]
+ 
+}

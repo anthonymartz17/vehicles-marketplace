@@ -1,0 +1,237 @@
+@import url(https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;500;900&display=swap);
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+// viewports
+
+$mobile: 26em;
+$tablet: 48em;
+
+
+@mixin desktop {
+  @media (min-width:#{$mobile}){
+    @content;
+  }
+  
+}
+
+@mixin tablet {
+  @media (min-width:#{$tablet}){
+    @content
+  }
+}
+
+// colors
+
+
+$dark:#333;
+$lightDark: lighten($dark, 10%);
+$lightestDark: lighten($dark, 40%);
+$light:white;
+$primary:#E40017;
+
+
+// fonts
+$font-stack: 'Poppins', sans-serif;
+$font-logo-L: normal 500 2em $font-stack;
+$font-logo-S: normal 500 1em $font-stack;
+$font-text-bold: normal 500 1em $font-stack;
+$font-text: normal 300 1em $font-stack;
+
+
+$font-mobile-xl: normal 500 1.500em $font-stack; //24px
+$font-mobile-l: normal 500 1.250em $font-stack;  //20px
+$font-mobile-m-bold: normal 500 0.938em $font-stack;  //15px
+$font-mobile-m: normal 300 0.938em $font-stack;  //15px
+$font-mobile-s-bold: normal 500 0.750em$font-stack;  //12px
+$font-mobile-s: normal 300 0.750em$font-stack;  //12px
+
+// fonts desktop
+// $font-deskt-xl: normal 500 1.375em $font-stack; //22px
+// $font-deskt-l: normal 500 1.250em $font-stack; //20px
+// $font-deskt-m-bold: normal 500 1em $font-stack; //16px
+// $font-deskt-m: normal 300 1em $font-stack; //16px
+// $font-deskt-s-bold: normal 500 0.875em $font-stack;  //14
+// $font-deskt-s: normal 300 0.875em $font-stack;  //14
+// $font-deskt-xs-bold: normal 500 0.813em $font-stack;  //13
+// $font-deskt-xs: normal 300 0.813em $font-stack;  //13
+// $font-deskt-xxs: normal 300 0.688em $font-stack;  //11
+// $font-desktext-bold: normal 500 0.8125em $font-stack;
+// $font-desktext: normal 300 0.8125em $font-stack;
+
+
+// flexing
+.flex-gap{
+  display: flex;
+  align-items: center;
+  gap: .5em;
+}
+
+.flex-a-c{
+  display: flex;
+  align-items: center;
+}
+.flex-j-c{
+  display: flex;
+  justify-content: center;
+}
+.flex-dir-c{
+  display: flex;
+  flex-direction: column;
+}
+
+
+// search fields 
+.search-fields-container{
+  background: $dark;
+  padding:.5em;
+  font-family: $font-stack;
+  color: $light;
+
+  &-title{
+    margin-block: 1em;
+  }
+
+&-field{
+  flex: 1;
+  height: 3em;
+  margin-top: .2em;
+  background:$lightestDark;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 1em;
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+   border: 1px solid transparent;
+
+  &:hover{
+    background: darken($lightestDark, 10%);
+    border: 1px solid $light;
+  }
+
+  p,i{
+    pointer-events: none;
+    
+  }
+
+}
+}
+a{
+  text-decoration: none;
+}
+.btn{
+  width: 100%;
+  height: 3em;
+  margin-block: .2em;
+  font: $font-mobile-l;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  
+  
+}
+.btn-search{
+  background: $primary;
+  transition: all .3s ease-in-out;
+  border: 1px solid transparent;
+  color: $light;
+    &:hover{
+    background: lighten($primary, 15%);
+    border: 1px solid $light;
+   
+  }
+  
+  
+  
+
+@include desktop{
+  width: 30%;
+  height: 2.5em;
+  font: $font-mobile-m-bold;
+  // margin-block:1em;
+}
+}
+
+
+.selected-field-options{
+  
+  position: fixed;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  place-items: center;
+  padding: 1em .5em;
+  background:rgba(0, 0, 0, 0.5);
+  z-index: 12;
+ 
+
+
+
+
+  &-card{
+    font-family: $font-stack;
+    overflow-y: auto;
+    max-height: 95%;
+    width: 100%;
+    background: $light;
+    border-radius: 5px;
+    // background-color: red;
+    
+
+
+  &-content{
+    position: relative;
+    padding: 1em;
+    border-bottom: .5px solid $lightestDark;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+
+    &:hover{
+      background: darken($light, 20%);
+    }
+
+
+    p{
+      pointer-events: none;
+    }
+    
+  }
+  .card-content-disabled{
+    pointer-events: none;
+  
+  }
+  .disabledOptions{
+    pointer-events: none;
+    background: darken($light, 20%);
+    text-decoration: line-through;
+  }
+  .select-a-make{
+    padding: 2em 1em;
+    text-align: center;
+    font: $font-mobile-m-bold;
+  }
+
+  .radio{
+    pointer-events: none;
+  }
+    
+
+    p{
+      color: $dark;
+    }
+
+  }
+}
+
+
+
+

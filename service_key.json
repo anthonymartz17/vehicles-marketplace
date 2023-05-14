@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "dealership-project",
+  "private_key_id": "ebfe870d542229aaa7c792ad103ac94af9ef4fca",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCsGzjcBMVDWXlO\nhOOO1Zfx9vIeqU1i/T4tUu9ZDZRB/NIzx7D1cWA/hWA1hq5zyvVTJGCbZT05/DC7\nBLr3z4ulvu6NACLEtO6/uVTkZNL6q9FjjruU43vQOe71pFnCfi8P6bV3JSfhhLzk\nucq9lk6dSKaetcsoZG5CvRhmT2Rc0SKaZNulkuHHGdk0Jr5cxBFQmlrOzMcxGlb1\nGH51yIPb6+phfaFUBrcSF19vEbOeAC2kAmNsZREHrH6rBS95No2x78nps+4MRDXK\nCtuCXiyK2SDxo88gd5FvBP/2H+px/IyweilOz+Es1gXK5daoFhNMlxgMfXm2YvHx\nHSCrR6FtAgMBAAECggEALK8urpVAgDGBWN0Q1ftn5Wc3yrUrRfm5RHxFb2oipZVW\nICKHM9qZYjSnW45Zye+WjV0jBgWdhWoQXuYmAwQsXj654fr4i/jsCfQ88cWpr3Kf\nvUkIM+pyMYhxHe7rbR9k6a1Es6f+eEOF5Z7FYD7fr192/zr1Aco9hG9jH+EaDizC\nxwB+SUQy0YDU2LE0oDV7pRpPkcC9KuED0RlOGJAP6VewbirZ4KrnXxmj5krwH4bl\nav/YuOiXX8cVSFFVbpIr8z1HVZaFmKciuSVEwHFBEVUnwOj+tByknWMMyGeqRDRv\n2EwB3LJcoFK57plAh8iTRjiE+nGvBdcx8JCPXJLEAwKBgQDpB3+uFlatqqMLySxE\nl79lcOySPPz+UOIw0VaAXoYIX5uAGixBP5Nj9Z5tyR+Fu2CmtPJkoH0RZM+NBtE0\nU3Qj+QdHhjEvrCqZFDBex9dOv8bCOhSR2HMWMZn1HJBot0wM2sWYyPDOCZLjkLoJ\nEp4bFEc3Hfd/YMeE5gkpLlniFwKBgQC9ElSqVvd56t2ZsUS0FAS56sSLTCQCJK3p\nXuu7dURD/j/qAZRe2I07UylFyA5DHzePB5jZin4witJWEal26uD7/BDvNkPFA+KW\nJ2vsGre1zVM+QZg6JI75yKpm/Jvi5HtQbJRyyIC26n3jdjDXWulXVKcP4WqoDWcD\nGWiRBXQfGwKBgG0TCXyfECtx96eInqPss7XzyYgZ7AHOMlHPasHjfLFmrw6jMZvI\n+mCLk4Cn541dS7w8bkkTpfcCTPQiAMKRXYeJBRNBiLxbxgSpIor615kQwyQes4og\n2p3E0d+dYyrgwUQzEtKVG8IVUSAbmjis8jySnVL7P+HrlvhqBFe2TnQ5AoGAYbL8\nLv07ajN0CPwx/T+u5YcrwrM4lCbx+vqCo15IRT43NqtUSOJrsHEbjaR/wi16Xx1U\n3WyUIm9JmxILWJisY2lwMrv+ruqABokeWmW/8mDEGBJ7H+hOPUJ00zzLLKZWFkvV\nNa7n3B01qfkj6dRfaTIkFa+slmQ+i7pwbye7RmsCgYEApJl8h+qHO656sl23bfld\nDkvIYjBZEWi2UBXA+oGowQEMAwn1Q8emEUXtVSPuztlDx8VyweRZ3t5tLZADeLsW\nvwXJ3/DIsiou2cvuIERaYvFpRK7eko5rgL3e5+UI3cYGjli0omo1CE7nk6r9sRWz\nzdmt9aKismZuuC0iuGJiPaM=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-jdjec@dealership-project.iam.gserviceaccount.com",
+  "client_id": "103298058545957266858",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-jdjec%40dealership-project.iam.gserviceaccount.com"
+}

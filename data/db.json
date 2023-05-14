@@ -1,0 +1,1552 @@
+
+{
+  "car_selection":[
+
+    {
+      "id": 1,
+      "make":"ACURA",
+      "model":[
+        {
+          "dealerId":"dealer-1",
+          "make":"ACURA",
+          "model":"MDX",
+          "trim":"SH-AWD",
+          "price":31900,
+          "year":2018,
+          "mainPic":"acura-mdx-front.jpeg",
+          "pics":[
+            "acura-mdx-front.jpeg",
+            "acura-mdx-back.jpeg",
+            "acura-mdx-interior.jpeg",
+            "acura-mdx-dashboard.jpeg"
+        ],
+          "miles":"76,235",
+          "mileage":"22",
+          "carType":"SUV",
+          "carCondition":"Used",
+          "fuel":"Gasoline",
+          "transmission":"Automatic",
+          "driveTrain":"AWD",
+          "engine":"290 hp 3.5L V6",
+          "colorEx":"White",
+          "colorIn":"White",
+          "vin":"5J8YD4H50JL027019",
+          "location":"Elizabeth, NJ",
+          "owner":1,
+          "accidents":2,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+
+        } 
+        
+      ]
+    },
+    {
+      "id": 2,
+      "make":"AUDI",
+      "model":[
+        {
+          "dealerId":"dealer-1",
+          "make":"AUDI",
+          "model":"A3",
+          "trim":"QUATTRO",
+          "price":25295,
+          "year":2018,
+          "mainPic":"audi-a3-front.jpeg",
+          "pics":[
+            "audi-a3-front.jpeg",
+            "audi-a3-back.jpeg",
+            "audi-a3-interior.jpeg",
+            "audi-a3-dashboard.jpeg"
+        ],
+          "miles":"25,465",
+          "mileage":"25",
+          "carType":"Sedan",
+          "carCondition":"Used",
+          "fuel":"Gasoline",
+          "transmission":"Automatic",
+          "driveTrain":"AWD",
+          "engine":"220 hp 2L I4",
+          "colorEx":"Black",
+          "colorIn":"Black",
+          "vin":"WAUB8GFF9J1088822",
+          "location":"Bronfx, NY",
+          "owner":1,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+         
+       },
+       {
+        "dealerId":"dealer-1",
+        "make":"AUDI",
+        "model":"A4",
+        "trim":"QUATTRO",
+        "price":8500,
+        "year":2014,
+        "mainPic":"audi-a4-front.jpeg",
+        "pics":[
+                "audi-a4-front.jpeg",
+                "audi-a4-back.jpeg",
+                "audi-a4-interior.jpeg",
+                "audi-a4-dashboard.jpeg"
+             ],
+        "miles":"134,970",
+        "mileage":"25",
+        "carType":"Sedan",
+        "carCondition":"Used",
+        "fuel":"FFVs",
+        "transmission":"Automatic",
+        "driveTrain":"AWD",
+        "engine":"220 hp 2L I4 Flex Fuel Vehicle",
+        "colorEx":"Red",
+        "colorIn":"Black",
+        "vin":"WAUBFAFL1EA030704",
+        "location":"Maplewood, NJ",
+        "owner":3,
+        "accidents":1,
+        "titleCheck":"No issues",
+        "accesories":[
+          "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+        ]
+        
+       }
+     ]
+    },
+    {
+      "id": 3,
+      "make":"BMW",
+      "model":[ 
+        {
+          "dealerId":"dealer-2",
+          "make":"BMW",
+          "model":"2 SERIE",
+          "trim":"228i",
+          "price":41445,
+          "year":2021,
+          "mainPic":"bmw-2series-front.jpeg",
+          "pics":[
+            "bmw-2series-front.jpeg",
+            "bmw-2series-back.jpeg",
+            "bmw-2series-interior.jpeg",
+            "bmw-2series-dashboard.jpeg"
+        ],
+          "miles":"5,134",
+          "mileage":"28",
+          "carType":"Sedan",
+          "carCondition":"Used",
+          "fuel":"Gasoline",
+          "transmission":"Automatic",
+          "driveTrain":"AWD",
+          "engine":"228 hp 2L I4",
+          "colorEx":"Gray",
+          "colorIn":"Black SensaTec",
+          "vin":"WBA73AK00M7H41870",
+          "location":"Darien, CT",
+          "owner":1,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        },
+        {
+          "dealerId":"dealer-2",
+          "make":"BMW",
+          "model":"X3",
+          "trim":"30i",
+          "price":49445,
+          "year":2021,
+          "mainPic":"bmw-x3-front.jpeg",
+          "pics":[
+            "bmw-x3-front.jpeg",
+            "bmw-x3-back.jpeg",
+            "bmw-x3-interior.jpeg",
+            "bmw-x3-dashboard.jpeg"
+        ],
+          "miles":"10",
+          "mileage":"26",
+          "carType":"SUV",
+          "carCondition":"New",
+          "fuel":"Gasoline",
+          "transmission":"Automatic",
+          "driveTrain":"AWD",
+          "engine":"248 hp 2L I4",
+          "colorEx":"Gray",
+          "colorIn":"Black SensaTec",
+          "vin":"WBA73AK00M7H41870",
+          "location":"Darien, CT",
+          "owner":0,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "make":"CADILLAC",
+      "model":[ 
+        {
+          "dealerId":"dealer-2",
+          "make":"CADILLAC",
+          "model":"ESCALADE",
+          "trim":"ESV",
+          "price":68994,
+          "year":2018,
+          "mainPic":"cadillac-esv-front.jpeg",
+          "pics":[
+            "cadillac-esv-front.jpeg",
+            "cadillac-esv-back.jpeg",
+            "cadillac-esv-interior.jpeg",
+            "cadillac-esv-dashboard.jpeg"
+        ],
+          "miles":"33,911",
+          "mileage":"17",
+          "carType":"SUV",
+          "carCondition":"Used",
+          "fuel":"Gasoline",
+          "transmission":"Automatic",
+          "driveTrain":"AWD",
+          "engine":"420 hp 6.2L V8",
+          "colorEx":"White",
+          "colorIn":"Black",
+          "vin":"1GYS4KKJXJR287577",
+          "location":"Woodbridge, CT",
+          "owner":1,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        },
+        {
+          "dealerId":"dealer-2",
+          "make":"CADILLAC",
+          "model":"ATS",
+          "trim":"Luxury",
+          "price":21019,
+          "year":2018,
+          "mainPic":"cadillac-ats-front.jpeg",
+          "pics":[
+            "cadillac-ats-front.jpeg",
+            "cadillac-ats-back.jpeg",
+            "cadillac-ats-interior.jpeg",
+            "cadillac-ats-dashboard.jpeg"
+        ],
+          "miles":"44,507",
+          "mileage":"26",
+          "carType":"Sedan",
+          "carCondition":"Used",
+          "fuel":"Gasoline",
+          "transmission":"Automatic",
+          "driveTrain":"RWD",
+          "engine":"272 hp 2L I4",
+          "colorEx":"Black Raven",
+          "colorIn":"Jet Black with Jet Black Accents",
+          "vin":"1G6AA5RX2J0180567",
+          "location":"Stradford, CT",
+          "owner":1,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+         
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "make":"CHEVROLET",
+      "model":[
+        {
+          "dealerId":"dealer-3",
+          "make":"CHEVROLET",
+          "model":"TAHOE",
+          "trim":"LT",
+          "price":49985,
+          "year":2019,
+          "mainPic":"tahoe-lt-front.jpeg",
+          "pics":[
+            "tahoe-lt-front.jpeg",
+            "tahoe-lt-back.jpeg",
+            "tahoe-lt-interior.jpeg",
+            "tahoe-lt-dashboard.jpeg"
+        ],
+          "miles":"23,066",
+          "mileage":"20",
+          "carType":"SUV",
+          "carCondition":"Used",
+          "fuel":"Gasoline",
+          "transmission":"Automatic",
+          "driveTrain":"AWD",
+          "engine":"355 hp 5.3L V8",
+          "colorEx":"Black",
+          "colorIn":"Black",
+          "vin":"1GNSKBKC1KR132986",
+          "location":"Douglaston, NY",
+          "owner":1,
+          "accidents":1,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+          
+        },
+        {
+          "dealerId":"dealer-3",
+          "make":"CHEVROLET",
+          "model":"TRAVERSE",
+          "trim":"LT",
+          "price":34996,
+          "year":2018,
+          "mainPic":"traverse-lt-front.jpeg",
+          "pics":[
+            "traverse-lt-front.jpeg",
+            "traverse-lt-back.jpeg",
+            "traverse-lt-interior.jpeg",
+            "traverse-lt-dashboard.jpeg"
+        ],
+          "miles":"39,876",
+          "mileage":"21",
+          "carType":"SUV",
+          "carCondition":"Used",
+          "fuel":"Gasoline",
+          "transmission":"Automatic",
+          "driveTrain":"AWD",
+          "engine":"310 hp 3.6L V6",
+          "colorEx":"Gray (Graphite Metallic)",
+          "colorIn":"Jet Black",
+          "vin":"1GNEVHKW5JJ263014",
+          "location":"St James, NY",
+          "owner":1,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "make":"DODGE",
+      "model":[
+        {
+          
+          "dealerId":"dealer-3",
+          "make":"DODGE",
+          "model":"AVENGER",
+          "trim":"SE",
+          "price":8800,
+          "year":2014,
+          "mainPic":"dodge-avenger-front.jpeg",
+          "pics":[
+            "dodge-avenger-front.jpeg",
+            "dodge-avenger-back.jpeg",
+            "dodge-avenger-interior.jpeg",
+            "dodge-avenger-dashboard.jpeg"
+        ],
+          "miles":"82,658",
+          "mileage":"25",
+          "carType":"Sedan",
+          "carCondition":"Used",
+          "fuel":"Gasoline",
+          "transmission":"Automatic",
+          "driveTrain":"FWD",
+          "engine":"173 hp 2.4L I4",
+          "colorEx":"White",
+          "colorIn":"Black",
+          "vin":"1C3CDZAB3EN190008",
+          "location":"South Orange, NJ",
+          "owner":3,
+          "accidents":1,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        },
+        {      
+          "dealerId":"dealer-3",   
+          "make":"DODGE",
+          "model":"DURANGO",
+          "trim":"SGT",
+          "price":38900,
+          "year":2018,
+          "mainPic":"dodge-durango-front.jpeg",
+          "pics":[
+            "dodge-durango-front.jpeg",
+            "dodge-durango-back.jpeg",
+            "dodge-durango-interior.jpeg",
+            "dodge-durango-dashboard.jpeg"
+        ],
+          "miles":"19,326",
+          "mileage":"21",
+          "carType":"SUV",
+          "carCondition":"Used",
+          "fuel":"Gasoline",
+          "transmission":"Automatic",
+          "driveTrain":"AWD",
+          "engine":"295 hp 3.6L V6",
+          "colorEx":"Granite Clearcoat",
+          "colorIn":"Black",
+          "vin":"1C4RDJDG1JC497486",
+          "location":"Amityville, NY",
+          "owner":1,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+
+        }
+      ]
+    },
+  
+    {
+      "id": 8,
+      "make":"FORD",
+      "model":[ 
+        {
+          "dealerId":"dealer-4",
+          "make":"FORD",
+          "model":"ESCAPE",
+          "trim":"Titanium ",
+          "price":39960,
+          "year":2021,
+          "mainPic":"ford-escape-front.jpeg",
+          "pics":[
+            "ford-escape-front.jpeg",
+            "ford-escape-back.jpeg",
+            "ford-escape-interior.jpeg",
+            "ford-escape-dashboard.jpeg"
+        ],
+          "miles":"0",
+          "mileage":"27",
+          "carType":"SUV",
+          "carCondition":"New",
+          "fuel":"Gasoline",
+          "transmission":"Automatic",
+          "driveTrain":"AWD",
+          "engine":"2L I4",
+          "colorEx":"Iconic Silver Metallic",
+          "colorIn":"Ebony",
+          "vin":"1FMCU9J95MUB14489",
+          "location":"Red Bank, NJ",
+          "owner":0,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        },
+        {
+          "dealerId":"dealer-4",
+          "make":"FORD",
+          "model":"EXPLORER",
+          "trim":"Titanium ",
+          "price":20995,
+          "year":2016,
+          "mainPic":"ford-explorer-front.jpeg",
+          "pics":[
+            "ford-explorer-front.jpeg",
+            "ford-explorer-back.jpeg",
+            "ford-explorer-interior.jpeg",
+            "ford-explorer-dashboard.jpeg"
+        ],
+          "miles":"88,760",
+          "mileage":"21",
+          "carType":"SUV",
+          "carCondition":"Used",
+          "fuel":"Gasoline",
+          "transmission":"Automatic",
+          "driveTrain":"AWD",
+          "engine":"290 hp 3.5L V6",
+          "colorEx":"Gray",
+          "colorIn":"Black",
+          "vin":"1FM5K8D8XGGD08921",
+          "location":"Newark, NJ",
+          "owner":0,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "make":"GMC",
+      "model":[
+        {
+          "dealerId":"dealer-4",
+          "make":"GMC",
+          "model":"ACADIA",
+          "trim":"Denali ",
+          "price":55585,
+          "year":2021,
+          "mainPic":"gmc-acadia-front.jpeg",
+          "pics":[
+            "gmc-acadia-front.jpeg",
+            "fgmc-acadia-back.jpeg",
+            "gmc-acadia-interior.jpeg",
+            "gmc-acadia-dashboard.jpeg"
+        ],
+          "miles":"0",
+          "mileage":"22",
+          "carType":"SUV",
+          "carCondition":"New",
+          "fuel":"Gasoline",
+          "transmission":"Automatic",
+          "driveTrain":"AWD",
+          "engine":"310 hp 3.6L V6",
+          "colorEx":"White",
+          "colorIn":"Black",
+          "vin":"1GKKNXLS9MZ209470",
+          "location":"Long Island City, NY",
+          "owner":0,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        },
+
+      
+        {
+          "dealerId":"dealer-4",
+          "make":"GMC",
+          "model":"CANYON",
+          "trim":"SLE Crew Cab ",
+          "price":36995,
+          "year":2016,
+          "mainPic":"gmc-canyon-front.jpeg",
+          "pics":[
+            "gmc-canyon-front.jpeg",
+            "gmc-canyon-back.jpeg",
+            "gmc-canyon-interior.jpeg",
+            "gmc-canyon-dashboard.jpeg"
+        ],
+          "miles":"9,631",
+          "mileage":"22",
+          "carType":"Pickup",
+          "carCondition":"Used",
+          "fuel":"Gasoline",
+          "transmission":"Automatic",
+          "driveTrain":"AWD",
+          "engine":"310 hp 3.6L V6",
+          "colorEx":"Summit White",
+          "colorIn":"JET BLACK",
+          "vin":"1GTG6CE30G1318514",
+          "location":"Nanuet, NY",
+          "owner":1,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "make":"HONDA",
+      "model":[ 
+        {
+          "dealerId":"dealer-5",
+          "make":"HONDA",
+          "model":"ACCORD",
+          "trim":"EX",
+          "price":28995,
+          "year":2018,
+          "mainPic":"honda-accord-front.jpeg",
+          "pics":[
+            "honda-accord-front.jpeg",
+            "honda-accord-back.jpeg",
+            "honda-accord-interior.jpeg",
+            "honda-accord-dashboard.jpeg"
+        ],
+          "miles":"16,271",
+          "mileage":"27",
+          "carType":"Sedan",
+          "carCondition":"Used",
+          "fuel":"Gasoline",
+          "transmission":"Automatic",
+          "driveTrain":"FWD",
+          "engine":"252 hp 2L I4",
+          "colorEx":"White",
+          "colorIn":"JET BLACK",
+          "vin":"1HGCV2F50JA041612",
+          "location":"Glen Head, NY",
+          "owner":1,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        },
+        {
+          "dealerId":"dealer-5",
+          "make":"HONDA",
+          "model":"CIVIC",
+          "trim":"Hybrid",
+          "price":10751,
+          "year":2013,
+          "mainPic":"civic-hybrid-front.jpeg",
+          "pics":[
+            "civic-hybrid-front.jpeg",
+            "civic-hybrid-back.jpeg",
+            "civic-hybrid-interior.jpeg",
+            "civic-hybrid-dashboard.jpeg"
+        ],
+          "miles":"107,952",
+          "mileage":"44",
+          "carType":"Sedan",
+          "carCondition":"Used",
+          "fuel":"Hybrid",
+          "transmission":"Continuously Variable Transmission",
+          "driveTrain":"FWD",
+          "engine":"110 hp 1.5L I4 Hybrid",
+          "colorEx":"Crystal Black Pearl",
+          "colorIn":"Brown (Beige)K",
+          "vin":"19XFB4F24DE000035",
+          "location":"Farmington, NY",
+          "owner":4,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        },
+        {
+          "dealerId":"dealer-5",
+          "make":"HONDA",
+          "model":"CR-V",
+          "trim":"EX",
+          "price":30985,
+          "year":2022,
+          "mainPic":"honda-crv-front.jpeg",
+          "pics":[
+            "honda-crv-front.jpeg",
+            "honda-crv-back.jpeg",
+            "honda-crv-interior.jpeg",
+            "honda-crv-dashboard.jpeg"
+        ],
+          "miles":"3",
+          "mileage":"29",
+          "carType":"SUV",
+          "carCondition":"New",
+          "fuel":"Gasoline",
+          "transmission":"Continuously Variable Transmission",
+          "driveTrain":"AWD",
+          "engine":"190 hp 1.5L I4",
+          "colorEx":"Gray (Modern Steel Metallic)",
+          "colorIn":"Black",
+          "vin":"2HKRW2H50NH605910",
+          "location":"Nanuet, NY",
+          "owner":0,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        }
+        
+      ]
+
+    },
+    {
+      "id": 11,
+      "make":"HYUNDAI",
+      "model":[ 
+        {
+          "dealerId":"dealer-5",
+          "make":"HYUNDAI",
+          "model":"Sonata",
+          "trim":"N20",
+          "price":15644,
+          "year":2017,
+          "mainPic":"hyundai-sonata-front.jpeg",
+          "pics":[
+            "hyundai-sonata-front.jpeg",
+            "hyundai-sonata-back.jpeg",
+            "hyundai-sonata-interior.jpeg",
+            "hyundai-sonata-dashboard.jpeg"
+        ],
+          "miles":"72,272",
+          "mileage":"29",
+          "carType":"Sedan",
+          "carCondition":"Used",
+          "fuel":"Gasoline",
+          "transmission":"6-Speed Automatic",
+          "driveTrain":"FWD",
+          "engine":"185 hp 2.4L I4",
+          "colorEx":"Phantom Black",
+          "colorIn":"Gray",
+          "vin":"5NPE24AF4HH566851",
+          "location":"New Rochelle, NY",
+          "owner":2,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        
+        },
+        {
+          "dealerId":"dealer-5",
+          "make":"HYUNDAI",
+          "model":"TUCSON",
+          "trim":"Blue ",
+          "price":32500,
+          "year":2022,
+          "mainPic":"hyundai-tucson-front.jpeg",
+          "pics":[
+            "hyundai-tucson-front.jpeg",
+            "hyundai-tucson-back.jpeg",
+            "hyundai-tucson-interior.jpeg",
+            "hyundai-tucson-dashboard.jpeg"
+        ],
+          "miles":"5,483",
+          "mileage":"29",
+          "carType":"SUV",
+          "carCondition":"Used",
+          "fuel":"Gasoline",
+          "transmission":"Automatic",
+          "driveTrain":"AWD",
+          "engine":"185 hp 2.4L I4",
+          "colorEx":"Amazon Gray",
+          "colorIn":"Black",
+          "vin":"KM8JBCA15NU023020",
+          "location":"Olathe, KS",
+          "owner":1,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        }
+       
+      ]
+
+    },
+    {
+      "id": 12,
+      "make":"JEEP",
+      "model":[ 
+        {
+          "dealerId":"dealer-6",
+          "make":"JEEP",
+          "model":"GRAND CHEROKEE",
+          "trim":"Blue",
+          "price":45745,
+          "year":2021,
+          "mainPic":"jeep-granche-front.jpeg",
+          "pics":[
+            "jeep-granche-front.jpeg",
+            "jeep-granche-back.jpeg",
+            "jeep-granche-interior.jpeg",
+            "jeep-granche-dashboard.jpeg"
+        ],
+          "miles":"0",
+          "mileage":"21",
+          "carType":"SUV",
+          "carCondition":"New",
+          "fuel":"Gasoline",
+          "transmission":"Automatic",
+          "driveTrain":"AWD",
+          "engine":"295 hp 3.6L V6",
+          "colorEx":"Diamond Black Crystal",
+          "colorIn":"Black",
+          "vin":"1C4RJFBG8MC841991",
+          "location":"Levittown, NY",
+          "owner":0,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+          
+        },
+        {
+          "dealerId":"dealer-6",
+          "make":"JEEP",
+          "model":"Liberty",
+          "trim":"70th Anniversary Sport",
+          "price":9900,
+          "year":2011,
+          "mainPic":"jeep-liberty-front.jpeg",
+          "pics":[
+            "jeep-liberty-front.jpeg",
+            "jeep-liberty-back.jpeg",
+            "jeep-liberty-interior.jpeg",
+            "jeep-liberty-dashboard.jpeg"
+        ],
+          "miles":"118,259",
+          "mileage":"18",
+          "carType":"Midsize SUV",
+          "carCondition":"Used",
+          "fuel":"Gasoline",
+          "transmission":"Automatic",
+          "driveTrain":"AWD",
+          "engine":"210 hp 3.7L V6",
+          "colorEx":"Brilliant Black Crystal Pearlcoat",
+          "colorIn":"Dark Slate Gray Interior",
+          "vin":"1J4PN2GK4BW558429",
+          "location":"Hazlet, NJ",
+          "owner":2,
+          "accidents":1,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "make":"KIA",
+      "model":[ 
+        {
+          "dealerId":"dealer-6",
+          "make":"KIA",
+          "model":"FORTE",
+          "trim":"S",
+          "price":19100,
+          "year":2019,
+          "mainPic":"kia-forte-front.jpeg",
+          "pics":[
+            "kia-forte-front.jpeg",
+            "kia-forte-back.jpeg",
+            "kia-forte-interior.jpeg",
+            "kia-forte-dashboard.jpeg"
+        ],
+          "miles":"28,358",
+          "mileage":"40",
+          "carType":"Sedan",
+          "carCondition":"Used",
+          "fuel":"Gasoline",
+          "transmission":"Automatic",
+          "driveTrain":"FWD",
+          "engine":"147 hp 2L I4",
+          "colorEx":"Deep Sea Blue",
+          "colorIn":"Black",
+          "vin":"3KPF34AD3KE016696",
+          "location":"Hamden, CT",
+          "owner":1,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+
+        },
+        {
+          "dealerId":"dealer-6",
+          "make":"KIA",
+          "model":"SORENTO",
+          "trim":"S",
+          "price":19100,
+          "year":2019,
+          "mainPic":"kia-sorento-front.jpeg",
+          "pics":[
+            "kia-sorento-front.jpeg",
+            "kia-sorento-back.jpeg",
+            "kia-sorento-interior.jpeg",
+            "kia-sorento-dashboard.jpeg"
+        ],
+          "miles":"39,350",
+          "mileage":"21",
+          "carType":"SUV",
+          "carCondition":"Used",
+          "fuel":"Gasoline",
+          "transmission":"8-Speed Automatic",
+          "driveTrain":"AWD",
+          "engine":"290 hp 3.3L V6",
+          "colorEx":"Gray (Platinum Graphite)",
+          "colorIn":"Satin Black",
+          "vin":"5XYPHDA51KG464436",
+          "location":"Little Ferry, NJ",
+          "owner":1,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "make":"LEXUS",
+      "model":[ 
+        {
+          "dealerId":"dealer-7",
+          "make":"LEXUS",
+          "model":"NX",
+          "trim":"300",
+          "price":35995,
+          "year":2019,
+          "mainPic":"lexus-nx-front.jpeg",
+          "pics":[
+            "lexus-nx-front.jpeg",
+            "lexus-nx-back.jpeg",
+            "lexus-nx-interior.jpeg",
+            "lexus-nx-dashboard.jpeg"
+        ],
+          "miles":"33,153",
+          "mileage":"25",
+          "carType":"SUV",
+          "carCondition":"Used",
+          "fuel":"Gasoline",
+          "transmission":"6-Speed Automatic",
+          "driveTrain":"AWD",
+          "engine":"235 hp 2L I4",
+          "colorEx":"Gray (Platinum Graphite)",
+          "colorIn":"Satin Black",
+          "vin":"JTJBARBZ6K2192339",
+          "location":"Totowa, NJ",
+          "owner":1,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        },
+        {
+          "dealerId":"dealer-7",
+          "make":"LEXUS",
+          "model":"UX",
+          "trim":"200",
+          "price":36061,
+          "year":2021,
+          "mainPic":"lexus-ux-front.jpeg",
+          "pics":[
+            "lexus-ux-front.jpeg",
+            "lexus-ux-back.jpeg",
+            "lexus-ux-interior.jpeg",
+            "lexus-ux-dashboard.jpeg"
+        ],
+          "miles":"9",
+          "mileage":"33",
+          "carType":"SUV",
+          "carCondition":"New",
+          "fuel":"Gasoline",
+          "transmission":"Automatic",
+          "driveTrain":"FWD",
+          "engine":"169 hp 2L I4",
+          "colorEx":"Nori Green Pearl",
+          "colorIn":"Birch NuLuxe® with Black dash",
+          "vin":"JTHX3JBH5M2045166",
+          "location":"Ramsey, NJ",
+          "owner":0,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "make":"MAZDA",
+      "model":[ 
+        {
+          "dealerId":"dealer-7",
+          "make":"MAZDA",
+          "model":"MAZDA3",
+          "trim":"Touring",
+          "price":21500,
+          "year":2018,
+          "mainPic":"mazda-mazda3-front.jpeg",
+          "pics":[
+            "mazda-mazda3-front.jpeg",
+            "mazda-mazda3-back.jpeg",
+            "mazda-mazda3-interior.jpeg",
+            "mazda-mazda3-dashboard.jpeg"
+        ],
+          "miles":"22,751",
+          "mileage":"31",
+          "carType":"Sedan",
+          "carCondition":"Used",
+          "fuel":"Gasoline",
+          "transmission":"6-Speed Automatic",
+          "driveTrain":"FWD",
+          "engine":"184 hp 2.5L I4",
+          "colorEx":"Deep Crystal Blue Mica",
+          "colorIn":"Black",
+          "vin":"3MZBN1V35JM261851",
+          "location":"Hamden, CT",
+          "owner":1,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        },
+        {
+          "dealerId":"dealer-7",
+          "make":"MAZDA",
+          "model":"CX-9",
+          "trim":"Touring",
+          "price":30900,
+          "year":2019,
+          "mainPic":"mazda-cx9-front.jpeg",
+          "pics":[
+            "mazda-cx9-front.jpeg",
+            "mazda-cx9-back.jpeg",
+            "mazda-cx9-interior.jpeg",
+            "mazda-cx9-dashboard.jpeg"
+        ],
+          "miles":"48,057",
+          "mileage":"23",
+          "carType":"SUV",
+          "carCondition":"Used",
+          "fuel":"Gasoline",
+          "transmission":"6-Speed Automatic",
+          "driveTrain":"AWD",
+          "engine":"250 hp 2.5L I4",
+          "colorEx":"Snowflake White Pearl Mica",
+          "colorIn":"Black",
+          "vin":"JM3TCBCY0K0301332",
+          "location":"Rahway, NJ",
+          "owner":1,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "make":"MERCEDES-BENZ",
+      "model":[ 
+        {
+          "dealerId":"dealer-8",
+          "make":"MERCEDES-BENZ",
+          "model":"CLA-Class",
+          "trim":"CLA 250",
+          "price":28998,
+          "year":2018,
+          "mainPic":"mercedes-cla-front.jpeg",
+          "pics":[
+            "mercedes-cla-front.jpeg",
+            "mercedes-cla-back.jpeg",
+            "mercedes-cla-interior.jpeg",
+            "mercedes-cla-dashboard.jpeg"
+        ],
+          "miles":"44,496",
+          "mileage":"26",
+          "carType":"Sedan",
+          "carCondition":"Used",
+          "fuel":"Gasoline",
+          "transmission":"7-Speed Automatic",
+          "driveTrain":"AWD",
+          "engine":"208 hp 2L I4",
+          "colorEx":"Cirrus White",
+          "colorIn":"Black",
+          "vin":"WDDSJ4GB4JN566998",
+          "location":"Nanuet, NY",
+          "owner":1,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        },
+        {
+          "dealerId":"dealer-8",
+          "make":"MERCEDES-BENZ",
+          "model":"GLS-Class",
+          "trim":"GLS 450",
+          "price":56748,
+          "year":2018,
+          "mainPic":"mercedes-gls-front.jpeg",
+          "pics":[
+            "mercedes-gls-front.jpeg",
+            "mercedes-gls-back.jpeg",
+            "mercedes-gls-interior.jpeg",
+            "mercedes-gls-dashboard.jpeg"
+        ],
+          "miles":"37,101",
+          "mileage":"19",
+          "carType":"SUV",
+          "carCondition":"Used",
+          "fuel":"Gasoline",
+          "transmission":"9-Speed Automatic",
+          "driveTrain":"AWD",
+          "engine":"362 hp 3L V6",
+          "colorEx":"Designo Cardinal Red",
+          "colorIn":"Black",
+          "vin":"4JGDF6EE7JB131127",
+          "location":"Nanuet, NY",
+          "owner":1,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "make":"NISSAN",
+      "model":[ 
+        {
+          "dealerId":"dealer-8",
+          "make":"NISSAN",
+          "model":"GLS-Class",
+          "trim":"GLS 450",
+          "price":35760,
+          "year":2021,
+          "mainPic":"nissan-altima-front.jpeg",
+          "pics":[
+            "nissan-altima-front.jpeg",
+            "nissan-altima-back.jpeg",
+            "nissan-altima-interior.jpeg",
+            "nissan-altima-dashboard.jpeg"
+        ],
+          "miles":"3",
+          "mileage":"30",
+          "carType":"Sedan",
+          "carCondition":"New",
+          "fuel":"Gasoline",
+          "transmission":"Continuously Variable Transmission",
+          "driveTrain":"AWD",
+          "engine":"182 hp 2.5L I4",
+          "colorEx":"Brilliant Silver Metallic",
+          "colorIn":"Black",
+          "vin":"1N4BL4FW8MN306588",
+          "location":"New Rochelle, NY",
+          "owner":0,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        },
+        {
+          "dealerId":"dealer-8",
+          "make":"NISSAN",
+          "model":"Rogue",
+          "trim":"SV",
+          "price":16888,
+          "year":2016,
+          "mainPic":"nissan-rogue-front.jpeg",
+          "pics":[
+            "nissan-rogue-front.jpeg",
+            "nissan-rogue-back.jpeg",
+            "nissan-rogue-interior.jpeg",
+            "nissan-rogue-dashboard.jpeg"
+        ],
+          "miles":"96,994",
+          "mileage":"28",
+          "carType":"SUV",
+          "carCondition":"Used",
+          "fuel":"Gasoline",
+          "transmission":"Continuously Variable Transmission",
+          "driveTrain":"AWD",
+          "engine":"170 hp 2.5L I4",
+          "colorEx":"Brilliant Silver",
+          "colorIn":"Black (Charcoal)",
+          "vin":"KNMAT2MV3GP693547",
+          "location":"Red Bank, NJ",
+          "owner":1,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "make":"TESLA",
+      "model":[ 
+        {
+          "dealerId":"dealer-9",
+          "make":"TESLA",
+          "model":"Model Y",
+          "trim":"Long Range",
+          "price":65218,
+          "year":2021,
+          "mainPic":"tesla-y-front.jpeg",
+          "pics":[
+            "tesla-y-front.jpeg",
+            "tesla-y-back.jpeg",
+            "tesla-y-interior.jpeg",
+            "tesla-y-dashboard.jpeg"
+        ],
+          "miles":"10,598",
+          "mileage":"316",
+          "carType":"Sedan",
+          "carCondition":"Used",
+          "fuel":"Electric",
+          "transmission":"1-Speed Automatic",
+          "batteryPerformance":"10 hr",
+          "driveTrain":"AWD",
+          "colorEx":"White",
+          "colorIn":"Black",
+          "vin":"5YJYGDEE8MF092766",
+          "location":"Jamaica, NY",
+          "owner":1,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        },
+        {
+          "dealerId":"dealer-9",
+          "make":"TESLA",
+          "model":"Model 3",
+          "trim":"Long Range",
+          "price":48490,
+          "year":2018,
+          "mainPic":"tesla-3-front.jpeg",
+          "pics":[
+            "tesla-3-front.jpeg",
+            "tesla-3-back.jpeg",
+            "tesla-3-interior.jpeg",
+            "tesla-3-dashboard.jpeg"
+        ],
+          "miles":"14,564",
+          "mileage":"310",
+          "carType":"Sedan",
+          "carCondition":"Used",
+          "fuel":"Electric",
+          "transmission":"1-Speed Automatic",
+          "batteryPerformance":"10 hr",
+          "driveTrain":"AWD",
+          "colorEx":"Red",
+          "colorIn":"Black",
+          "vin":"5YJ3E1EB5JF114755",
+          "location":"Mt Kisco, NY",
+          "owner":1,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "make":"TOYOTA",
+      "model":[ 
+        {
+          "dealerId":"dealer-9",
+          "make":"TOYOTA",
+          "model":"Avalon",
+          "trim":"Limited",
+          "price":35499,
+          "year":2019,
+          "mainPic":"toyota-avalon-front.jpeg",
+          "pics":[
+            "toyota-avalon-front.jpeg",
+            "toyota-avalon-back.jpeg",
+            "toyota-avalon-interior.jpeg",
+            "toyota-avalon-dashboard.jpeg"
+        ],
+          "miles":"48,705",
+          "mileage":"43",
+          "carType":"Sedan",
+          "carCondition":"Used",
+          "fuel":"Hybrid",
+          "transmission":"Continuously Variable Transmission",
+          "driveTrain":"FWD",
+          "engine":"2.5L I4 Hybrid",
+          "colorEx":"Black",
+          "colorIn":"White",
+          "vin":"4T1B21FB6KU007656",
+          "location":"Trooper, PA",
+          "owner":1,
+          "accidents":1,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        },
+        {
+          "dealerId":"dealer-9",
+          "make":"TOYOTA",
+          "model":"Corolla",
+          "trim":"L",
+          "price":10995,
+          "year":2016,
+          "mainPic":"toyota-corolla-front.jpeg",
+          "pics":[
+            "toyota-corolla-front.jpeg",
+            "toyota-corolla-back.jpeg",
+            "toyota-corolla-interior.jpeg",
+            "toyota-corolla-dashboard.jpeg"
+        ],
+          "miles":"74,224",
+          "mileage":"43",
+          "carType":"Sedan",
+          "carCondition":"Used",
+          "fuel":"Gasoline",
+          "transmission":"Automatic",
+          "driveTrain":"FWD",
+          "engine":"132 hp 1.8L I4",
+          "colorEx":"Super White",
+          "colorIn":"White",
+          "vin":"5YFBURHE5GP490307",
+          "location":"Copiague, NY",
+          "owner":4,
+          "accidents":1,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        },
+        {
+          "dealerId":"dealer-9",
+          "make":"TOYOTA",
+          "model":"Highlander",
+          "trim":"XLE",
+          "price":38999,
+          "year":2019,
+          "mainPic":"toyota-highlander-front.jpeg",
+          "pics":[
+            "toyota-highlander-front.jpeg",
+            "toyota-highlander-back.jpeg",
+            "toyota-highlander-interior.jpeg",
+            "toyota-highlander-dashboard.jpeg"
+        ],
+          "miles":"32,939",
+          "mileage":"22",
+          "carType":"SUV",
+          "carCondition":"Used",
+          "fuel":"Gasoline",
+          "transmission":"Automatic",
+          "driveTrain":"AWD",
+          "engine":"295 hp 3.5L V6",
+          "colorEx":"Black",
+          "colorIn":"Black",
+          "vin":"5TDJZRFHXKS924134",
+          "location":"Brooklyn, NY",
+          "owner":1,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "make":"VOLVO",
+      "model":[ 
+        {
+          "dealerId":"dealer-10",
+          "make":"VOLVO",
+          "model":"S90",
+          "trim":"T6",
+          "price":38495,
+          "year":2020,
+          "mainPic":"volvo-s90-front.jpeg",
+          "pics":[
+            "volvo-s90-front.jpeg",
+            "volvo-s90-back.jpeg",
+            "volvo-s90-interior.jpeg",
+            "volvo-s90-dashboard.jpeg"
+        ],
+          "miles":"9,366",
+          "mileage":"25",
+          "carType":"Sedan",
+          "carCondition":"Used",
+          "fuel":"Gasoline",
+          "transmission":"Automatic",
+          "driveTrain":"AWD",
+          "engine":"316 hp 2L I4",
+          "colorEx":"Black",
+          "colorIn":"Black",
+          "vin":"LVYA22MK5LP175581",
+          "location":"Commack, NY",
+          "owner":1,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        },
+        {
+          "dealerId":"dealer-10",
+          "make":"VOLVO",
+          "model":"XC60",
+          "trim":"T6",
+          "price":38484,
+          "year":2019,
+          "mainPic":"volvo-xc60-front.jpeg",
+          "pics":[
+            "volvo-xc60-front.jpeg",
+            "volvo-xc60-back.jpeg",
+            "volvo-xc60-interior.jpeg",
+            "volvo-xc60-dashboard.jpeg"
+        ],
+          "miles":"29,327",
+          "mileage":"22",
+          "carType":"SUV",
+          "carCondition":"Used",
+          "fuel":"Gasoline",
+          "transmission":"Automatic",
+          "driveTrain":"AWD",
+          "engine":"316 hp 2L I4",
+          "colorEx":"Onyx Black Metallic",
+          "colorIn":"Black",
+          "vin":"LYVA22RK7KB230526",
+          "location":"Ramsey, NJ",
+          "owner":1,
+          "accidents":0,
+          "titleCheck":"No issues",
+          "accesories":[
+            "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+          ]
+        }
+      ]
+    }
+
+  ],
+  
+  "dealers":[
+    {
+      "id":1,
+      "dealerId":"dealer-1",
+      "name":"DC Autos",
+      "logo":"Logo",
+      "tel":"516-871-4456",
+      "address":"8154 Walnut Lane Newburgh, NY 12550",
+      "email":"email@hotmail.com"
+    },
+    {
+      "id":2,
+      "dealerId":"dealer-2",
+      "name":"Banboo Auto",
+      "logo":"Logo",
+      "tel":"516-345-4366",
+      "address":"8154 peanuts Lane Bethpage, NY 23456",
+      "email":"Banboo@hotmail.com"
+    },
+    {
+      "id":3,
+      "dealerId":"dealer-3",
+      "name":"Pines Auto",
+      "logo":"Logo",
+      "tel":"516-871-3456",
+      "address":"8154 Pines ave Wyandanch, NY 234567",
+      "email":"Pines@hotmail.com"
+    },
+    {
+      "id":4,
+      "dealerId":"dealer-4",
+      "name":"Crazy Cars",
+      "logo":"Logo",
+      "tel":"516-871-7944",
+      "address":"3245 Crazy Lane bronx, NY 34567",
+      "email":"Crazy@hotmail.com"
+    },
+    {
+      "id":5,
+      "dealerId":"dealer-5",
+      "name":"Martz Auto",
+      "logo":"Logo",
+      "tel":"578-345-2334",
+      "address":"2345 Hicksville ave Hicksville, NY 87654",
+      "email":"Martz@hotmail.com"
+    },
+    {
+      "id":6,
+      "dealerId":"dealer-6",
+      "name":"Hoopties",
+      "logo":"Logo",
+      "tel":"536-432-3455",
+      "address":"8154 Hoopties Lane Farmingdale, NY 12550",
+      "email":"Hoopties@hotmail.com"
+    },
+    {
+      "id":7,
+      "dealerId":"dealer-7",
+      "name":"Chilling Autos",
+      "logo":"Logo",
+      "tel":"5168717944",
+      "address":"5432 golden Lane Dix Hills, NY 23456",
+      "email":"Chilling@hotmail.com"
+    },
+    {
+      "id":8,
+      "dealerId":"dealer-8",
+      "name":"JD Auto",
+      "logo":"Logo",
+      "tel":"345-654-33456",
+      "address":"5432 peach st fruits, NY 12550",
+      "email":"JD@hotmail.com"
+    },
+    {
+      "id":9,
+      "dealerId":"dealer-9",
+      "name":"Easy Car",
+      "logo":"Logo",
+      "tel":"543-455-6543",
+      "address":"6543 caramel Lane Candy, NY 12550",
+      "email":"Easy@hotmail.com"
+    },
+    {
+      "id":10,
+      "dealerId":"dealer-10",
+      "name":"ABC Autos",
+      "logo":"Logo",
+      "tel":"234-543-2356",
+      "address":"987 mango ave tropical, NY 54322",
+      "email":"ABC@hotmail.com"
+    }
+],
+"cars_inventory":[
+  {
+     "id": 1,
+     "dealerId":"dealer-1",
+     "condition":"used",
+     "make":"Toyota",
+     "model":"RAV4",
+     "style":"XLE",
+     "type":"SUV",
+     "images":[
+                  "./assets/images/1-blue-rav4.png","./assets/images/2-blue-rav4.png"
+     ],
+     "doors":5,
+     "passengers":5,
+     "year":2017,
+     "fuel":"Gasoline",
+     "price":23300,
+     "engine":"176 hp 2.5L I4",
+     "transmition":"Automatic",
+     "mileage":28920,
+     "exterior":"Blue",
+     "Interior":"Black",
+     "vin":"A1B2C3D4E5F6G7HI9",
+     "owners":1,
+     "accidents":0,
+     "accesories":[
+                      "All Wheel Drive","Power Steering,ABS","4-Wheel Disc Brakes","Brake Assist","Aluminum Wheels","Tires - Front All-Season","Temporary Spare Tire","Sun/Moonroof","Generic Sun/Moonroof","Heated Mirrors","Power Mirror(s)","Integrated Turn Signal Mirrors","Rear Defrost","Privacy Glass","Intermittent Wipers","Power Door Locks","AM/FM Stereo","CD Player","MP3 Player","Bluetooth Connection","Back-Up Camera","Adjustable Steering Wheel","Cruise Control","Power Windows","Power Door Locks","Stability Control","Traction Control","Front Side Air Bag","Driver Air Bag","Passenger Air Bag","Child Safety Locks"
+     ],
+     "description":"orem ipsum, dolor sit amet consectetur adipisicing elit. Exercitationem labore modi reprehenderit optio, omnis deserunt quae error cum iste molestiae, aperiam dolores? Aliquid sequi neque nemo in aspernatur asperiores sapiente tenetur totam, nisi beatae, quia quasi! Possimus vel nisi aut iure rerum repellendus, officiis odio dolor a? Doloribus, pariatur vero."
+
+  }
+
+]
+}
