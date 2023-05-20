@@ -36,11 +36,11 @@ export default new Vuex.Store({
 		searchMobileModalContent: null,
 
 		// endPoints
-		endPoints: {
-			carsUrl: "http://localhost:3000/car_selection",
-			dealersUrl: "http://localhost:3000/dealers",
-			carsInventoryUrl: "http://localhost:3000/cars_inventory",
-		},
+		// endPoints: {
+		// 	carsUrl: "http://localhost:3000/car_selection",
+		// 	dealersUrl: "http://localhost:3000/dealers",
+		// 	carsInventoryUrl: "http://localhost:3000/cars_inventory",
+		// },
 
 		// mobile nav links
 		mobileMenuToggler: false,
