@@ -21,7 +21,7 @@ export default {
 	mutations: {
 		SET_MODEL_OPTIONS(state,{list,make}) {
 			if (make) {
-				state.modelOptions = list.filter(x =>x.make == make).map(x => x.model)
+				state.modelOptions = [`All ${make}S`,...list.filter(x =>x.make == make).map(x => x.model)]
 			}
 		},
 		SET_FILTERS_OPTIONS(state, payload) {

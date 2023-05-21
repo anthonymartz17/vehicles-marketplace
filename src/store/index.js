@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import vehicles from './modules/vehicles'
-import filterOptions from './modules/filterOptions'
+import vehicles from "./modules/vehicles";
+import filterOptions from "./modules/filterOptions";
 
 Vue.use(Vuex);
 
@@ -138,13 +138,7 @@ export default new Vuex.Store({
 				link: "Vehicles",
 				name: "searchResults",
 				icon: "fas fa-car",
-				subList: [
-					"Carros",
-					"Motores",
-					"Barcos",
-					"Vehiculos Pesados",
-					"Otros",
-				],
+				subList: ["Carros", "Motores", "Barcos", "Vehiculos Pesados", "Otros"],
 			},
 			{
 				link: "Electric Cars",
@@ -161,158 +155,147 @@ export default new Vuex.Store({
 	mutations: {
 		// when the app is created, this function get the data  that is at the moment in the  searchResults prop in local storage and sets it to the vehicleDisplay prop that is in the state. this allows the data to stay rendered when the page is reloaded.
 		setDataInVehiclesDisplayFromLocal(state) {
-			state.vehiclesDisplay = JSON.parse(
-				localStorage.getItem("searchResults")
-			);
+			state.vehiclesDisplay = JSON.parse(localStorage.getItem("searchResults"));
 		},
 
 		set_typeOfCar(state, val) {
 			state.typeOfCar = val;
 		},
 		// bug. when in sidebarserach component, clicking the different makes on the left sidebar, program wont display them.
-		searchVehicles(state) {
-			let results = state.allModels;
+		// searchVehicles(state) {
+		// 	let results = state.allModels;
 
-			if (
-				state.filters.carCondition.typeSelected !== "" &&
-				state.filters.carCondition.typeSelected !== "New/Used"
-			) {
-				results = results.filter(
-					(one) =>
-						one.carCondition === state.filters.carCondition.typeSelected
-				);
-			}
-			if (
-				state.filters.fuel.typeSelected !== "" &&
-				state.filters.fuel.typeSelected !== "All"
-			) {
-				results = results.filter(
-					(one) => one.fuel === state.filters.fuel.typeSelected
-				);
-			}
-			if (
-				state.filters.transmission.typeSelected !== "" &&
-				state.filters.transmission.typeSelected !== "All"
-			) {
-				results = results.filter(
-					(one) =>
-						one.transmission === state.filters.transmission.typeSelected
-				);
-			}
-			if (
-				state.filters.driveTrain.typeSelected !== "" &&
-				state.filters.driveTrain.typeSelected !== "All"
-			) {
-				results = results.filter(
-					(one) => one.driveTrain === state.filters.driveTrain.typeSelected
-				);
-			}
-			if (
-				state.filters.engine.typeSelected !== "" &&
-				state.filters.engine.typeSelected !== "All"
-			) {
-				results = results.filter((one) => {
-					if (
-						one.engine != undefined &&
-						one.engine
-							.toLowerCase()
-							.includes(state.filters.engine.typeSelected.toLowerCase())
-					) {
-						return one;
-					}
-				});
-			}
-			if (
-				state.filters.mileage.typeSelected !== "" &&
-				state.filters.mileage.typeSelected !== "All"
-			) {
-				let reg = /\d+/g;
-				// finds the numbers in a string and returns them in an array.
-				let nums = state.filters.mileage.typeSelected.match(reg);
-				// setting numbers at position zero and one to min and max respectively and converting them to thousands.
-				let min = +nums[0] * 1000;
-				let max = +nums[1] * 1000;
+		// 	if (
+		// 		state.filters.carCondition.typeSelected !== "" &&
+		// 		state.filters.carCondition.typeSelected !== "New/Used"
+		// 	) {
+		// 		results = results.filter(
+		// 			(one) => one.carCondition === state.filters.carCondition.typeSelected
+		// 		);
+		// 	}
+		// 	if (
+		// 		state.filters.fuel.typeSelected !== "" &&
+		// 		state.filters.fuel.typeSelected !== "All"
+		// 	) {
+		// 		results = results.filter(
+		// 			(one) => one.fuel === state.filters.fuel.typeSelected
+		// 		);
+		// 	}
+		// 	if (
+		// 		state.filters.transmission.typeSelected !== "" &&
+		// 		state.filters.transmission.typeSelected !== "All"
+		// 	) {
+		// 		results = results.filter(
+		// 			(one) => one.transmission === state.filters.transmission.typeSelected
+		// 		);
+		// 	}
+		// 	if (
+		// 		state.filters.driveTrain.typeSelected !== "" &&
+		// 		state.filters.driveTrain.typeSelected !== "All"
+		// 	) {
+		// 		results = results.filter(
+		// 			(one) => one.driveTrain === state.filters.driveTrain.typeSelected
+		// 		);
+		// 	}
+		// 	if (
+		// 		state.filters.engine.typeSelected !== "" &&
+		// 		state.filters.engine.typeSelected !== "All"
+		// 	) {
+		// 		results = results.filter((one) => {
+		// 			if (
+		// 				one.engine != undefined &&
+		// 				one.engine
+		// 					.toLowerCase()
+		// 					.includes(state.filters.engine.typeSelected.toLowerCase())
+		// 			) {
+		// 				return one;
+		// 			}
+		// 		});
+		// 	}
+		// 	if (
+		// 		state.filters.mileage.typeSelected !== "" &&
+		// 		state.filters.mileage.typeSelected !== "All"
+		// 	) {
+		// 		let reg = /\d+/g;
+		// 		// finds the numbers in a string and returns them in an array.
+		// 		let nums = state.filters.mileage.typeSelected.match(reg);
+		// 		// setting numbers at position zero and one to min and max respectively and converting them to thousands.
+		// 		let min = +nums[0] * 1000;
+		// 		let max = +nums[1] * 1000;
 
-				results = results.filter((one) => {
-					let miles = +one.miles.replace(",", "");
+		// 		results = results.filter((one) => {
+		// 			let miles = +one.miles.replace(",", "");
 
-					if (max) {
-						return miles > min && miles < max;
-					} else {
-						return miles > min;
-					}
-				});
-			}
-			if (
-				state.filters.color.typeSelected !== "" &&
-				state.filters.color.typeSelected !== "All"
-			) {
-				results = results.filter(
-					(one) => one.colorEx === state.filters.color.typeSelected
-				);
-			}
-			if (state.filters.carType.typeSelected !== "") {
-				results = results.filter((one) =>
-					one.carType
-						.toLowerCase()
-						.includes(
-							state.filters.carType.typeSelected.toLowerCase().trim()
-						)
-				);
+		// 			if (max) {
+		// 				return miles > min && miles < max;
+		// 			} else {
+		// 				return miles > min;
+		// 			}
+		// 		});
+		// 	}
+		// 	if (
+		// 		state.filters.color.typeSelected !== "" &&
+		// 		state.filters.color.typeSelected !== "All"
+		// 	) {
+		// 		results = results.filter(
+		// 			(one) => one.colorEx === state.filters.color.typeSelected
+		// 		);
+		// 	}
+		// 	if (state.filters.carType.typeSelected !== "") {
+		// 		results = results.filter((one) =>
+		// 			one.carType
+		// 				.toLowerCase()
+		// 				.includes(state.filters.carType.typeSelected.toLowerCase().trim())
+		// 		);
 
-				// state.inputTextUser = state.filters.carType.typeSelected;
-			}
-			if (state.filters.priceFrom.typeSelected != 0) {
-				results = results.filter(
-					(one) => one.price >= state.filters.priceFrom.typeSelected
-				);
-			}
-			if (state.filters.priceTo.typeSelected != 0) {
-				results = results.filter(
-					(one) => one.price <= state.filters.priceTo.typeSelected
-				);
-			}
-			if (state.filters.yearFrom.typeSelected > 0) {
-				results = results.filter(
-					(one) => one.year >= state.filters.yearFrom.typeSelected
-				);
-			}
-			if (state.filters.yearTo.typeSelected > 0) {
-				results = results.filter(
-					(one) => one.year <= state.filters.yearTo.typeSelected
-				);
-			}
-			// the following condition ensures to show selected make, and in case all makes is selected, it doesnt get into the condition which makes the program run as if nothing was selected and shows all makes avalables.
-			if (
-				state.filters.make.typeSelected !== "" &&
-				state.filters.make.typeSelected !== "All Makes"
-			) {
-				results = results.filter((one) =>
-					one.make
-						.toLowerCase()
-						.includes(
-							state.filters.make.typeSelected.toLowerCase().trim()
-						)
-				);
-			}
+		// 		// state.inputTextUser = state.filters.carType.typeSelected;
+		// 	}
+		// 	if (state.filters.priceFrom.typeSelected != 0) {
+		// 		results = results.filter(
+		// 			(one) => one.price >= state.filters.priceFrom.typeSelected
+		// 		);
+		// 	}
+		// 	if (state.filters.priceTo.typeSelected != 0) {
+		// 		results = results.filter(
+		// 			(one) => one.price <= state.filters.priceTo.typeSelected
+		// 		);
+		// 	}
+		// 	if (state.filters.yearFrom.typeSelected > 0) {
+		// 		results = results.filter(
+		// 			(one) => one.year >= state.filters.yearFrom.typeSelected
+		// 		);
+		// 	}
+		// 	if (state.filters.yearTo.typeSelected > 0) {
+		// 		results = results.filter(
+		// 			(one) => one.year <= state.filters.yearTo.typeSelected
+		// 		);
+		// 	}
+		// 	// the following condition ensures to show selected make, and in case all makes is selected, it doesnt get into the condition which makes the program run as if nothing was selected and shows all makes avalables.
+		// 	if (
+		// 		state.filters.make.typeSelected !== "" &&
+		// 		state.filters.make.typeSelected !== "All Makes"
+		// 	) {
+		// 		results = results.filter((one) =>
+		// 			one.make
+		// 				.toLowerCase()
+		// 				.includes(state.filters.make.typeSelected.toLowerCase().trim())
+		// 		);
+		// 	}
 
-			if (
-				state.filters.models.typeSelected != "" &&
-				state.filters.models.typeSelected !=
-					`All ${state.filters.make.typeSelected}`
-			) {
-				results = results.filter((one) =>
-					one.model
-						.toLowerCase()
-						.includes(
-							state.filters.models.typeSelected.toLowerCase().trim()
-						)
-				);
-			}
-			localStorage.setItem("searchResults", JSON.stringify(results));
-			state.showDropDownTextField = false;
-
-		},
+		// 	if (
+		// 		state.filters.models.typeSelected != "" &&
+		// 		state.filters.models.typeSelected !=
+		// 			`All ${state.filters.make.typeSelected}`
+		// 	) {
+		// 		results = results.filter((one) =>
+		// 			one.model
+		// 				.toLowerCase()
+		// 				.includes(state.filters.models.typeSelected.toLowerCase().trim())
+		// 		);
+		// 	}
+		// 	localStorage.setItem("searchResults", JSON.stringify(results));
+		// 	state.showDropDownTextField = false;
+		// },
 
 		//prepares user type in input on side search to be used in mutation assignValueToTypeSelected
 		searchByInputText(state, e) {
@@ -321,24 +304,18 @@ export default new Vuex.Store({
 			// finds the make model and type of car the user put in
 			state.allModels.find((one) => {
 				if (
-					state.inputTextUser
-						.toLowerCase()
-						.includes(one.make.toLowerCase())
+					state.inputTextUser.toLowerCase().includes(one.make.toLowerCase())
 				) {
 					make = one.make;
 				}
 				if (
-					state.inputTextUser
-						.toLowerCase()
-						.includes(one.model.toLowerCase())
+					state.inputTextUser.toLowerCase().includes(one.model.toLowerCase())
 				) {
 					make = one.make;
 					model = one.model;
 				}
 				if (
-					state.inputTextUser
-						.toLowerCase()
-						.includes(one.carType.toLowerCase())
+					state.inputTextUser.toLowerCase().includes(one.carType.toLowerCase())
 				) {
 					type = one.carType;
 				}
@@ -372,8 +349,7 @@ export default new Vuex.Store({
 					state.dropDownErrorMsg = "";
 				}
 
-				if (e.target.id === "userInputId")
-					state.showDropDownTextField = true;
+				if (e.target.id === "userInputId") state.showDropDownTextField = true;
 			}
 		},
 
@@ -416,6 +392,7 @@ export default new Vuex.Store({
 		// gets all models from local storage and set them in the state prop allModels when the app component is created
 		getAllModelsFromLocal(state) {
 			state.allModels = JSON.parse(localStorage.getItem("allModels"));
+			console.log('testingg')
 		},
 
 		// receives the data of the current car to view and sets the specifications in the setCarToViewGeneralInfo prop that is  in the state.
@@ -454,36 +431,34 @@ export default new Vuex.Store({
 					icon: "transmission.svg",
 					iconInfo: state.carToView.transmission,
 				},
-				{icon: "drivetrain.svg", iconInfo: state.carToView[0].driveTrain},
-				{icon: "engine.svg", iconInfo: state.carToView[0].engine},
-				{icon: fuelIcon, iconInfo: state.carToView[0].fuel},
-				{icon: milesIcon, iconInfo: `${state.carToView[0].mileage} MPG`},
-				{icon: "excolor.svg", iconInfo: state.carToView[0].colorEx},
-				{icon: "incolor.svg", iconInfo: state.carToView[0].colorIn},
-				{icon: ownerIcon, iconInfo: owner},
+				{ icon: "drivetrain.svg", iconInfo: state.carToView[0].driveTrain },
+				{ icon: "engine.svg", iconInfo: state.carToView[0].engine },
+				{ icon: fuelIcon, iconInfo: state.carToView[0].fuel },
+				{ icon: milesIcon, iconInfo: `${state.carToView[0].mileage} MPG` },
+				{ icon: "excolor.svg", iconInfo: state.carToView[0].colorEx },
+				{ icon: "incolor.svg", iconInfo: state.carToView[0].colorIn },
+				{ icon: ownerIcon, iconInfo: owner },
 			];
 		},
 
 		setCarToviewDetails(state) {
 			state.carToViewDetails = [
-				{key: "Location", val: state.carToView[0].location},
-				{key: "Engine", val: state.carToView[0].engine},
-				{key: "Miles", val: state.carToView[0].miles},
-				{key: "MPG", val: state.carToView[0].mileage},
-				{key: "Fuel", val: state.carToView[0].fuel},
-				{key: "transmission", val: state.carToView[0].transmission},
-				{key: "Car type", val: state.carToView[0].carType},
-				{key: "Drivetrain", val: state.carToView[0].driveTrain},
-				{key: "Color Exterior", val: state.carToView[0].colorEx},
-				{key: "Color Interior", val: state.carToView[0].colorIn},
-				{key: "Vin", val: state.carToView[0].vin},
+				{ key: "Location", val: state.carToView[0].location },
+				{ key: "Engine", val: state.carToView[0].engine },
+				{ key: "Miles", val: state.carToView[0].miles },
+				{ key: "MPG", val: state.carToView[0].mileage },
+				{ key: "Fuel", val: state.carToView[0].fuel },
+				{ key: "transmission", val: state.carToView[0].transmission },
+				{ key: "Car type", val: state.carToView[0].carType },
+				{ key: "Drivetrain", val: state.carToView[0].driveTrain },
+				{ key: "Color Exterior", val: state.carToView[0].colorEx },
+				{ key: "Color Interior", val: state.carToView[0].colorIn },
+				{ key: "Vin", val: state.carToView[0].vin },
 			];
 		},
 		//gets the dealer according to the car selected
 		saveCarToViewDealerToLocalS(state, dealerId) {
-			let dealer = state.dealersData.find(
-				(one) => dealerId === one.dealerId
-			);
+			let dealer = state.dealersData.find((one) => dealerId === one.dealerId);
 			let dealerInventory = state.allModels.filter(
 				(one) => one.dealerId === dealerId
 			);
@@ -565,7 +540,7 @@ export default new Vuex.Store({
 			];
 		},
 
-		setCarsData(state, vehicles) {
+		SET_CARSData(state, vehicles) {
 			if (vehicles) {
 				state.carsData = vehicles;
 			}
@@ -739,9 +714,7 @@ export default new Vuex.Store({
 		toggleOptionsCard(state, e) {
 			if (
 				e.target.classList.contains("selected-field-options") ||
-				e.target.classList.contains(
-					"selected-field-options-card-content"
-				) ||
+				e.target.classList.contains("selected-field-options-card-content") ||
 				e.target.classList.contains("search-fields-container-field")
 			) {
 				state.optionsCardToggler = !state.optionsCardToggler;
@@ -761,7 +734,6 @@ export default new Vuex.Store({
 		},
 
 		assignValueToTypeSelected(state, event) {
-
 			let filters = Object.values(state.filters);
 			let selectedField = filters.find((one) => {
 				// did the following if statement like this, so that i can add a string id + key to radio btn in the sidebarsearch component, so i can match the id to the label of the radio btn, and still be able to filter here,using the id coming from the selection
@@ -876,17 +848,13 @@ export default new Vuex.Store({
 
 				case "lowestMileage":
 					state.vehiclesDisplay.sort((a, b) => {
-						return (
-							+a.miles.replace(/,/g, "") - +b.miles.replace(/,/g, "")
-						);
+						return +a.miles.replace(/,/g, "") - +b.miles.replace(/,/g, "");
 					});
 					break;
 
 				case "highestMileage":
 					state.vehiclesDisplay.sort((a, b) => {
-						return (
-							+b.miles.replace(/,/g, "") - +a.miles.replace(/,/g, "")
-						);
+						return +b.miles.replace(/,/g, "") - +a.miles.replace(/,/g, "");
 					});
 					break;
 
@@ -906,12 +874,11 @@ export default new Vuex.Store({
 
 	actions: {
 		//fetches the cars data, then commits mutations in charge of setting data in the state.
-		async getCarsData({commit, state}) {
+		async getCarsData({ commit, state }) {
 			// try {
 			// 	const response = await fetch(state.endPoints.carsUrl);
 			// 	const vehicles = await response.json();
-
-			// 	commit("setCarsData", vehicles);
+			// 	commit("SET_CARSData", vehicles);
 			// 	// commit("setMakes", vehicles);
 			// 	commit("saveAllModelsToLocal", vehicles);
 			// 	commit("getAllModelsFromLocal");
@@ -921,7 +888,7 @@ export default new Vuex.Store({
 			// }
 		},
 
-		async getDealersData({commit, state}) {
+		async getDealersData({ commit, state }) {
 			try {
 				const response = await fetch(state.endPoints.dealersUrl);
 				const carDealers = await response.json();

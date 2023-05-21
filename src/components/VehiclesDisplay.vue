@@ -27,7 +27,7 @@
 				>
 					<div
 						class="vehicles-display-car"
-						v-for="(car, key) in vehiclesDisplay"
+						v-for="(car, key) in vehicles"
 						:key="key"
 						@click="
 							saveCarToViewToLocalStore({
@@ -42,9 +42,9 @@
 							setCarToviewDetails();
 						"
 					>
-						<div v-if="car.pics[0]" class="vehicles-display-img">
+						<div v-if="car.imagesUrl[0]" class="vehicles-display-img">
 							<img
-								:src="`/images/${car.pics[0]}`"
+								:src="car.imagesUrl[0]"
 								:alt="`picture of ${car.model}`"
 							/>
 						</div>
@@ -100,10 +100,6 @@ export default {
 	},
 
 	created() {
-		// this.getCarsData({
-		// 	funcToCommit: "shuffleHomeDisplayCars",
-		// 	route: this.$route,
-		// });
 		this.selectPageTitle(this.$route.name);
 	},
 
@@ -141,6 +137,7 @@ export default {
 	},
 	computed: {
 		...mapState(["vehiclesDisplay", "msg", "carToViewDealer"]),
+		...mapState('vehicles',["vehicles", "msg", "carToViewDealer"]),
 	},
 };
 </script>

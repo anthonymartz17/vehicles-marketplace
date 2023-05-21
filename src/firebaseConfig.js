@@ -1,23 +1,24 @@
 import { initializeApp } from "firebase/app";
+
 // import { v4 as uuidv4 } from "uuid";
 
+// Your Firebase configuration
+const firebaseConfig = {
+	apiKey: "AIzaSyAwIN2cWNmZlb_jZBjhHeJVS3UymQAGc4M",
+	authDomain: "vehicles-marketplace.firebaseapp.com",
+	projectId: "vehicles-marketplace",
+	storageBucket: "vehicles-marketplace.appspot.com",
+	messagingSenderId: "775154818578",
+	appId: "1:775154818578:web:d182643d23d2c6c0d182cb",
+	measurementId: "G-5PT2T0VZB5",
+};
 
-	// Your Firebase configuration
-	const firebaseConfig = {
-		apiKey: "AIzaSyAwIN2cWNmZlb_jZBjhHeJVS3UymQAGc4M",
-		authDomain: "vehicles-marketplace.firebaseapp.com",
-		projectId: "vehicles-marketplace",
-		storageBucket: "vehicles-marketplace.appspot.com",
-		messagingSenderId: "775154818578",
-		appId: "1:775154818578:web:d182643d23d2c6c0d182cb",
-		measurementId: "G-5PT2T0VZB5",
-	};
+// Import the Firebase SDK and initialize Firebase app
+const firebase = require("firebase/app");
+require("firebase/storage");
 
-	// Initialize Firebase
-	export default initializeApp(firebaseConfig);
-
-	
-
+// Initialize Firebase
+export default initializeApp(firebaseConfig);
 
 // collection refference
 // const colRef = collection(db, "cars");

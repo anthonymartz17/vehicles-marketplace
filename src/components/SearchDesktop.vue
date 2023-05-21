@@ -1,8 +1,13 @@
 <script>
 import { mapGetters, mapState, mapMutations, mapActions } from "vuex";
 import SearchBtn from "./searchFieldMobile/SearchBtn.vue";
-import PriceYear from "./priceYearDesktop.vue";
+import Multiselect from "vue-multiselect";
+// import PriceYear from "./priceYearDesktop.vue";
 export default {
+	components: {
+		SearchBtn,
+		Multiselect,
+	},
 	data() {
 		return {
 			filtersSelected: {},
@@ -15,21 +20,25 @@ export default {
 			route: this.$route,
 		});
 	},
-	components: {
-		SearchBtn,
-		PriceYear,
-	},
 	methods: {
-		...mapMutations([
-			"assignValueToTypeSelected",
-			"searchVehicles",
-			"setDataInVehiclesDisplayFromLocal",
-			"selectModelByMake",
-			"disablePricesYears",
-			"updateInputTextUser",
-		]),
+		// ...mapMutations([
+		// 	"assignValueToTypeSelected",
+		// 	"searchVehicles",
+		// 	"setDataInVehiclesDisplayFromLocal",
+		// 	"selectModelByMake",
+		// 	"disablePricesYears",
+		// 	"updateInputTextUser",
+		// ]),
 		...mapMutations("filterOptions", ["SET_MODEL_OPTIONS"]),
+
+		...mapMutations("vehicles", ["UPDATE_FILTERS", "FILTER_VEHICLES"]),
 		...mapActions(["getCarsData"]),
+
+		fireSearch() {
+			this.UPDATE_FILTERS(this.filtersSelected);
+			this.FILTER_VEHICLES();
+			this.$router.replace({name:'searchResults'})
+		},
 	},
 
 	computed: {
@@ -108,7 +117,93 @@ export default {
 			<form>
 				<div class="field">
 					<label for="condition">Condition:</label>
-					<p>{{ modelOptions }}dd</p>
+					<multiselect
+						class="dropdown"
+						v-model="filtersSelected.carCondition"
+						:options="carConditionOptions"
+						:searchable="false"
+						:show-labels="false"
+						placeholder="New/Used"
+					></multiselect>
+				</div>
+				<div class="field">
+					<label for="condition">Make:</label>
+					<multiselect
+						class="dropdown"
+						v-model="filtersSelected.make"
+						:options="makeOptions"
+						:searchable="false"
+						:show-labels="false"
+						placeholder="All makes"
+						@input="
+							SET_MODEL_OPTIONS({
+								list: vehiclesList,
+								make: filtersSelected.make,
+							})
+						"
+					></multiselect>
+				</div>
+
+				<div class="field">
+					<label for="condition">Model:</label>
+					<multiselect
+						class="dropdown"
+						v-model="filtersSelected.model"
+						:options="modelOptions"
+						:searchable="false"
+						:show-labels="false"
+						:placeholder="
+							filtersSelected.make && filtersSelected.make !== 'All Makes'
+								? `All ${filtersSelected.make}S`
+								: 'All Models'
+						"
+					></multiselect>
+				</div>
+				<div class="field">
+					<label for="condition">Year:</label>
+					<div class="double-input-container">
+						<multiselect
+							class="dropdown"
+							v-model="filtersSelected.yearFrom"
+							:options="yearOptions.from"
+							:searchable="false"
+							:show-labels="false"
+							placeholder="From"
+						></multiselect>
+						<multiselect
+							class="dropdown"
+							v-model="filtersSelected.yearTo"
+							:options="yearOptions.to"
+							:searchable="false"
+							:show-labels="false"
+							placeholder="To"
+						></multiselect>
+					</div>
+				</div>
+				<div class="field">
+					<label for="condition">Price:</label>
+					<div class="double-input-container">
+						<multiselect
+							class="dropdown"
+							v-model="filtersSelected.priceFrom"
+							:options="priceOptions.from"
+							:searchable="false"
+							:show-labels="false"
+							placeholder="From"
+						></multiselect>
+						<multiselect
+							class="dropdown"
+							v-model="filtersSelected.priceTo"
+							:options="priceOptions.to"
+							:searchable="false"
+							:show-labels="false"
+							placeholder="To"
+						></multiselect>
+					</div>
+				</div>
+				<!-- 
+				<div class="field">
+					<label for="condition">Condition:</label>
 					<select
 						name="condition"
 						id="condition"
@@ -118,40 +213,108 @@ export default {
 							{{ condition }}
 						</option>
 					</select>
-				</div>
+				</div> -->
 
-				<div class="field">
+				<!-- <div class="field">
 					<label for="make">Make:</label>
-					<select
-						name="make"
-						id="make"
-						v-model="filtersSelected.make"
-						@click="
-							SET_MODEL_OPTIONS({
-								list: vehiclesList,
-								make: filtersSelected.make,
-							})
-						"
-					>
+					<select name="make" id="make" v-model="filtersSelected.make">
+						<option disabled selected value="">Select an option</option>
 						<option v-for="(make, key) in makeOptions" :key="key">
 							{{ make }}
 						</option>
 					</select>
-				</div>
+				</div> -->
 
-				<div class="field">
+				<!-- <div class="field">
 					<label for="model">Model:</label>
 					<select v-model="filtersSelected.model" name="model" id="model">
 						<option v-for="(model, key) in modelOptions" :key="key">
 							{{ model }}
 						</option>
 					</select>
-				</div>
-				<div>
-					<PriceYear />
-				</div>
+				</div> -->
 
-				<SearchBtn />
+				<!-- <div class="price-year-desk-wrappert">
+					<div class="field">
+						<label>Year:</label>
+						<div class="double-input-container">
+							<select
+								name="yearFrom"
+								id="yearFrom"
+								v-model="filtersSelected.yearFrom"
+							>
+								<option :value="null">From</option>
+								<option
+									:selected="yearFrom == filtersSelected.yearFrom"
+									v-for="(yearFrom, key) in yearOptions.from"
+									:key="key"
+								>
+									{{ yearFrom }}
+								</option>
+							</select>
+							<select
+								name="yearTo"
+								id="yearTo"
+								v-model="filtersSelected.yearTo"
+							>
+								<option :value="null">To</option>
+								<option
+									v-for="(yearTo, key) in yearOptions.to"
+									:key="key"
+									:disabled="yearsUnavailable != null && key < yearsUnavailable"
+									:class="{
+										disabledOptions:
+											yearsUnavailable != null && key < yearsUnavailable,
+									}"
+									:selected="yearTo == filters.yearTo.typeSelected"
+								>
+									{{ yearTo }}
+								</option>
+							</select>
+						</div>
+					</div>
+					<div class="field">
+						<label>Price:</label>
+						<div class="double-input-container">
+							<select
+								name="yearFrom"
+								id="yearFrom"
+								v-model="filtersSelected.priceFrom"
+							>
+								<option :value="null">From</option>
+								<option
+									:selected="priceFrom == filtersSelected.priceFrom"
+									v-for="(priceFrom, key) in priceOptions.from"
+									:key="key"
+								>
+									{{ priceFrom }}
+								</option>
+							</select>
+							<select
+								name="priceTo"
+								id="priceTo"
+								v-model="filtersSelected.priceTo"
+							>
+								<option :value="null">To</option>
+								<option
+									v-for="(priceTo, key) in priceOptions.to"
+									:key="key"
+									:disabled="yearsUnavailable != null && key < yearsUnavailable"
+									:class="{
+										disabledOptions:
+											pricesUnavailable != null && key < pricesUnavailable,
+									}"
+									:selected="priceTo == filtersSelected.priceTo"
+								>
+									{{ priceTo }}
+								</option>
+							</select>
+						</div>
+					</div>
+				</div> -->
+				<div class="btn-container">
+					<div class="btn-search" @click="fireSearch()">Search</div>
+				</div>
 			</form>
 		</div>
 
@@ -182,7 +345,7 @@ export default {
 		</div>
 	</div>
 </template>
-
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style lang="scss" scoped>
 .types-icon-container {
 	max-height: 100%;
@@ -253,16 +416,24 @@ export default {
 	display: flex;
 	flex-direction: column;
 }
-
+.double-input-container {
+	flex: 3;
+	display: flex;
+	gap: 1em;
+}
+.dropdown {
+	flex: 3;
+}
 .field {
 	height: 3em;
 	margin-block: 0.2em;
 	display: flex;
 	align-items: center;
+	font: $font-mobile-m-bold;
 
 	label {
 		flex: 1;
-		font: $font-mobile-m-bold;
+
 		color: $dark;
 	}
 
@@ -273,6 +444,11 @@ export default {
 		padding: 0.2em;
 	}
 }
+.btn-container{
+	display: flex;
+	justify-content: flex-end;
+	margin-top:1em ;
+	}
 .price {
 	display: flex;
 }

@@ -1,7 +1,9 @@
 import apiVehicles from "../../helpers/apiVehicles";
+import apiCarsImages from "../../helpers/apiCarsImages";
 
 export default {
 	namespaced: true,
+
 	state: {
 		vehicles: [],
 		filters: {
@@ -22,11 +24,19 @@ export default {
 		},
 	},
 	mutations: {
-		SETCARS(state, payload) {
+		SET_CARS(state, payload) {
 			state.vehicles = payload;
+		},
+		//add the imagesUrl array property to each corresponding car in vehicles array
+		SET_CARS_IMAGESURL(state, payload) {
+			state.vehicles.forEach((car) => {
+				let { carImagesUrl } = payload.find((x) => x.carId == car.id);
+				car.imagesUrl = carImagesUrl;
+			});
 		},
 		UPDATE_FILTERS(state, payload) {
 			state.filters = { ...state.filters, ...payload };
+			console.log(state.filters, "the filters");
 		},
 		FILTER_VEHICLES(state) {
 			let results = state.vehicles;
@@ -133,6 +143,7 @@ export default {
 			}
 			localStorage.setItem("searchResults", JSON.stringify(results));
 			state.showDropDownTextField = false;
+			console.log(results);
 		},
 	},
 
@@ -142,17 +153,29 @@ export default {
 				return state.vehicles;
 			}
 		},
-	
-
 	},
 
 	actions: {
-		async fetchCars({ commit, state }) {
+		async fetchCars({ commit }) {
 			// shows loading animation while getting the data
 			// commit("SWITCH_LOADING");
 			try {
 				let data = await apiVehicles.getCars();
-				commit("SETCARS", data);
+				commit("SET_CARS", data);
+				return data;
+			} catch (error) {
+				throw error;
+			} finally {
+				// turns loading to false
+				// commit("SWITCH_LOADING");
+			}
+		},
+		async fetchCarsImages({ commit, state }, carsData) {
+			// shows loading animation while getting the data
+			// commit("SWITCH_LOADING");
+			try {
+				let data = await apiCarsImages.getCarsImages(carsData);
+				commit("SET_CARS_IMAGESURL", data);
 				return data;
 			} catch (error) {
 				throw error;

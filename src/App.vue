@@ -29,11 +29,12 @@ export default {
 		initializeFirebase;
 		this.fetchCars().then((data) => {
 			this.SET_FILTERS_OPTIONS(data);
+			this.fetchCarsImages(data)
 		});
 	},
 
 	methods: {
-		...mapActions("vehicles", ["fetchCars"]),
+		...mapActions("vehicles", ["fetchCars","fetchCarsImages"]),
 
 		...mapMutations(["toggleMobileMenu", "detectResize"]),
 
