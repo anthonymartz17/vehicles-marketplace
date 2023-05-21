@@ -11,7 +11,6 @@
 </template>
 
 <script>
-
 import AppModal from "./components/Modal.vue";
 import CarSelectionCard from "./components/searchFieldMobile/CarSelectionCard.vue";
 import AppHeader from "./components/Header.vue";
@@ -20,22 +19,25 @@ import AppMain from "./components/Main.vue";
 import AppFooter from "./components/Footer.vue";
 import MobileMenu from "./components/MobileMenu.vue";
 import initializeFirebase from "./firebaseConfig";
-import ApiBuyer from "./helpers/apiBuyer";
 
 import { mapActions, mapState, mapMutations } from "vuex";
 
 export default {
 	created() {
-		this.$store.dispatch("getCarsData");
-		this.$store.dispatch("getDealersData");
-		initializeFirebase
-		ApiBuyer.fetchCars()
+		// this.$store.dispatch("getCarsData");
+		// this.$store.dispatch("getDealersData");
+		initializeFirebase;
+		this.fetchCars().then((data) => {
+			this.SET_FILTERS_OPTIONS(data);
+		});
 	},
 
 	methods: {
-		...mapActions(["getCarsData"]),
+		...mapActions("vehicles", ["fetchCars"]),
 
 		...mapMutations(["toggleMobileMenu", "detectResize"]),
+
+		...mapMutations("filterOptions", ["SET_FILTERS_OPTIONS"]),
 	},
 
 	components: {

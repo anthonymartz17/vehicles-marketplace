@@ -1,6 +1,7 @@
 <template>
 	<div>
 		<div class="makeModel-wrapper">
+			<p>{{ filters }}</p>
 			<div
 				class="search-fields-container-field"
 				v-for="(field, key) in makeModel"
@@ -27,6 +28,7 @@ export default {
 		...mapState(["filters"]),
 		// working here for mobile view?????????????
 		makeModel() {
+			
 			let selectedMake = this.filters.make.typeSelected,
 				selectedModel = this.filters.models.typeSelected,
 				make,

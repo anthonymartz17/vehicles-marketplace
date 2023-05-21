@@ -1,101 +1,11 @@
-<template>
-	<div class="search-type-wrapper">
-		<div class="search-vehicle">
-			<p class="search-title-desktop"><span> Search</span> Your Vehicle!</p>
-
-			<form>
-				<div class="field">
-					<label for="condition">Condition:</label>
-					<select
-						name="condition"
-						id="condition"
-						value="hello"
-						@input="assignValueToTypeSelected"
-					>
-						<template
-							v-for="(condition, key) in filters.carCondition.type"
-						>
-							<option :key="key">
-								{{ condition }}
-							</option>
-						</template>
-					</select>
-				</div>
-
-				<div class="field">
-					<label for="make">Make:</label>
-					<select
-						name="make"
-						id="make"
-						value="Make"
-						@input="assignValueToTypeSelected"
-						@click="selectModelByMake({$event, id: 'make'})"
-					>
-						<template v-for="(make, key) in filters.make.type">
-							<option :key="key">
-								{{ make }}
-							</option>
-						</template>
-					</select>
-				</div>
-
-				<div class="field">
-					<label for="model">Model:</label>
-					<select
-						name="model"
-						id="model"
-						@input="assignValueToTypeSelected"
-					>
-						<template v-for="(model, key) in modelByMake">
-							<option :key="key" :value="model">
-								{{ model }}
-							</option>
-						</template>
-					</select>
-				</div>
-				<div>
-					<PriceYear />
-				</div>
-
-				<SearchBtn />
-			</form>
-		</div>
-
-		<div class="search-types">
-			<p class="search-title-desktop"><span> Types</span> of Vehicles</p>
-			<ul class="typesCarList">
-				<li v-for="(type, key) in cartypes" :key="key">
-					<router-link
-						:to="{name: 'searchResults'}"
-						class="routerlink"
-						id="carType"
-						@click.native="
-							assignValueToTypeSelected($event);
-							searchVehicles();
-							setDataInVehiclesDisplayFromLocal();
-							updateInputTextUser();
-						"
-					>
-						<img
-							class="type-cars-icons"
-							:src="`/images/icons/${type.img}`"
-							:alt="`picture of ${type.type}`"
-						/>
-						<p>{{ type.type }}</p>
-					</router-link>
-				</li>
-			</ul>
-		</div>
-	</div>
-</template>
-
 <script>
-import {mapGetters, mapState, mapMutations, mapActions} from "vuex";
+import { mapGetters, mapState, mapMutations, mapActions } from "vuex";
 import SearchBtn from "./searchFieldMobile/SearchBtn.vue";
 import PriceYear from "./priceYearDesktop.vue";
 export default {
 	data() {
 		return {
+			filtersSelected: {},
 			searchLabels: ["Condition", "Make", "Model", "Year", "Price"],
 		};
 	},
@@ -118,16 +28,17 @@ export default {
 			"disablePricesYears",
 			"updateInputTextUser",
 		]),
+		...mapMutations("filterOptions", ["SET_MODEL_OPTIONS"]),
 		...mapActions(["getCarsData"]),
 	},
 
 	computed: {
 		cartypes() {
 			return [
-				{type: "Sedan", img: "sedan.png"},
-				{type: "SUV", img: "suv.png"},
-				{type: "Midsize SUV", img: "midsize.png"},
-				{type: "Pickup", img: "pickup.png"},
+				{ type: "Sedan", img: "sedan.png" },
+				{ type: "SUV", img: "suv.png" },
+				{ type: "Midsize SUV", img: "midsize.png" },
+				{ type: "Pickup", img: "pickup.png" },
 			];
 		},
 		modelByMake() {
@@ -156,8 +67,8 @@ export default {
 			}
 
 			return [
-				{field: make, id: "make"},
-				{field: model, id: "model"},
+				{ field: make, id: "make" },
+				{ field: model, id: "model" },
 			];
 		},
 		...mapState([
@@ -173,9 +84,104 @@ export default {
 			"yearFromComputed",
 			"yearToComputed",
 		]),
+		...mapGetters("vehicles", ["vehiclesList"]),
+		...mapGetters("filterOptions", [
+			"makeOptions",
+			"modelOptions",
+			"carConditionOptions",
+			"yearOptions",
+			"priceOptions",
+			"transmissionOptions",
+			"drivetrainOptions",
+			"mileageOptions",
+			"engineOptions",
+			"colorOptions",
+		]),
 	},
 };
 </script>
+<template>
+	<div class="search-type-wrapper">
+		<div class="search-vehicle">
+			<p class="search-title-desktop"><span> Search</span> Your Vehicle!</p>
+
+			<form>
+				<div class="field">
+					<label for="condition">Condition:</label>
+					<p>{{ modelOptions }}dd</p>
+					<select
+						name="condition"
+						id="condition"
+						v-model="filtersSelected.carCondition"
+					>
+						<option v-for="(condition, key) in carConditionOptions" :key="key">
+							{{ condition }}
+						</option>
+					</select>
+				</div>
+
+				<div class="field">
+					<label for="make">Make:</label>
+					<select
+						name="make"
+						id="make"
+						v-model="filtersSelected.make"
+						@click="
+							SET_MODEL_OPTIONS({
+								list: vehiclesList,
+								make: filtersSelected.make,
+							})
+						"
+					>
+						<option v-for="(make, key) in makeOptions" :key="key">
+							{{ make }}
+						</option>
+					</select>
+				</div>
+
+				<div class="field">
+					<label for="model">Model:</label>
+					<select v-model="filtersSelected.model" name="model" id="model">
+						<option v-for="(model, key) in modelOptions" :key="key">
+							{{ model }}
+						</option>
+					</select>
+				</div>
+				<div>
+					<PriceYear />
+				</div>
+
+				<SearchBtn />
+			</form>
+		</div>
+
+		<div class="search-types">
+			<p class="search-title-desktop"><span> Types</span> of Vehicles</p>
+			<ul class="typesCarList">
+				<li v-for="(type, key) in cartypes" :key="key">
+					<router-link
+						:to="{ name: 'searchResults' }"
+						class="routerlink"
+						id="carType"
+						@click.native="
+							assignValueToTypeSelected($event);
+							searchVehicles();
+							setDataInVehiclesDisplayFromLocal();
+							updateInputTextUser();
+						"
+					>
+						<img
+							class="type-cars-icons"
+							:src="`/images/icons/${type.img}`"
+							:alt="`picture of ${type.type}`"
+						/>
+						<p>{{ type.type }}</p>
+					</router-link>
+				</li>
+			</ul>
+		</div>
+	</div>
+</template>
 
 <style lang="scss" scoped>
 .types-icon-container {

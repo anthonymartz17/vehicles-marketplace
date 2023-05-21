@@ -1,9 +1,15 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import vehicles from './modules/vehicles'
+import filterOptions from './modules/filterOptions'
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+	modules: {
+		vehicles,
+		filterOptions,
+	},
 	state: {
 		// Global
 		searchMobileModal: false,
@@ -901,18 +907,18 @@ export default new Vuex.Store({
 	actions: {
 		//fetches the cars data, then commits mutations in charge of setting data in the state.
 		async getCarsData({commit, state}) {
-			try {
-				const response = await fetch(state.endPoints.carsUrl);
-				const vehicles = await response.json();
+			// try {
+			// 	const response = await fetch(state.endPoints.carsUrl);
+			// 	const vehicles = await response.json();
 
-				commit("setCarsData", vehicles);
-				// commit("setMakes", vehicles);
-				commit("saveAllModelsToLocal", vehicles);
-				commit("getAllModelsFromLocal");
-				commit("setItemsInArrayOfEveryPropType");
-			} catch (error) {
-				console.log(error);
-			}
+			// 	commit("setCarsData", vehicles);
+			// 	// commit("setMakes", vehicles);
+			// 	commit("saveAllModelsToLocal", vehicles);
+			// 	commit("getAllModelsFromLocal");
+			// 	commit("setItemsInArrayOfEveryPropType");
+			// } catch (error) {
+			// 	console.log(error);
+			// }
 		},
 
 		async getDealersData({commit, state}) {
