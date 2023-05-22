@@ -37,7 +37,7 @@ export default {
 		fireSearch() {
 			this.UPDATE_FILTERS(this.filtersSelected);
 			this.FILTER_VEHICLES();
-			this.$router.replace({name:'searchResults'})
+			this.$router.replace({ name: "searchResults" });
 		},
 	},
 
@@ -106,6 +106,45 @@ export default {
 			"engineOptions",
 			"colorOptions",
 		]),
+
+		//updates years fields to keep years from less than years to and viceversa
+		yearOptionsDynamic() {
+			let list = {};
+			if (this.filtersSelected.yearTo) {
+				list.from = this.yearOptions.from.filter(
+					(x) => x <= this.filtersSelected.yearTo
+				);
+			} else {
+				list.from = this.yearOptions.from;
+			}
+			if (this.filtersSelected.yearFrom) {
+				list.to = this.yearOptions.to.filter(
+					(x) => x >= this.filtersSelected.yearFrom
+				);
+			} else {
+				list.to = this.yearOptions.to;
+			}
+			return list;
+		},
+		priceOptionsDynamic() {
+			let list = {};
+			if (this.filtersSelected.priceTo) {
+				list.from = this.priceOptions.from.filter(
+					(x) => x <= this.filtersSelected.priceTo
+				);
+			} else {
+				list.from = this.priceOptions.from;
+			}
+			if (this.filtersSelected.priceFrom) {
+				list.to = this.priceOptions.to.filter(
+					(x) => x >= this.filtersSelected.priceFrom
+				);
+			} else {
+				list.to = this.priceOptions.to;
+			}
+
+			return list;
+		},
 	},
 };
 </script>
@@ -165,7 +204,7 @@ export default {
 						<multiselect
 							class="dropdown"
 							v-model="filtersSelected.yearFrom"
-							:options="yearOptions.from"
+							:options="yearOptionsDynamic.from"
 							:searchable="false"
 							:show-labels="false"
 							placeholder="From"
@@ -173,7 +212,7 @@ export default {
 						<multiselect
 							class="dropdown"
 							v-model="filtersSelected.yearTo"
-							:options="yearOptions.to"
+							:options="yearOptionsDynamic.to"
 							:searchable="false"
 							:show-labels="false"
 							placeholder="To"
@@ -186,7 +225,7 @@ export default {
 						<multiselect
 							class="dropdown"
 							v-model="filtersSelected.priceFrom"
-							:options="priceOptions.from"
+							:options="priceOptionsDynamic.from"
 							:searchable="false"
 							:show-labels="false"
 							placeholder="From"
@@ -194,7 +233,7 @@ export default {
 						<multiselect
 							class="dropdown"
 							v-model="filtersSelected.priceTo"
-							:options="priceOptions.to"
+							:options="priceOptionsDynamic.to"
 							:searchable="false"
 							:show-labels="false"
 							placeholder="To"
@@ -444,11 +483,11 @@ export default {
 		padding: 0.2em;
 	}
 }
-.btn-container{
+.btn-container {
 	display: flex;
 	justify-content: flex-end;
-	margin-top:1em ;
-	}
+	margin-top: 1em;
+}
 .price {
 	display: flex;
 }

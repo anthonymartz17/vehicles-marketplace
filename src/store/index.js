@@ -567,10 +567,10 @@ export default new Vuex.Store({
 		},
 
 		// keeps track of the index of the priceFrom property selected, to disable prices below this index in the priceTo options
-		disablePricesYears(state, data) {
-			if (data.id == "priceFrom") state.pricesUnavailable = data.key;
-			if (data.id == "yearFrom") state.yearsUnavailable = data.key;
-		},
+		// disablePricesYears(state, data) {
+		// 	if (data.id == "priceFrom") state.pricesUnavailable = data.key;
+		// 	if (data.id == "yearFrom") state.yearsUnavailable = data.key;
+		// },
 		//sets the content in every array named 'type' of every filter prop object.
 		setItemsInArrayOfEveryPropType(state) {
 			let content = JSON.parse(localStorage.getItem("allModels"));
