@@ -19,9 +19,12 @@ export default {
 	},
 
 	mutations: {
-		SET_MODEL_OPTIONS(state,{list,make}) {
+		SET_MODEL_OPTIONS(state, { list, make }) {
 			if (make) {
-				state.modelOptions = [`All ${make}S`,...list.filter(x =>x.make == make).map(x => x.model)]
+				state.modelOptions = [
+					`All ${make}S`,
+					...list.filter((x) => x.make == make).map((x) => x.model),
+				];
 			}
 		},
 		SET_FILTERS_OPTIONS(state, payload) {
@@ -70,23 +73,33 @@ export default {
 			console.log(state.carConditionOptions, "testing");
 		},
 	},
-	getters :{
-		makeOptions: state => state.makeOptions,
-		modelOptions: state => state.modelOptions,
-		carConditionOptions: state => state.carConditionOptions,
-		yearOptions: state => ({
+	getters: {
+		makeOptions: (state) => state.makeOptions,
+		modelOptions: (state) => state.modelOptions,
+		carConditionOptions: (state) => state.carConditionOptions,
+		yearOptions: (state) => ({
 			from: state.yearFromOptions,
-			to: state.yearToOptions
+			to: state.yearToOptions,
 		}),
-		priceOptions: state => ({
-			from: state.priceFromOptions,
-			to: state.priceToOptions
-		}),
-		transmissionOptions: state => state.transmissionOptions,
-		drivetrainOptions: state => state.driveTrainOptions,
-		mileageOptions: state => state.mileageOptions,
-		engineOptions: state => state.engineOptions,
-		colorOptions: state => state.colorOptions
-	}
-	
+		priceOptions: (state) => {
+			let from = [];
+			let to = [];
+//  prepares data to be used in vue multiselect with a custom label attribute, to display currency format in dropdown, but send num type in v-model.
+			state.priceFromOptions.forEach((price) => {
+				let formatted = price.toLocaleString("en-US", {
+					style: "currency",
+					currency: "USD",
+				});
+				from.push({ fromFormatted: formatted, fromNumType: price });
+				to.push({ toFormatted: formatted, toNumType: price });
+			});
+			return {from,to}
+		},
+
+		transmissionOptions: (state) => state.transmissionOptions,
+		drivetrainOptions: (state) => state.driveTrainOptions,
+		mileageOptions: (state) => state.mileageOptions,
+		engineOptions: (state) => state.engineOptions,
+		colorOptions: (state) => state.colorOptions,
+	},
 };

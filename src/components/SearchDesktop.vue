@@ -127,17 +127,19 @@ export default {
 			return list;
 		},
 		priceOptionsDynamic() {
+			// controls from price is not greater than to price and to price not less than from price.
 			let list = {};
+
 			if (this.filtersSelected.priceTo) {
 				list.from = this.priceOptions.from.filter(
-					(x) => x <= this.filtersSelected.priceTo
+					(x) => x.fromNumType <= this.filtersSelected.priceTo
 				);
 			} else {
 				list.from = this.priceOptions.from;
 			}
 			if (this.filtersSelected.priceFrom) {
 				list.to = this.priceOptions.to.filter(
-					(x) => x >= this.filtersSelected.priceFrom
+					(x) => x.toNumType >= this.filtersSelected.priceFrom
 				);
 			} else {
 				list.to = this.priceOptions.to;
@@ -221,11 +223,19 @@ export default {
 				</div>
 				<div class="field">
 					<label for="condition">Price:</label>
+					<!-- <p>{{ priceOptions.from }}</p> -->
 					<div class="double-input-container">
 						<multiselect
 							class="dropdown"
 							v-model="filtersSelected.priceFrom"
-							:options="priceOptionsDynamic.from"
+							:options="priceOptionsDynamic.from.map((x) => x.fromNumType)"
+							:custom-label="
+								(opt) => {
+									return priceOptionsDynamic.from.find(
+										(x) => x.fromNumType == opt
+									).fromFormatted;
+								}
+							"
 							:searchable="false"
 							:show-labels="false"
 							placeholder="From"
@@ -233,124 +243,20 @@ export default {
 						<multiselect
 							class="dropdown"
 							v-model="filtersSelected.priceTo"
-							:options="priceOptionsDynamic.to"
+							:options="priceOptionsDynamic.to.map((x) => x.toNumType)"
+							:custom-label="
+								(opt) => {
+									return priceOptionsDynamic.to.find((x) => x.toNumType == opt)
+										.toFormatted;
+								}
+							"
 							:searchable="false"
 							:show-labels="false"
 							placeholder="To"
 						></multiselect>
 					</div>
 				</div>
-				<!-- 
-				<div class="field">
-					<label for="condition">Condition:</label>
-					<select
-						name="condition"
-						id="condition"
-						v-model="filtersSelected.carCondition"
-					>
-						<option v-for="(condition, key) in carConditionOptions" :key="key">
-							{{ condition }}
-						</option>
-					</select>
-				</div> -->
 
-				<!-- <div class="field">
-					<label for="make">Make:</label>
-					<select name="make" id="make" v-model="filtersSelected.make">
-						<option disabled selected value="">Select an option</option>
-						<option v-for="(make, key) in makeOptions" :key="key">
-							{{ make }}
-						</option>
-					</select>
-				</div> -->
-
-				<!-- <div class="field">
-					<label for="model">Model:</label>
-					<select v-model="filtersSelected.model" name="model" id="model">
-						<option v-for="(model, key) in modelOptions" :key="key">
-							{{ model }}
-						</option>
-					</select>
-				</div> -->
-
-				<!-- <div class="price-year-desk-wrappert">
-					<div class="field">
-						<label>Year:</label>
-						<div class="double-input-container">
-							<select
-								name="yearFrom"
-								id="yearFrom"
-								v-model="filtersSelected.yearFrom"
-							>
-								<option :value="null">From</option>
-								<option
-									:selected="yearFrom == filtersSelected.yearFrom"
-									v-for="(yearFrom, key) in yearOptions.from"
-									:key="key"
-								>
-									{{ yearFrom }}
-								</option>
-							</select>
-							<select
-								name="yearTo"
-								id="yearTo"
-								v-model="filtersSelected.yearTo"
-							>
-								<option :value="null">To</option>
-								<option
-									v-for="(yearTo, key) in yearOptions.to"
-									:key="key"
-									:disabled="yearsUnavailable != null && key < yearsUnavailable"
-									:class="{
-										disabledOptions:
-											yearsUnavailable != null && key < yearsUnavailable,
-									}"
-									:selected="yearTo == filters.yearTo.typeSelected"
-								>
-									{{ yearTo }}
-								</option>
-							</select>
-						</div>
-					</div>
-					<div class="field">
-						<label>Price:</label>
-						<div class="double-input-container">
-							<select
-								name="yearFrom"
-								id="yearFrom"
-								v-model="filtersSelected.priceFrom"
-							>
-								<option :value="null">From</option>
-								<option
-									:selected="priceFrom == filtersSelected.priceFrom"
-									v-for="(priceFrom, key) in priceOptions.from"
-									:key="key"
-								>
-									{{ priceFrom }}
-								</option>
-							</select>
-							<select
-								name="priceTo"
-								id="priceTo"
-								v-model="filtersSelected.priceTo"
-							>
-								<option :value="null">To</option>
-								<option
-									v-for="(priceTo, key) in priceOptions.to"
-									:key="key"
-									:disabled="yearsUnavailable != null && key < yearsUnavailable"
-									:class="{
-										disabledOptions:
-											pricesUnavailable != null && key < pricesUnavailable,
-									}"
-									:selected="priceTo == filtersSelected.priceTo"
-								>
-									{{ priceTo }}
-								</option>
-							</select>
-						</div>
-					</div>
-				</div> -->
 				<div class="btn-container">
 					<div class="btn-search" @click="fireSearch()">Search</div>
 				</div>
