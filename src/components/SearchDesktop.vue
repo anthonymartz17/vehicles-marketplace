@@ -2,11 +2,13 @@
 import { mapGetters, mapState, mapMutations, mapActions } from "vuex";
 import SearchBtn from "./searchFieldMobile/SearchBtn.vue";
 import Multiselect from "vue-multiselect";
+import MartzIcons from "./martz-icons.vue";
 // import PriceYear from "./priceYearDesktop.vue";
 export default {
 	components: {
 		SearchBtn,
 		Multiselect,
+		MartzIcons,
 	},
 	data() {
 		return {
@@ -44,10 +46,7 @@ export default {
 	computed: {
 		cartypes() {
 			return [
-				{ type: "Sedan", img: "sedan.png" },
-				{ type: "SUV", img: "suv.png" },
-				{ type: "Midsize SUV", img: "midsize.png" },
-				{ type: "Pickup", img: "pickup.png" },
+				...new Set(this.vehiclesList.map((x) => x.carType.toLowerCase())),
 			];
 		},
 		modelByMake() {
@@ -278,12 +277,9 @@ export default {
 							updateInputTextUser();
 						"
 					>
-						<img
-							class="type-cars-icons"
-							:src="`/images/icons/${type.img}`"
-							:alt="`picture of ${type.type}`"
-						/>
-						<p>{{ type.type }}</p>
+						<MartzIcons :icon="type" size="80" />
+
+						<p>{{ type }}</p>
 					</router-link>
 				</li>
 			</ul>

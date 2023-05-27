@@ -6,30 +6,44 @@ const storage = getStorage();
 // Retrieve the image URL from Firebase Firestore or Realtime Database
 
 export default {
-	async getCarsImages(data) {
+	async getCarsImages(imagesData) {
 		try {
-			const carsImages = [];
+			const carsUrl = await Promise.all(
+				imagesData.map((one) => {
+					const promisedUrls = one.pics.map((pic) => {
+						const imageRef = ref(storage, pic);
+						return getDownloadURL(imageRef);
+					});
+					return Promise.all(promisedUrls).then((urls) => {
+						return { id: one.id, imagesUrl: urls };
+					});
+				})
+			);
 
-			data.forEach((one) => {
-				const { id, pics } = one;
-				const urlList = [];
-				pics.forEach((pic) => {
-					const imageRef = ref(storage, pic);
-					getDownloadURL(imageRef)
-						.then((url) => {
-							urlList.push(url);
-						})
-						.catch((error) => {
-							// Handle any errors that occurred during fetching the image
-							console.error("Error fetching image:", error);
-						});
-				});
-				carsImages.push({ carId: id, carImagesUrl: urlList });
-			});
-
-			return carsImages;
+			return carsUrl;
 		} catch (error) {
+			console.error("Error fetching images:", error);
 			throw error;
 		}
+		// try {
+		// 	let carsUrl = await Promise.all(
+
+		// 	)
+		// 	imagesData.map((one) => {
+		// 		const promisedUrls = one.pics.map((pic) => {
+		// 			const imageRef = ref(storage, pic);
+		// 			return getDownloadURL(imageRef);
+		// 		});
+		// 		return Promise.all(promisedUrls).then(urls => {
+		// 			return {id:one.id, imagesUrl:urls}
+		// 		})
+		// 	});
+		//   console.log(carsUrl,'arr')
+
+		// 	return carsUrl;
+		// } catch (error) {
+		// 	console.error("Error fetching images:", error);
+		// 	throw error;
+		// }
 	},
 };

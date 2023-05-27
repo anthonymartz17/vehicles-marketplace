@@ -29,9 +29,9 @@ export default {
 		},
 		//add the imagesUrl array property to each corresponding car in vehicles array
 		SET_CARS_IMAGESURL(state, payload) {
-			state.vehicles.forEach((car) => {
-				let { carImagesUrl } = payload.find((x) => x.carId == car.id);
-				car.imagesUrl = carImagesUrl;
+			state.vehicles.forEach((one) => {
+				let imagesUrl = payload.find((x) => x.id == one.id).imagesUrl;
+				one.carPicsUrls = imagesUrl;
 			});
 		},
 		UPDATE_FILTERS(state, payload) {
@@ -174,9 +174,8 @@ export default {
 			// shows loading animation while getting the data
 			// commit("SWITCH_LOADING");
 			try {
-				let data = await apiCarsImages.getCarsImages(carsData);
-				commit("SET_CARS_IMAGESURL", data);
-				return data;
+				let dataUrl = await apiCarsImages.getCarsImages(carsData);
+				commit("SET_CARS_IMAGESURL", dataUrl);
 			} catch (error) {
 				throw error;
 			} finally {

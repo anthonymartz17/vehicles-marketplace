@@ -1,3 +1,55 @@
+	<script>
+	import {mapMutations, mapState, mapActions, mapGetters} from "vuex";
+	
+	export default {
+		data() {
+			return {
+				pageTitle: "",
+			};
+		},
+	
+		created() {
+			this.selectPageTitle(this.$route.name);
+		},
+	
+		methods: {
+			...mapMutations([
+				"getCarToViewFromLocalStore",
+				"setCarToViewGeneralInfo",
+				"saveCarToViewDealerToLocalS",
+				"setCarToViewDealer",
+				"setVehicleHistory",
+				"setCarToviewDetails",
+				"saveCarToViewToLocalStore",
+				"selectElectricCars",
+				"clearPropsVal",
+				"searchVehicles",
+				"setDataInVehiclesDisplayFromLocal",
+			]),
+			...mapActions(["getCarsData"]),
+	
+			selectPageTitle(name) {
+				let titles = [
+					{routeName: "Vehicles", title: "Vehicles"},
+					{routeName: "Electric", title: "Electrics and Hybrids"},
+					{routeName: "Home", title: "Vehicles"},
+					{routeName: "searchResults", title: "Search Results"},
+					{routeName: "dealerInventory", title: "Our Inventory"},
+				];
+	
+				titles.forEach((one) => {
+					if (name == one.routeName) {
+						this.pageTitle = one.title;
+					}
+				});
+			},
+		},
+		computed: {
+			...mapState(["vehiclesDisplay", "msg", "carToViewDealer"]),
+			...mapGetters('vehicles',["vehiclesList"]),
+		},
+	};
+	</script>
 <template>
 	<div
 		:class="[
@@ -27,7 +79,7 @@
 				>
 					<div
 						class="vehicles-display-car"
-						v-for="(car, key) in vehicles"
+						v-for="(car, key) in vehiclesList"
 						:key="key"
 						@click="
 							saveCarToViewToLocalStore({
@@ -42,9 +94,9 @@
 							setCarToviewDetails();
 						"
 					>
-						<div v-if="car.imagesUrl[0]" class="vehicles-display-img">
+						<div v-if="car && car.carPicsUrls" class="vehicles-display-img">
 							<img
-								:src="car.imagesUrl[0]"
+								:src="car.carPicsUrls[0]"
 								:alt="`picture of ${car.model}`"
 							/>
 						</div>
@@ -89,58 +141,6 @@
 	</div>
 </template>
 
-<script>
-import {mapMutations, mapState, mapActions} from "vuex";
-
-export default {
-	data() {
-		return {
-			pageTitle: "",
-		};
-	},
-
-	created() {
-		this.selectPageTitle(this.$route.name);
-	},
-
-	methods: {
-		...mapMutations([
-			"getCarToViewFromLocalStore",
-			"setCarToViewGeneralInfo",
-			"saveCarToViewDealerToLocalS",
-			"setCarToViewDealer",
-			"setVehicleHistory",
-			"setCarToviewDetails",
-			"saveCarToViewToLocalStore",
-			"selectElectricCars",
-			"clearPropsVal",
-			"searchVehicles",
-			"setDataInVehiclesDisplayFromLocal",
-		]),
-		...mapActions(["getCarsData"]),
-
-		selectPageTitle(name) {
-			let titles = [
-				{routeName: "Vehicles", title: "Vehicles"},
-				{routeName: "Electric", title: "Electrics and Hybrids"},
-				{routeName: "Home", title: "Vehicles"},
-				{routeName: "searchResults", title: "Search Results"},
-				{routeName: "dealerInventory", title: "Our Inventory"},
-			];
-
-			titles.forEach((one) => {
-				if (name == one.routeName) {
-					this.pageTitle = one.title;
-				}
-			});
-		},
-	},
-	computed: {
-		...mapState(["vehiclesDisplay", "msg", "carToViewDealer"]),
-		...mapState('vehicles',["vehicles", "msg", "carToViewDealer"]),
-	},
-};
-</script>
 
 <style lang="scss">
 .space-even {

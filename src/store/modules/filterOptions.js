@@ -70,7 +70,6 @@ export default {
 				"All",
 				...new Set(payload.map((one) => one.colorEx)),
 			].sort();
-			console.log(state.carConditionOptions, "testing");
 		},
 	},
 	getters: {
