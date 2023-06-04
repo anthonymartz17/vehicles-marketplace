@@ -8,17 +8,28 @@
 
 // viewports
 
-$mobile: 26em;
-$tablet: 48em;
+
+$breakPoints: (
+	"tablet": 768px,
+	"desktop": 1024px,
+	"lg-device": 1200px,
+);
+
+@mixin breakpoint($size) {
+	@media (min-width: map-get($breakPoints,$size)) {
+		@content;
+	}
+}
+
 
 @mixin desktop {
-	@media (min-width:#{$mobile}) {
+	@media (min-width:1024px) {
 		@content;
 	}
 }
 
 @mixin tablet {
-	@media (min-width:#{$tablet}) {
+	@media (min-width:768px) {
 		@content;
 	}
 }

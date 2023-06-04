@@ -1,34 +1,15 @@
 <template>
-  <VehiclesDisplay/>
+	<VehiclesDisplay />
 </template>
 
 <script>
-import VehiclesDisplay from '../components/VehiclesDisplay.vue'
-import {mapMutations} from 'vuex'
+import VehiclesDisplay from "../components/VehiclesDisplay.vue";
 
 export default {
-
-
-  created(){
-    this.selectElectricCars(this.$route.name)
-  },
-
-
-  components:{
-    VehiclesDisplay,
-  },
-  methods:{
-
-
-    ...mapMutations([
-      'selectElectricCars'
-    ])
-
-  },
-
-}
+	components: {
+		VehiclesDisplay,
+	},
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

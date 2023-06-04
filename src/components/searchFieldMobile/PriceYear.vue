@@ -1,19 +1,6 @@
 <template>
 	<div>
-		<div class="price-year-wrapper">
-			<div
-				class="search-fields-container-field"
-				v-for="(field, key) in priceYear"
-				:key="key"
-				@click="
-					toggleOptionsCard($event);
-					updateClickedFieldContent(field.id);
-				"
-			>
-				<p>{{ field.field }}</p>
-				<i class="fas fa-caret-down"></i>
-			</div>
-		</div>
+		
 	</div>
 </template>
 
@@ -22,6 +9,7 @@ import { mapMutations, mapState } from "vuex";
 export default {
 	data() {
 		return {
+			filterSelected:{},
 			priceOrYear: [],
 		};
 	},

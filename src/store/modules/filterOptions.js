@@ -100,5 +100,7 @@ export default {
 		mileageOptions: (state) => state.mileageOptions,
 		engineOptions: (state) => state.engineOptions,
 		colorOptions: (state) => state.colorOptions,
+		carTypeOptions: (state) => state.carTypeOptions,
+		fuelOptions: (state) => state.fuelOptions,
 	},
 };

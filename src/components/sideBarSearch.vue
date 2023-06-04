@@ -78,9 +78,9 @@
 					<label :for="`fuel ${key}`">{{ option }}</label>
 				</div>
 			</div>
-			<div class="year-price">
+			<!-- <div class="year-price">
 				<PriceYear />
-			</div>
+			</div> -->
 			<div
 				class="make-models"
 				v-if="filters.make.typeSelected !== '' && !showDropDownTextField"
@@ -175,7 +175,7 @@
 
 <script>
 import {mapMutations, mapState} from "vuex";
-import PriceYear from "./priceYearDesktop.vue";
+// import PriceYear from "./priceYearDesktop.vue";
 export default {
 	data() {
 		return {
@@ -186,7 +186,7 @@ export default {
 		};
 	},
 	components: {
-		PriceYear,
+		// PriceYear,
 	},
 	mounted() {
 		this.scrollSelectedMakeOrModelIntoView();

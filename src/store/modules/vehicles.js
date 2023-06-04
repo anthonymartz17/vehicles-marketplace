@@ -27,20 +27,12 @@ export default {
 		SET_CARS(state, payload) {
 			state.vehicles = payload;
 		},
-		//add the imagesUrl array property to each corresponding car in vehicles array
-		SET_CARS_IMAGESURL(state, payload) {
-			state.vehicles.forEach((one) => {
-				let imagesUrl = payload.find((x) => x.id == one.id).imagesUrl;
-				one.carPicsUrls = imagesUrl;
-			});
-		},
+
 		UPDATE_FILTERS(state, payload) {
 			state.filters = { ...state.filters, ...payload };
-			console.log(state.filters, "the filters");
 		},
 		FILTER_VEHICLES(state) {
 			let results = state.vehicles;
-
 			if (
 				state.filters.carCondition !== "" &&
 				state.filters.carCondition !== "New/Used"
@@ -51,6 +43,7 @@ export default {
 			}
 			if (state.filters.fuel !== "" && state.filters.fuel !== "All") {
 				results = results.filter((one) => one.fuel === state.filters.fuel);
+			
 			}
 			if (
 				state.filters.transmission !== "" &&
@@ -121,6 +114,7 @@ export default {
 			}
 			if (state.filters.yearTo > 0) {
 				results = results.filter((one) => one.year <= state.filters.yearTo);
+			
 			}
 			// the following condition ensures to show selected make, and in case all makes is selected, it doesnt get into the condition which makes the program run as if nothing was selected and shows all makes avalables.
 			if (state.filters.make !== "" && state.filters.make !== "All Makes") {
@@ -141,9 +135,25 @@ export default {
 						.includes(state.filters.models.toLowerCase().trim())
 				);
 			}
+			
 			localStorage.setItem("searchResults", JSON.stringify(results));
 			state.showDropDownTextField = false;
-			console.log(results);
+			state.filters = {
+				make: "",
+				models: "",
+				priceFrom: 0,
+				priceTo: 0,
+				yearFrom: 0,
+				yearTo: 0,
+				carType: "",
+				carCondition: "",
+				fuel: "",
+				transmission: "",
+				driveTrain: "",
+				mileage: "",
+				engine: "",
+				color: "",
+			}
 		},
 	},
 
@@ -161,6 +171,12 @@ export default {
 			// commit("SWITCH_LOADING");
 			try {
 				let data = await apiVehicles.getCars();
+				// fetch images url in firestore storage & adds each corresponding list of urls to the proper car in cars list.
+				let dataUrl = await apiCarsImages.getCarsImages(data);
+				data.forEach((one) => {
+					let imagesUrl = dataUrl.find((x) => x.id == one.id).imagesUrl;
+					one.carPicsUrls = imagesUrl;
+				});
 				commit("SET_CARS", data);
 				return data;
 			} catch (error) {
@@ -170,18 +186,18 @@ export default {
 				// commit("SWITCH_LOADING");
 			}
 		},
-		async fetchCarsImages({ commit, state }, carsData) {
-			// shows loading animation while getting the data
-			// commit("SWITCH_LOADING");
-			try {
-				let dataUrl = await apiCarsImages.getCarsImages(carsData);
-				commit("SET_CARS_IMAGESURL", dataUrl);
-			} catch (error) {
-				throw error;
-			} finally {
-				// turns loading to false
-				// commit("SWITCH_LOADING");
-			}
-		},
+		// async fetchCarsImages({ commit}, carsData) {
+		// 	// shows loading animation while getting the data
+		// 	// commit("SWITCH_LOADING");
+		// 	try {
+		// 		let dataUrl = await apiCarsImages.getCarsImages(carsData);
+		// 		commit("SET_CARS_IMAGESURL", dataUrl);
+		// 	} catch (error) {
+		// 		throw error;
+		// 	} finally {
+		// 		// turns loading to false
+		// 		// commit("SWITCH_LOADING");
+		// 	}
+		// },
 	},
 };

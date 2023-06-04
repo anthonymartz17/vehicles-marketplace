@@ -33,6 +33,9 @@ export default {
 	created() {
 		this.setDataInVehiclesDisplayFromLocal();
 	},
+	beforeDestroy() {
+		localStorage.removeItem('searchResults')
+	},
 
 	components: {
 		VehiclesDisplay,

@@ -29,11 +29,6 @@ export default {
 		initializeFirebase;
 		this.fetchCars().then((data) => {
 			this.SET_FILTERS_OPTIONS(data);
-			data.map(x => {
-				console.log(x.carType)
-			})
-			// let flattenedImages = data.map(x => x.pics).flat(1)
-			this.fetchCarsImages(data);
 		});
 	},
 
@@ -47,15 +42,11 @@ export default {
 
 	components: {
 		AppHeader,
-		// HomeAd,
 		AppMain,
 		AppFooter,
 		CarSelectionCard,
 		MobileMenu,
 		AppModal,
-	},
-	computed: {
-		...mapState(["makeSelected", "vehiclesDisplay"]),
 	},
 };
 </script>

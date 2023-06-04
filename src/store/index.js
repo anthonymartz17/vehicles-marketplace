@@ -550,21 +550,21 @@ export default new Vuex.Store({
 				state.dealersData = data;
 			}
 		},
-		//  shuffles the vehicleDisplay array
-		shuffleHomeDisplayCars(state) {
-			let shuffledCars = JSON.parse(localStorage.getItem("allModels"));
-			let arrLength = shuffledCars.length,
-				temp,
-				ranNum;
-			while (arrLength-- > 0) {
-				ranNum = Math.round(Math.random() * (arrLength + 1));
-				temp = shuffledCars[ranNum];
-				shuffledCars[ranNum] = shuffledCars[arrLength];
-				shuffledCars[arrLength] = temp;
+		// //  shuffles the vehicleDisplay array
+		// shuffleHomeDisplayCars(state) {
+		// 	let shuffledCars = JSON.parse(localStorage.getItem("allModels"));
+		// 	let arrLength = shuffledCars.length,
+		// 		temp,
+		// 		ranNum;
+		// 	while (arrLength-- > 0) {
+		// 		ranNum = Math.round(Math.random() * (arrLength + 1));
+		// 		temp = shuffledCars[ranNum];
+		// 		shuffledCars[ranNum] = shuffledCars[arrLength];
+		// 		shuffledCars[arrLength] = temp;
 
-				state.vehiclesDisplay = shuffledCars;
-			}
-		},
+		// 		state.vehiclesDisplay = shuffledCars;
+		// 	}
+		// },
 
 		// keeps track of the index of the priceFrom property selected, to disable prices below this index in the priceTo options
 		// disablePricesYears(state, data) {

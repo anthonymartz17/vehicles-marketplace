@@ -1,85 +1,106 @@
-	<script>
-	import {mapMutations, mapState, mapActions, mapGetters} from "vuex";
-	
-	export default {
-		data() {
-			return {
-				pageTitle: "",
-			};
+<script>
+import { mapMutations, mapActions, mapGetters } from "vuex";
+
+export default {
+	data() {
+		return {
+			pageTitle: "",
+		};
+	},
+
+	created() {
+		this.selectPageTitle(this.$route.name);
+		console.log(this.vehiclesList);
+	},
+
+	methods: {
+		...mapMutations([
+			"getCarToViewFromLocalStore",
+			"setCarToViewGeneralInfo",
+			"saveCarToViewDealerToLocalS",
+			"setCarToViewDealer",
+			"setVehicleHistory",
+			"setCarToviewDetails",
+			"saveCarToViewToLocalStore",
+			"selectElectricCars",
+			"clearPropsVal",
+			"searchVehicles",
+			"setDataInVehiclesDisplayFromLocal",
+		]),
+		...mapActions(["getCarsData"]),
+
+		selectPageTitle(name) {
+			let titles = [
+				{ routeName: "Vehicles", title: "Vehicles" },
+				{ routeName: "Electric", title: "Electrics and Hybrids" },
+				{ routeName: "Home", title: "Vehicles" },
+				{ routeName: "searchResults", title: "Search Results" },
+				{ routeName: "dealerInventory", title: "Our Inventory" },
+			];
+
+			titles.forEach((one) => {
+				if (name == one.routeName) {
+					this.pageTitle = one.title;
+				}
+			});
 		},
-	
-		created() {
-			this.selectPageTitle(this.$route.name);
+	},
+	computed: {
+		...mapGetters("vehicles", ["vehiclesList"]),
+
+		vehiclesToDisplay() {
+			let list;
+			let listFromLocal = JSON.parse(localStorage.getItem("searchResults"));
+
+			if (this.$route.name == "Home") {
+				// shuffles the list
+				const shuffledArray = this.vehiclesList.sort(() => Math.random() - 0.5);
+				list = shuffledArray.slice(0, 8);
+			} else if (this.$route.name == "Electric") {
+				// shows electric only
+				list = this.vehiclesList.filter((x) => x.fuel == "Electric");
+			} else if (listFromLocal && listFromLocal.length > 0) {
+				// shows results of search
+				list = listFromLocal;
+			} else {
+				// shows all available cars
+				list = this.vehiclesList;
+			}
+			return list;
 		},
-	
-		methods: {
-			...mapMutations([
-				"getCarToViewFromLocalStore",
-				"setCarToViewGeneralInfo",
-				"saveCarToViewDealerToLocalS",
-				"setCarToViewDealer",
-				"setVehicleHistory",
-				"setCarToviewDetails",
-				"saveCarToViewToLocalStore",
-				"selectElectricCars",
-				"clearPropsVal",
-				"searchVehicles",
-				"setDataInVehiclesDisplayFromLocal",
-			]),
-			...mapActions(["getCarsData"]),
-	
-			selectPageTitle(name) {
-				let titles = [
-					{routeName: "Vehicles", title: "Vehicles"},
-					{routeName: "Electric", title: "Electrics and Hybrids"},
-					{routeName: "Home", title: "Vehicles"},
-					{routeName: "searchResults", title: "Search Results"},
-					{routeName: "dealerInventory", title: "Our Inventory"},
-				];
-	
-				titles.forEach((one) => {
-					if (name == one.routeName) {
-						this.pageTitle = one.title;
-					}
-				});
-			},
-		},
-		computed: {
-			...mapState(["vehiclesDisplay", "msg", "carToViewDealer"]),
-			...mapGetters('vehicles',["vehiclesList"]),
-		},
-	};
-	</script>
+	},
+};
+</script>
 <template>
 	<div
 		:class="[
 			'vehicles-container',
-			{'vehicles-container-height': $route.name == 'Home'},
+			{ 'vehicles-container-height': $route.name == 'Home' },
 		]"
 	>
-		<div :class="['vehicles', {'vehicles-height': $route.name == 'Home'}]">
+		<div :class="['vehicles', { 'vehicles-height': $route.name == 'Home' }]">
 			<h2 class="vehicles-title">
 				<span v-if="$route.name === 'dealerInventory'"
 					>{{ carToViewDealer.name }} | </span
 				>{{ pageTitle }}
 				<i
 					v-if="$route.name == 'Electric'"
-					:style="{color: '#116530'}"
+					:style="{ color: '#116530' }"
 					class="fas fa-leaf"
 				></i>
 			</h2>
 
-			<router-link :to="{name: 'CarToView'}">
+			<router-link :to="{ name: 'CarToView' }">
 				<div
 					:class="[
 						'vehicles-display',
-						{'space-even': vehiclesDisplay.length > 4},
-						{'vehicles-display-height-flow ':  $route.name == 'searchResults'},
+						{ 'space-even': vehiclesToDisplay.length > 4 },
+						{ 'vehicles-display-height-flow ': $route.name == 'searchResults' },
 					]"
 				>
 					<div
 						class="vehicles-display-car"
-						v-for="(car, key) in vehiclesList"
+						v-for="(car, key) in vehiclesToDisplay"
 						:key="key"
 						@click="
 							saveCarToViewToLocalStore({
@@ -95,18 +116,14 @@
 						"
 					>
 						<div v-if="car && car.carPicsUrls" class="vehicles-display-img">
-							<img
-								:src="car.carPicsUrls[0]"
-								:alt="`picture of ${car.model}`"
-							/>
+							<img :src="car.carPicsUrls[0]" :alt="`picture of ${car.model}`" />
 						</div>
 						<div class="vehicles-display-description">
 							<h3 class="vehicles-display-title">
 								{{ car.year }} {{ car.make }} {{ car.model }}
 							</h3>
 							<p class="vehicles-display-specs">
-								{{ car.fuel }} - {{ car.carCondition }} -
-								{{ car.miles }} miles
+								{{ car.fuel }} - {{ car.carCondition }} - {{ car.miles }} miles
 							</p>
 							<p class="vehicles-display-price">
 								{{ car.price | currency }}
@@ -116,7 +133,7 @@
 				</div>
 			</router-link>
 		</div>
-		<router-link class="moreVehicleBtn" :to="{name: 'searchResults'}">
+		<router-link class="moreVehicleBtn" :to="{ name: 'searchResults' }">
 			<div
 				@click="
 					searchVehicles();
@@ -128,19 +145,18 @@
 				+ More Vehicles
 			</div>
 		</router-link>
-		<div class="noResultMsg" v-if="vehiclesDisplay.length === 0">
+		<div class="noResultMsg" v-if="vehiclesToDisplay.length === 0">
 			<div class="noResultMsg-text">
 				<p>No Vehicles found with these criteria</p>
 				<p>Try modifying the filters!</p>
 			</div>
 
-			<router-link :to="{name: 'Advance'}" class="btn-adjustSearch">
+			<router-link :to="{ name: 'Advance' }" class="btn-adjustSearch">
 				<div @click="clearPropsVal">Adjust Search</div>
 			</router-link>
 		</div>
 	</div>
 </template>
-
 
 <style lang="scss">
 .space-even {
@@ -154,7 +170,6 @@
 .vehicles-container {
 	padding: 0.5em;
 	flex: 1;
-	
 }
 // this height only when in home screen
 .vehicles-container-height {
@@ -163,9 +178,6 @@
 
 .vehicles-height {
 	height: 80vh;
-	@include desktop {
-		height: 80vh;
-	}
 }
 
 .vehicles {
@@ -186,19 +198,7 @@
 }
 
 .vehicles-display {
-	@include desktop {
-	
-		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-		// justify-items: stretch;
-		gap: 1em;
-		padding-inline: .5em;
-	}
 	&-car {
-		@include desktop {
-			flex-direction: column;
-		}
-
 		display: flex;
 		justify-content: space-around;
 		gap: 0.5em;
@@ -228,13 +228,8 @@
 		font: $font-text-bold;
 	}
 }
-.moreVehicleBtn {
-	@include desktop {
-		display: none;
-	}
-}
+
 .noResultMsg {
-	background: blue;
 	display: grid;
 	place-items: center;
 	gap: 2em;
@@ -259,8 +254,30 @@
 		background: lighten($primary, 15%);
 		border: 1px solid $light;
 	}
-	@include desktop {
-		display: none;
+}
+
+.vehicles-container {
+	@include breakpoint(tablet) {
+		.vehicles-display {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 1em;
+			padding-inline: 0.5em;
+			&-car {
+				flex-direction: column;
+			}
+		}
+	}
+	@include breakpoint(desktop) {
+		.vehicles-display {
+			grid-template-columns: repeat(4, 1fr);
+		}
+		.moreVehicleBtn {
+			display: none;
+		}
+		.btn-adjustSearch {
+			display: none;
+		}
 	}
 }
 </style>
