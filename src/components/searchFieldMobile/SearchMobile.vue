@@ -4,7 +4,7 @@
 
 		<HomeSearchForm />
 		<router-link :to="{ name: 'Advance' }">
-			<div class="btn btn-advanceSearch" @click="clearPropsVal">
+			<div class="btn btn-advanceSearch" @click="clearFilters()">
 				Advanced Search
 			</div>
 		</router-link>
@@ -22,7 +22,7 @@ export default {
 		HomeSearchForm,
 	},
 	methods: {
-		...mapMutations(["clearPropsVal"]),
+		...mapMutations("vehicles",["clearFilters"]),
 	},
 };
 </script>

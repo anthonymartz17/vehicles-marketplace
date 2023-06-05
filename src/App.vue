@@ -1,8 +1,8 @@
 <template>
 	<div class="page-container">
 		<AppModal />
-		<MobileMenu />
-		<AppHeader />
+		<MobileMenu :desktopNav="desktopNav"/>
+		<AppHeader :desktopNav="desktopNav"/>
 		<!-- <HomeAd/> -->
 		<AppMain />
 		<CarSelectionCard />
@@ -31,6 +31,37 @@ export default {
 			this.SET_FILTERS_OPTIONS(data);
 		});
 	},
+	data() {
+		return {
+			desktopNav: [
+				{
+					name: "Home",
+					link: "Home",
+					icon: "fas fa-home",
+				},
+				{
+					name: "Vehicles",
+					link: "searchResults",
+					icon: "fas fa-car",
+				},
+				{
+					name: "Electric Cars",
+					link: "Electric",
+					icon: "fas fa-charging-station",
+				},
+				{
+					name: "Contacto",
+					link: "Contact",
+					icon: "fas fa-phone-volume",
+				},
+				{
+					name: "Join Us",
+					link: "JoinUs",
+					icon: "fas fa-phone-volume",
+				},
+			],
+		}
+	},
 
 	methods: {
 		...mapActions("vehicles", ["fetchCars", "fetchCarsImages"]),
@@ -53,8 +84,8 @@ export default {
 <style lang="scss" scoped>
 .page-container {
 	// background:$lightestDark;
-	min-height: 100%;
-	min-width: 25em;
+	// min-height: 100%;
+	// min-width: 25em;
 	// overflow: auto;
 	position: relative;
 }

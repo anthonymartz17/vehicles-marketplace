@@ -10,25 +10,10 @@ export default {
 
 	created() {
 		this.selectPageTitle(this.$route.name);
-		console.log(this.vehiclesList);
 	},
 
 	methods: {
-		...mapMutations([
-			"getCarToViewFromLocalStore",
-			"setCarToViewGeneralInfo",
-			"saveCarToViewDealerToLocalS",
-			"setCarToViewDealer",
-			"setVehicleHistory",
-			"setCarToviewDetails",
-			"saveCarToViewToLocalStore",
-			"selectElectricCars",
-			"clearPropsVal",
-			"searchVehicles",
-			"setDataInVehiclesDisplayFromLocal",
-		]),
-		...mapActions(["getCarsData"]),
-
+		...mapMutations("vehicles", ["clearFilters"]),
 		selectPageTitle(name) {
 			let titles = [
 				{ routeName: "Vehicles", title: "Vehicles" },
@@ -59,12 +44,12 @@ export default {
 			} else if (this.$route.name == "Electric") {
 				// shows electric only
 				list = this.vehiclesList.filter((x) => x.fuel == "Electric");
-			} else if (listFromLocal && listFromLocal.length > 0) {
+			} else if (listFromLocal && listFromLocal.length >= 0) {
 				// shows results of search
 				list = listFromLocal;
 			} else {
 				// shows all available cars
-				list = this.vehiclesList;
+				list = [];
 			}
 			return list;
 		},
@@ -152,7 +137,7 @@ export default {
 			</div>
 
 			<router-link :to="{ name: 'Advance' }" class="btn-adjustSearch">
-				<div @click="clearPropsVal">Adjust Search</div>
+				<div @click="clearFilters()">Adjust Search</div>
 			</router-link>
 		</div>
 	</div>

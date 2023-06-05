@@ -6,29 +6,26 @@
 		>
 			<div
 				class="selected-field-options"
-				v-show="$store.state.mobileMenuToggler"
-				@click="toggleMobileMenu()"
+				v-show="mobileMenuToggler"
+				@click="TOGGLE_MOBILE_MENUE()"
 			></div>
 		</transition>
 		<transition
 			enter-active-class="animate__animated animate__slideInLeft animate__faster"
 			leave-active-class="animate__animated animate__slideOutLeft animate__faster"
 		>
-			<nav
-				class="nav-menu-container"
-				v-show="$store.state.mobileMenuToggler"
-			>
+			<nav class="nav-menu-container" v-show="mobileMenuToggler">
 				<ul>
 					<li
-						v-for="(link, key) in $store.state.desktopNav"
+						v-for="(link, key) in desktopNav"
 						:key="key"
 						@click="
-							toggleMobileMenu();
-							clearPropsVal();
+							TOGGLE_MOBILE_MENUE();
+							clearFilters();
 							link.link === 'Vehicles' ? clearFilters() : null;
 						"
 					>
-						<router-link :to="{ name: link.name }" class="tabs">
+						<router-link :to="{ name: link.link }" class="tabs">
 							<i :class="link.icon"></i>
 							<p>{{ link.link }}</p>
 						</router-link>
@@ -40,16 +37,16 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations,mapState } from "vuex";
 export default {
+	props:["desktopNav"],
 	methods: {
-		...mapMutations([
-			"toggleMobileMenu",
-			"toggleModal",
-			"clearPropsVal",
-			"clearFilters",
-		]),
+		...mapMutations("vehicles", ["clearFilters","TOGGLE_MOBILE_MENUE"]),
 	},
+	computed: {
+		...mapState("vehicles",["mobileMenuToggler"])
+	}
+
 };
 </script>
 
@@ -64,7 +61,8 @@ a.active {
 .nav-menu-container {
 	z-index: 12;
 	position: fixed;
-	background: $lightestDark;
+	background: $dark;
+	border-right: 1px solid $light;
 	height: 100%;
 	width: 70%;
 	padding-top: 4em;

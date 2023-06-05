@@ -128,29 +128,7 @@ export default new Vuex.Store({
 		typeOfCar: "All Vehicles",
 		clickedFieldContent: {},
 
-		desktopNav: [
-			{
-				link: "Home",
-				name: "Home",
-				icon: "fas fa-home",
-			},
-			{
-				link: "Vehicles",
-				name: "searchResults",
-				icon: "fas fa-car",
-				subList: ["Carros", "Motores", "Barcos", "Vehiculos Pesados", "Otros"],
-			},
-			{
-				link: "Electric Cars",
-				name: "Electric",
-				icon: "fas fa-charging-station",
-			},
-			{
-				link: "Contacto",
-				name: "Contact",
-				icon: "fas fa-phone-volume",
-			},
-		],
+	
 	},
 	mutations: {
 		// when the app is created, this function get the data  that is at the moment in the  searchResults prop in local storage and sets it to the vehicleDisplay prop that is in the state. this allows the data to stay rendered when the page is reloaded.
@@ -706,9 +684,9 @@ export default new Vuex.Store({
 			}
 		},
 
-		toggleMobileMenu(state) {
-			state.mobileMenuToggler = !state.mobileMenuToggler;
-		},
+		// toggleMobileMenu(state) {
+		// 	state.mobileMenuToggler = !state.mobileMenuToggler;
+		// },
 
 		// togggles on and off to show the card with the options  of the selected field
 		toggleOptionsCard(state, e) {

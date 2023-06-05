@@ -22,6 +22,7 @@ export default {
 			engine: "",
 			color: "",
 		},
+		mobileMenuToggler: false,
 	},
 	mutations: {
 		SET_CARS(state, payload) {
@@ -43,7 +44,6 @@ export default {
 			}
 			if (state.filters.fuel !== "" && state.filters.fuel !== "All") {
 				results = results.filter((one) => one.fuel === state.filters.fuel);
-			
 			}
 			if (
 				state.filters.transmission !== "" &&
@@ -114,7 +114,6 @@ export default {
 			}
 			if (state.filters.yearTo > 0) {
 				results = results.filter((one) => one.year <= state.filters.yearTo);
-			
 			}
 			// the following condition ensures to show selected make, and in case all makes is selected, it doesnt get into the condition which makes the program run as if nothing was selected and shows all makes avalables.
 			if (state.filters.make !== "" && state.filters.make !== "All Makes") {
@@ -135,9 +134,11 @@ export default {
 						.includes(state.filters.models.toLowerCase().trim())
 				);
 			}
-			
+
 			localStorage.setItem("searchResults", JSON.stringify(results));
 			state.showDropDownTextField = false;
+		},
+		clearFilters(state) {
 			state.filters = {
 				make: "",
 				models: "",
@@ -154,6 +155,9 @@ export default {
 				engine: "",
 				color: "",
 			}
+		},
+		TOGGLE_MOBILE_MENUE(state) {
+			state.mobileMenuToggler = !state.mobileMenuToggler;
 		},
 	},
 

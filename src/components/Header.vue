@@ -1,7 +1,24 @@
+<script>
+import { mapMutations, mapState } from "vuex";
+// import SocialMedia from './SocialMedia.vue'
+export default {
+	data() {
+		return {};
+	},
+	props:["desktopNav"],
+	methods: {
+		...mapMutations("vehicles", ["clearFilters", "TOGGLE_MOBILE_MENUE"]),
+	},
+	computed: {
+	
+	},
+};
+</script>
 <template>
 	<header class="header-container flex-j-c">
 		<div class="header-wrapper flex-a-c">
-			<i class="fas fa-bars fa-2x" @click="toggleMobileMenu()"></i>
+			<i class="fas fa-bars fa-2x" @click="TOGGLE_MOBILE_MENUE()"></i>
+
 			<div class="logo-container">
 				<router-link :to="{ name: 'Home' }">
 					<img src="/images/icons/logo.png" alt="site logo" class="logo" />
@@ -13,19 +30,23 @@
 						v-for="(link, key) in desktopNav"
 						:key="key"
 						@click="
-							clearPropsVal();
+							clearFilters();
 							link.link === 'Vehicles' ? clearFilters() : null;
 						"
 					>
-						<router-link :to="{ name: link.name }">
-							<p>{{ link.link }}</p>
+						<router-link :to="{ name: link.link }">
+							<p>{{ link.name }}</p>
 						</router-link>
 					</li>
 				</ul>
 			</nav>
 			<div class="searchIcon">
-				<router-link :to="{ name: 'Advance' }" tag="div">
-					<i class="fas fa-search" @click="clearPropsVal"></i>
+				<router-link
+					@click="clearFilters()"
+					:to="{ name: 'Advance' }"
+					tag="div"
+				>
+					<i class="fas fa-search"></i>
 				</router-link>
 			</div>
 
@@ -36,22 +57,6 @@
 		</div>
 	</header>
 </template>
-
-<script>
-import { mapMutations, mapState } from "vuex";
-// import SocialMedia from './SocialMedia.vue'
-export default {
-	components: {
-		// SocialMedia,
-	},
-	methods: {
-		...mapMutations(["clearPropsVal", "toggleMobileMenu", "clearFilters"]),
-	},
-	computed: {
-		...mapState(["desktopView", "desktopNav"]),
-	},
-};
-</script>
 
 <style lang="scss" scoped>
 .header-container {

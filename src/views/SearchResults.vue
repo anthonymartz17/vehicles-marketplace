@@ -31,7 +31,7 @@ import { mapMutations } from "vuex";
 
 export default {
 	created() {
-		this.setDataInVehiclesDisplayFromLocal();
+		// this.setDataInVehiclesDisplayFromLocal();
 	},
 	beforeDestroy() {
 		localStorage.removeItem('searchResults')
