@@ -46,4 +46,19 @@ export default {
 		// 	throw error;
 		// }
 	},
+	async getImagesById(imagePaths) {
+		try {
+			const imageUrls = [];
+	
+			for (const imagePath of imagePaths) {
+				const imageRef = ref(storage, imagePath);
+				const imageUrl = await getDownloadURL(imageRef);
+				imageUrls.push(imageUrl);
+			}
+	
+			return imageUrls;
+		} catch (error) {
+			throw error;
+		}
+	}
 };

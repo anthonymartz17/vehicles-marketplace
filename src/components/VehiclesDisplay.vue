@@ -29,6 +29,9 @@ export default {
 				}
 			});
 		},
+		setCarToViewInLS(car) {
+			localStorage.setItem("carToView", JSON.stringify(car));
+		},
 	},
 	computed: {
 		...mapGetters("vehicles", ["vehiclesList"]),
@@ -75,31 +78,25 @@ export default {
 				></i>
 			</h2>
 
-			<router-link :to="{ name: 'CarToView' }">
+			<div
+				:class="[
+					'vehicles-display',
+					{ 'space-even': vehiclesToDisplay.length > 4 },
+					{ 'vehicles-display-height-flow ': $route.name == 'searchResults' },
+				]"
+			>
 				<div
-					:class="[
-						'vehicles-display',
-						{ 'space-even': vehiclesToDisplay.length > 4 },
-						{ 'vehicles-display-height-flow ': $route.name == 'searchResults' },
-					]"
+					class="vehicles-display-car"
+					v-for="(car, key) in vehiclesToDisplay"
+					:key="key"
 				>
-					<div
-						class="vehicles-display-car"
-						v-for="(car, key) in vehiclesToDisplay"
-						:key="key"
-						@click="
-							saveCarToViewToLocalStore({
-								name: 'carToView',
-								data: car,
-							});
-							getCarToViewFromLocalStore();
+					<router-link :to="{ name: 'CarToView', query: { id: car.id } }">
+						<!-- getCarToViewFromLocalStore();
 							setCarToViewGeneralInfo();
 							saveCarToViewDealerToLocalS(car.dealerId);
 							setCarToViewDealer();
 							setVehicleHistory();
-							setCarToviewDetails();
-						"
-					>
+							setCarToviewDetails(); -->
 						<div v-if="car && car.carPicsUrls" class="vehicles-display-img">
 							<img :src="car.carPicsUrls[0]" :alt="`picture of ${car.model}`" />
 						</div>
@@ -114,9 +111,9 @@ export default {
 								{{ car.price | currency }}
 							</p>
 						</div>
-					</div>
+					</router-link>
 				</div>
-			</router-link>
+			</div>
 		</div>
 		<router-link class="moreVehicleBtn" :to="{ name: 'searchResults' }">
 			<div

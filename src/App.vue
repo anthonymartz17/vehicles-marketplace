@@ -1,8 +1,8 @@
 <template>
 	<div class="page-container">
 		<AppModal />
-		<MobileMenu :desktopNav="desktopNav"/>
-		<AppHeader :desktopNav="desktopNav"/>
+		<MobileMenu :desktopNav="desktopNav" />
+		<AppHeader :desktopNav="desktopNav" />
 		<!-- <HomeAd/> -->
 		<AppMain />
 		<CarSelectionCard />
@@ -24,10 +24,8 @@ import { mapActions, mapState, mapMutations } from "vuex";
 
 export default {
 	created() {
-		// this.$store.dispatch("getCarsData");
-		// this.$store.dispatch("getDealersData");
 		initializeFirebase;
-		this.fetchCars().then((data) => {
+		this.fetchVehicles().then((data) => {
 			this.SET_FILTERS_OPTIONS(data);
 		});
 	},
@@ -60,11 +58,11 @@ export default {
 					icon: "fas fa-phone-volume",
 				},
 			],
-		}
+		};
 	},
 
 	methods: {
-		...mapActions("vehicles", ["fetchCars", "fetchCarsImages"]),
+		...mapActions("vehicles", ["fetchVehicles", "fetchVehiclesImages"]),
 
 		...mapMutations(["toggleMobileMenu", "detectResize"]),
 

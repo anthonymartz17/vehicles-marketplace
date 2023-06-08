@@ -1,5 +1,5 @@
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 import Multiselect from "vue-multiselect";
 import SearchBtn from "../components/searchFieldMobile/SearchBtn.vue";
 export default {
@@ -7,13 +7,16 @@ export default {
 		Multiselect,
 		SearchBtn,
 	},
+	created() {
+		this.fetchDealers();
+	},
 	data() {
 		return {
 			filtersSelected: {},
 		};
 	},
 	computed: {
-		...mapGetters("vehicles", ["vehiclesList"]),
+		...mapGetters("vehicles", ["vehiclesList", "dealersList"]),
 		...mapGetters("filterOptions", [
 			"makeOptions",
 			"modelOptions",
@@ -72,6 +75,7 @@ export default {
 		...mapMutations("filterOptions", ["SET_MODEL_OPTIONS"]),
 
 		...mapMutations("vehicles", ["UPDATE_FILTERS", "FILTER_VEHICLES"]),
+		...mapActions("vehicles", ["fetchDealers"]),
 
 		fireSearch() {
 			this.UPDATE_FILTERS(this.filtersSelected);
@@ -263,9 +267,13 @@ export default {
 					<label for="condition">Seller:</label>
 					<multiselect
 						class="dropdown"
-						v-model="filtersSelected.color"
-						:options="colorOptions"
-						:searchable="false"
+						v-model="filtersSelected.dealerId"
+						:options="dealersList.map((x) => x.id)"
+						:custom-label="
+							(opt) => {
+								return dealersList.find((x) => x.id == opt).name;
+							}
+						"
 						:show-labels="false"
 						placeholder="All"
 					></multiselect>

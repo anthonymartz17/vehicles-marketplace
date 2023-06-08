@@ -127,8 +127,6 @@ export default new Vuex.Store({
 
 		typeOfCar: "All Vehicles",
 		clickedFieldContent: {},
-
-	
 	},
 	mutations: {
 		// when the app is created, this function get the data  that is at the moment in the  searchResults prop in local storage and sets it to the vehicleDisplay prop that is in the state. this allows the data to stay rendered when the page is reloaded.
@@ -352,9 +350,6 @@ export default new Vuex.Store({
 		},
 
 		// get the data of current car from local storage and assigns it to the prop carToView.
-		getCarToViewFromLocalStore(state) {
-			state.carToView = [JSON.parse(localStorage.getItem("carToView"))];
-		},
 
 		// saves all models availables to local storage when the app component is created
 		saveAllModelsToLocal(state, vehicles) {
@@ -370,7 +365,7 @@ export default new Vuex.Store({
 		// gets all models from local storage and set them in the state prop allModels when the app component is created
 		getAllModelsFromLocal(state) {
 			state.allModels = JSON.parse(localStorage.getItem("allModels"));
-			console.log('testingg')
+			console.log("testingg");
 		},
 
 		// receives the data of the current car to view and sets the specifications in the setCarToViewGeneralInfo prop that is  in the state.

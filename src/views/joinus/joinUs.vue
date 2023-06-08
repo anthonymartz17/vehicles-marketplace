@@ -53,15 +53,12 @@ export default {
 <style lang="scss" scoped>
 .joinus-wrapper {
 	margin: 2em 0.5em;
-
-
 }
 .joinus-container {
 	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 	display: flex;
 	flex-direction: column;
 	min-height: 30em;
-
 }
 .component-tabs-container {
 	display: flex;
@@ -96,8 +93,22 @@ export default {
 .inActive-component {
 	background: $lightDark;
 }
-.forgot-pwd{
+.forgot-pwd {
 	text-align: center;
 	margin-bottom: 1em;
+}
+.joinus-wrapper {
+	@include breakpoint(tablet) {
+		display: flex;
+		justify-content: center;
+		.joinus-container {
+			width: 70%;
+		}
+	}
+	@include breakpoint(desktop) {
+		.joinus-container {
+			width: 50%;
+		}
+	}
 }
 </style>

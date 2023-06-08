@@ -6,6 +6,7 @@ export default {
 
 	state: {
 		vehicles: [],
+		dealers: [],
 		filters: {
 			make: "",
 			models: "",
@@ -25,8 +26,11 @@ export default {
 		mobileMenuToggler: false,
 	},
 	mutations: {
-		SET_CARS(state, payload) {
+		SET_VEHICLES(state, payload) {
 			state.vehicles = payload;
+		},
+		SET_DEALERS(state, payload) {
+			state.dealers = payload;
 		},
 
 		UPDATE_FILTERS(state, payload) {
@@ -44,6 +48,11 @@ export default {
 			}
 			if (state.filters.fuel !== "" && state.filters.fuel !== "All") {
 				results = results.filter((one) => one.fuel === state.filters.fuel);
+			}
+			if (state.filters.dealerId !== "" && state.filters.dealerId !== "All") {
+				results = results.filter(
+					(one) => one.dealerId === state.filters.dealerId
+				);
 			}
 			if (
 				state.filters.transmission !== "" &&
@@ -154,7 +163,7 @@ export default {
 				mileage: "",
 				engine: "",
 				color: "",
-			}
+			};
 		},
 		TOGGLE_MOBILE_MENUE(state) {
 			state.mobileMenuToggler = !state.mobileMenuToggler;
@@ -167,21 +176,26 @@ export default {
 				return state.vehicles;
 			}
 		},
+		dealersList(state) {
+			if (state.dealers) {
+				return state.dealers;
+			}
+		},
 	},
 
 	actions: {
-		async fetchCars({ commit }) {
+		async fetchVehicles({ commit }) {
 			// shows loading animation while getting the data
 			// commit("SWITCH_LOADING");
 			try {
-				let data = await apiVehicles.getCars();
+				let data = await apiVehicles.getVehicles();
 				// fetch images url in firestore storage & adds each corresponding list of urls to the proper car in cars list.
 				let dataUrl = await apiCarsImages.getCarsImages(data);
 				data.forEach((one) => {
 					let imagesUrl = dataUrl.find((x) => x.id == one.id).imagesUrl;
 					one.carPicsUrls = imagesUrl;
 				});
-				commit("SET_CARS", data);
+				commit("SET_VEHICLES", data);
 				return data;
 			} catch (error) {
 				throw error;
@@ -190,18 +204,43 @@ export default {
 				// commit("SWITCH_LOADING");
 			}
 		},
-		// async fetchCarsImages({ commit}, carsData) {
-		// 	// shows loading animation while getting the data
-		// 	// commit("SWITCH_LOADING");
-		// 	try {
-		// 		let dataUrl = await apiCarsImages.getCarsImages(carsData);
-		// 		commit("SET_CARS_IMAGESURL", dataUrl);
-		// 	} catch (error) {
-		// 		throw error;
-		// 	} finally {
-		// 		// turns loading to false
-		// 		// commit("SWITCH_LOADING");
-		// 	}
-		// },
+		async fetchVehicleById(_, vehicleId) {
+			try {
+				let vehicle = await apiVehicles.getVehicleById(vehicleId);
+				let imagesUrl = await apiCarsImages.getImagesById(vehicle.pics);
+				vehicle.carPicsUrls = imagesUrl;
+				return vehicle;
+			} catch (error) {
+				throw error;
+			} finally {
+				// turns loading to false
+				// commit("SWITCH_LOADING");
+			}
+		},
+		async fetchDealers({ commit }) {
+			// shows loading animation while getting the data
+			// commit("SWITCH_LOADING");
+			try {
+				let data = await apiVehicles.getDealers();
+				commit("SET_DEALERS", data);
+				return data;
+			} catch (error) {
+				throw error;
+			} finally {
+				// turns loading to false
+				// commit("SWITCH_LOADING");
+			}
+		},
+		async fetchDealerById(_, dealerId) {
+			try {
+				let dealer = await apiVehicles.getDealerById(dealerId);
+				return dealer;
+			} catch (error) {
+				throw error;
+			} finally {
+				// turns loading to false
+				// commit("SWITCH_LOADING");
+			}
+		},
 	},
 };
