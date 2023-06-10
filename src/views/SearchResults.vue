@@ -1,8 +1,51 @@
+<script>
+import VehiclesDisplay from "../components/VehiclesDisplay.vue";
+import SideSearch from "../components/sideBarSearch.vue";
+import Multiselect from "vue-multiselect";
+import { mapMutations } from "vuex";
+
+export default {
+	components: {
+		VehiclesDisplay,
+		SideSearch,
+		Multiselect,
+	},
+	data() {
+		return {
+			selectedSortId:'',
+			sortingOptions: [
+				{ name: "Lowest price first", id: "lowestPrice" },
+				{ name: "Highest price first", id: "highestPrice" },
+				{ name: "Highest mileage first", id: "highestMileage" },
+				{ name: "Lowest mileage first", id: "lowestMileage" },
+				{ name: "Newest first (by Car year)", id: "newest" },
+				{ name: "Oldest first (by Car year)", id: "oldest" },
+			],
+		};
+	},
+	methods: {
+		...mapMutations("vehicles", ["SORT_VEHICLES"]),
+	},
+};
+</script>
 <template>
 	<div class="resultsWrapper">
 		<div class="sort-ad-wrapper">
 			<div class="sort">
-				<select name="sort" id="sort" @input="sortBy">
+				<multiselect
+				v-model="selectedSortId"
+					:options="sortingOptions.map((x) => x.id)"
+					:custom-label="(opt)=>{
+						const selected = sortingOptions.find(x => x.id == opt)
+						return selected.name
+					}"
+					:searchable="false"
+					:show-labels="false"
+					placeholder="Sort by:"
+					@input="SORT_VEHICLES(selectedSortId)"
+				></multiselect>
+
+				<!-- <select name="sort" id="sort" @input="SORT_VEHICLES()">
 					<option :value="null">Sort by</option>
 					<option
 						:value="filter.id"
@@ -11,7 +54,7 @@
 					>
 						{{ filter.sortby }}
 					</option>
-				</select>
+				</select> -->
 			</div>
 		</div>
 		<div class="sideSearch">
@@ -23,41 +66,6 @@
 		</div>
 	</div>
 </template>
-
-<script>
-import VehiclesDisplay from "../components/VehiclesDisplay.vue";
-import SideSearch from "../components/sideBarSearch.vue";
-import { mapMutations } from "vuex";
-
-export default {
-	created() {
-		// this.setDataInVehiclesDisplayFromLocal();
-	},
-	beforeDestroy() {
-		localStorage.removeItem('searchResults')
-	},
-
-	components: {
-		VehiclesDisplay,
-		SideSearch,
-	},
-	methods: {
-		...mapMutations(["setDataInVehiclesDisplayFromLocal", "sortBy"]),
-	},
-	computed: {
-		filters() {
-			return [
-				{ sortby: "Lowest price first", id: "lowestPrice" },
-				{ sortby: "Highest price first", id: "highestPrice" },
-				{ sortby: "Highest mileage first", id: "highestMileage" },
-				{ sortby: "Lowest mileage first", id: "lowestMileage" },
-				{ sortby: "Newest first (by Car year)", id: "newest" },
-				{ sortby: "Oldest first (by Car year)", id: "oldest" },
-			];
-		},
-	},
-};
-</script>
 
 <style lang="scss" scoped>
 .resultsWrapper {

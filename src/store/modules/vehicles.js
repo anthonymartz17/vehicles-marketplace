@@ -7,6 +7,7 @@ export default {
 	state: {
 		vehicles: [],
 		dealers: [],
+		vehiclesToDisplay: [],
 		filters: {
 			make: "",
 			models: "",
@@ -22,7 +23,7 @@ export default {
 			mileage: "",
 			engine: "",
 			color: "",
-			dealerId:"",
+			dealerId: "",
 		},
 		mobileMenuToggler: false,
 	},
@@ -35,11 +36,31 @@ export default {
 		},
 
 		UPDATE_FILTERS(state, payload) {
-			state.filters = { ...state.filters, ...payload };
+			if (payload == null) {
+				state.filters = {
+					make: "",
+					models: "",
+					priceFrom: 0,
+					priceTo: 0,
+					yearFrom: 0,
+					yearTo: 0,
+					carType: "",
+					carCondition: "",
+					fuel: "",
+					transmission: "",
+					driveTrain: "",
+					mileage: "",
+					engine: "",
+					color: "",
+					dealerId: "",
+				};
+			} else {
+				state.filters = { ...state.filters, ...payload };
+			}
 		},
 		FILTER_VEHICLES(state) {
 			let results = state.vehicles;
-	   console.log('new filters empty',state.filters)
+			console.log("new filterssss", state.filters);
 			if (
 				state.filters.carCondition !== "" &&
 				state.filters.carCondition !== "New/Used"
@@ -48,16 +69,16 @@ export default {
 					(one) => one.carCondition === state.filters.carCondition
 				);
 			}
-		
+
 			if (state.filters.fuel !== "" && state.filters.fuel !== "All") {
 				results = results.filter((one) => one.fuel === state.filters.fuel);
 			}
-			
+
 			if (state.filters.dealerId !== "" && state.filters.dealerId !== "All") {
 				results = results.filter(
 					(one) => one.dealerId === state.filters.dealerId
 				);
-				console.log(results,'jdealers')
+				console.log(results, "jdealers");
 			}
 			if (
 				state.filters.transmission !== "" &&
@@ -67,7 +88,7 @@ export default {
 					(one) => one.transmission === state.filters.transmission
 				);
 			}
-			
+
 			if (
 				state.filters.driveTrain !== "" &&
 				state.filters.driveTrain !== "All"
@@ -120,7 +141,6 @@ export default {
 			}
 			if (state.filters.priceFrom != 0) {
 				results = results.filter((one) => one.price >= state.filters.priceFrom);
-			
 			}
 			if (state.filters.priceTo != 0) {
 				results = results.filter((one) => one.price <= state.filters.priceTo);
@@ -150,30 +170,49 @@ export default {
 						.includes(state.filters.models.toLowerCase().trim())
 				);
 			}
-			console.log(results,'end',state.filters)
+			console.log(results, "end", state.filters);
 			localStorage.setItem("searchResults", JSON.stringify(results));
+			state.vehiclesToDisplay = results;
 			state.showDropDownTextField = false;
 		},
-		clearFilters(state) {
-			state.filters = {
-				make: "",
-				models: "",
-				priceFrom: 0,
-				priceTo: 0,
-				yearFrom: 0,
-				yearTo: 0,
-				carType: "",
-				carCondition: "",
-				fuel: "",
-				transmission: "",
-				driveTrain: "",
-				mileage: "",
-				engine: "",
-				color: "",
-			};
-		},
+
 		TOGGLE_MOBILE_MENUE(state) {
 			state.mobileMenuToggler = !state.mobileMenuToggler;
+		},
+		// sorts the vehicles that are displaying
+		SORT_VEHICLES(state, id) {
+			console.log(id, "klk");
+			switch (id) {
+				case "lowestPrice":
+					state.vehiclesToDisplay.sort((a, b) => a.price - b.price);
+					break;
+				case "highestPrice":
+					state.vehiclesToDisplay.sort((a, b) => b.price - a.price);
+					break;
+
+				case "lowestMileage":
+					state.vehiclesToDisplay.sort((a, b) => {
+						return +a.miles.replace(/,/g, "") - +b.miles.replace(/,/g, "");
+					});
+					break;
+
+				case "highestMileage":
+					state.vehiclesToDisplay.sort((a, b) => {
+						return +b.miles.replace(/,/g, "") - +a.miles.replace(/,/g, "");
+					});
+					break;
+
+				case "newest":
+					state.vehiclesToDisplay.sort((a, b) => b.year - a.year);
+					break;
+
+				case "oldest":
+					state.vehiclesToDisplay.sort((a, b) => a.year - b.year);
+					break;
+
+				default:
+					return;
+			}
 		},
 	},
 
@@ -188,6 +227,9 @@ export default {
 				return state.dealers;
 			}
 		},
+		// vehiclesToDisplayList(state) {
+		// 	return state.vehiclesToDisplay = JSON.parse(localStorage.getItem("searchResults"));
+		// }
 	},
 
 	actions: {

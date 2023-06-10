@@ -11,6 +11,7 @@ export default {
 			this.vehicle = vehicle;
 			this.setVehicleDetails(vehicle);
 			this.setVehicleHistory(vehicle);
+			this.heroImg = vehicle.carPicsUrls[0];
 			this.fetchDealerById(this.vehicle.dealerId).then((dealer) => {
 				this.dealer = dealer;
 			});
@@ -26,6 +27,7 @@ export default {
 			vehicleDetails: [],
 			vehicleHistory: [],
 			dealer: {},
+			heroImg: "",
 			morePics: false,
 		};
 	},
@@ -113,9 +115,14 @@ export default {
 			];
 		},
 		getCarsByDealer() {
+			// resets filters first in case there were some set
+			this.UPDATE_FILTERS(null);
 			this.UPDATE_FILTERS({ dealerId: this.vehicle.dealerId });
 			this.FILTER_VEHICLES();
-			this.$router.replace({ name: "dealerInventory", query:{dealerId:this.vehicle.dealerId} });
+			this.$router.replace({
+				name: "dealerInventory",
+				query: { dealerId: this.vehicle.dealerId },
+			});
 		},
 
 		// toggles the showMorePics btn
@@ -127,11 +134,16 @@ export default {
 </script>
 <template>
 	<div class="car2view">
-		<div class="car2view-title-price">
-			<h2 class="car2view-titles">
-				{{ vehicle.year }} {{ vehicle.make }} {{ vehicle.model }}
-			</h2>
-			<p class="car2view-red-title">{{ vehicle.price | currency }}</p>
+		<div class="car-hero">
+			<div class="car2view-title-price">
+				<h2 class="car2view-titles">
+					{{ vehicle.year }} {{ vehicle.make }} {{ vehicle.model }}
+				</h2>
+				<p class="car2view-red-title">{{ vehicle.price | currency }}</p>
+			</div>
+			<!-- <div class="car2view-images-wrapper">
+				<img :src="heroImg" alt="" />
+			</div> -->
 		</div>
 		<div class="car-breakdown">
 			<div class="car2view-info"></div>
@@ -215,7 +227,9 @@ export default {
 				</p>
 			</div>
 			<div v-if="$route.name != 'dealerInventory'">
-				<div @click="getCarsByDealer" class="btn btn-local">Visit Our Inventory</div>
+				<div @click="getCarsByDealer" class="btn btn-local">
+					Visit Our Inventory
+				</div>
 			</div>
 		</div>
 	</div>

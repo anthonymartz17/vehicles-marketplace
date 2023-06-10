@@ -1,16 +1,28 @@
 <script>
 import { mapMutations, mapState } from "vuex";
-// import SocialMedia from './SocialMedia.vue'
 export default {
-	data() {
-		return {};
-	},
-	props:["desktopNav"],
+	props: ["desktopNav"],
 	methods: {
-		...mapMutations("vehicles", ["clearFilters", "TOGGLE_MOBILE_MENUE"]),
+		...mapMutations("vehicles", [
+			"TOGGLE_MOBILE_MENUE",
+			"UPDATE_FILTERS",
+			"FILTER_VEHICLES",
+		]),
+
+		getCars(link) {
+			if (link == "searchResults") {
+				this.UPDATE_FILTERS(null);
+				this.FILTER_VEHICLES();
+			} else if (link == "Electric") {
+				//clear filters first, in case filters where set somewhere else and are still active
+				this.UPDATE_FILTERS(null);
+				this.UPDATE_FILTERS({fuel: "Electric"});
+				this.FILTER_VEHICLES();
+			}
+		},
 	},
 	computed: {
-	
+		...mapState("vehicles", ["filters"]),
 	},
 };
 </script>
@@ -29,10 +41,7 @@ export default {
 					<li
 						v-for="(link, key) in desktopNav"
 						:key="key"
-						@click="
-							clearFilters();
-							link.link === 'Vehicles' ? clearFilters() : null;
-						"
+						@click="getCars(link.link)"
 					>
 						<router-link :to="{ name: link.link }">
 							<p>{{ link.name }}</p>

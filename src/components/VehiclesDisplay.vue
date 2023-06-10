@@ -1,5 +1,5 @@
 <script>
-import { mapMutations, mapActions, mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
 	data() {
@@ -13,7 +13,6 @@ export default {
 	},
 
 	methods: {
-		...mapMutations("vehicles", ["clearFilters"]),
 		selectPageTitle(name) {
 			let titles = [
 				{ routeName: "Vehicles", title: "Vehicles" },
@@ -29,27 +28,22 @@ export default {
 				}
 			});
 		},
-		setCarToViewInLS(car) {
-			localStorage.setItem("carToView", JSON.stringify(car));
-		},
+		// setCarToViewInLS(car) {
+		// 	localStorage.setItem("carToView", JSON.stringify(car));
+		// },
 	},
 	computed: {
 		...mapGetters("vehicles", ["vehiclesList"]),
+		...mapState("vehicles", ["vehiclesToDisplay"]),
 
-		vehiclesToDisplay() {
+		vehiclesToDisplayList() {
 			let list;
-			let listFromLocal = JSON.parse(localStorage.getItem("searchResults"));
-
 			if (this.$route.name == "Home") {
 				// shuffles the list
 				const shuffledArray = this.vehiclesList.sort(() => Math.random() - 0.5);
 				list = shuffledArray.slice(0, 8);
-			} else if (this.$route.name == "Electric") {
-				// shows electric only
-				list = this.vehiclesList.filter((x) => x.fuel == "Electric");
-			} else if (listFromLocal && listFromLocal.length >= 0) {
-				// shows results of search
-				list = listFromLocal;
+			} else {
+				list = this.vehiclesToDisplay;
 			}
 			return list;
 		},
@@ -76,16 +70,16 @@ export default {
 			</h4>
 
 			<div
-				v-if="vehiclesToDisplay.length > 0"
+				v-if="vehiclesToDisplayList && vehiclesToDisplayList.length > 0"
 				:class="[
 					'vehicles-display',
-					{ 'space-even': vehiclesToDisplay.length > 4 },
+					{ 'space-even': vehiclesToDisplayList.length > 4 },
 					{ 'vehicles-display-height-flow ': $route.name == 'searchResults' },
 				]"
 			>
 				<div
 					class="vehicles-display-car"
-					v-for="(car, key) in vehiclesToDisplay"
+					v-for="(car, key) in vehiclesToDisplayList"
 					:key="key"
 				>
 					<router-link :to="{ name: 'CarToView', query: { id: car.id } }">

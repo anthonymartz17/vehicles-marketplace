@@ -15,10 +15,7 @@ export default {
 			});
 		}
 	},
-	destroy() {
-		this.UPDATE_FILTERS({});
-		this.FILTER_VEHICLES();
-	},
+
 	data() {
 		return {
 			dealer: {},
@@ -28,7 +25,7 @@ export default {
 
 	methods: {
 		...mapActions("vehicles", ["fetchDealerById"]),
-		...mapMutations("vehicles", ["UPDATE_FILTERS", "FILTER_VEHICLES"]),
+		// ...mapMutations("vehicles", ["UPDATE_FILTERS", "FILTER_VEHICLES"]),
 	},
 	computed: {
 		...mapGetters("vehicles", ["dealersList"]),
