@@ -88,7 +88,12 @@ $font-mobile-s: normal 300 0.75em$font-stack; //12px
 	display: flex;
 	flex-direction: column;
 }
-
+.main-title {
+	border-bottom: 2px solid $lightestDark;
+	padding-block: 0.5em;
+	margin-bottom: 1em;
+	font: $font-mobile-xl;
+}
 // search fields
 .search-fields-container {
 	background: $dark;
@@ -147,6 +152,7 @@ a {
     cursor: pointer;
 		box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 	}
+	
 
 	@include desktop {
 		width: 30%;

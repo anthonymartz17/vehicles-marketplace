@@ -1,5 +1,5 @@
 <script>
-import { mapGetters, mapActions, mapState } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import VehiclesDisplay from "@/components/VehiclesDisplay.vue";
 
 export default {
@@ -7,14 +7,28 @@ export default {
 		VehiclesDisplay,
 	},
 
-	props: ["dealer"],
+	created() {
+		this.dealerId = this.$route.query.dealerId;
+		if (this.dealerId) {
+			this.fetchDealerById(this.dealerId).then((dealer) => {
+				this.dealer = dealer;
+			});
+		}
+	},
+	destroy() {
+		this.UPDATE_FILTERS({});
+		this.FILTER_VEHICLES();
+	},
+	data() {
+		return {
+			dealer: {},
+			dealerId: null,
+		};
+	},
 
 	methods: {
-		...mapActions("vehicles", ["fetchDealers"]),
-		setDealer() {
-			// this.vehicle = carsData.find((x) => x.id == carId);
-			console.log(dealerId, "el dealer");
-		},
+		...mapActions("vehicles", ["fetchDealerById"]),
+		...mapMutations("vehicles", ["UPDATE_FILTERS", "FILTER_VEHICLES"]),
 	},
 	computed: {
 		...mapGetters("vehicles", ["dealersList"]),
@@ -22,22 +36,14 @@ export default {
 };
 </script>
 <template>
-	<!-- added inventory-deskt class to dynamically trigger in dealerinventory route, so i can display vehicle display first and seller info to the right by reversing the flex, this without affecting their position in the other component cartoview.  -->
-	<div
-		:class="[
-			'car-seller',
-			{ 'inventory-deskt': $route.name === 'dealerInventory' },
-		]"
-	>
-		<div
-			:class="{ 'inventory-deskt-seller': $route.name === 'dealerInventory' }"
-		>
+	<div class="car-seller">
+		<div class="car-seller-details">
 			<div class="car-seller-title-logo-wrapper">
-				<h3 class="car-seller-title">Seller</h3>
+				<!-- <h3 class="car-seller-title">Seller</h3> -->
+				<h4 class="main-title">{{ dealer.name }}</h4>
 				<p class="car-seller-logo">{{ dealer.name }}</p>
 			</div>
 			<div class="car-seller-info">
-				<h4>{{ dealer.name }}</h4>
 				<p>
 					<span>Tel:</span> <span>{{ dealer.tel }}</span>
 				</p>
@@ -49,20 +55,9 @@ export default {
 				</p>
 			</div>
 		</div>
-		<div
-			v-if="$route.name === 'dealerInventory'"
-			:class="{
-				'inventory-deskt-carDisplay': $route.name === 'dealerInventory',
-			}"
-		>
+		<div class="vehicles">
 			<VehiclesDisplay />
 		</div>
-		<router-link
-			:to="{ name: 'dealerInventory' }"
-			v-if="$route.name != 'dealerInventory'"
-		>
-			<div class="btn btn-local">Visit Our Inventory</div>
-		</router-link>
 	</div>
 </template>
 
@@ -77,24 +72,6 @@ export default {
 		border: 1px solid $light;
 	}
 }
-.inventory-deskt {
-	@include desktop {
-		display: flex;
-		flex-direction: row-reverse;
-		border-top: 1px solid lighten($lightestDark, 20);
-		margin-block: 2em;
-	}
-}
-.inventory-deskt-seller {
-	@include desktop {
-		min-width: 30%;
-		background: lighten($lightestDark, 35);
-		padding-inline: 0.5em;
-	}
-}
-.inventory-deskt-carDisplay {
-	//  background: blue;
-}
 
 .car-seller {
 	color: $dark;
@@ -105,7 +82,9 @@ export default {
 		position: sticky;
 		top: 100px;
 	}
-
+	.car-seller-details {
+		margin-top: 2em;
+	}
 	.car-seller-title {
 		@include desktop {
 			border-bottom: none;
@@ -155,6 +134,13 @@ export default {
 		span:nth-child(2) {
 			font: $font-mobile-m;
 			margin-right: 0.5em;
+		}
+	}
+
+	@include breakpoint(desktop) {
+		.car-seller-details {
+		}
+		.vehicles {
 		}
 	}
 }

@@ -50,9 +50,6 @@ export default {
 			} else if (listFromLocal && listFromLocal.length >= 0) {
 				// shows results of search
 				list = listFromLocal;
-			} else {
-				// shows all available cars
-				list = [];
 			}
 			return list;
 		},
@@ -67,18 +64,19 @@ export default {
 		]"
 	>
 		<div :class="['vehicles', { 'vehicles-height': $route.name == 'Home' }]">
-			<h2 class="vehicles-title">
-				<span v-if="$route.name === 'dealerInventory'"
-					>{{ carToViewDealer.name }} | </span
-				>{{ pageTitle }}
+			<h4 class="main-title">
+				<!-- <span v-if="$route.name === 'dealerInventory'"
+					>{{ carToViewDealer.name }} | </span -->
+				{{ pageTitle }}
 				<i
 					v-if="$route.name == 'Electric'"
 					:style="{ color: '#116530' }"
 					class="fas fa-leaf"
 				></i>
-			</h2>
+			</h4>
 
 			<div
+				v-if="vehiclesToDisplay.length > 0"
 				:class="[
 					'vehicles-display',
 					{ 'space-even': vehiclesToDisplay.length > 4 },
@@ -91,12 +89,6 @@ export default {
 					:key="key"
 				>
 					<router-link :to="{ name: 'CarToView', query: { id: car.id } }">
-						<!-- getCarToViewFromLocalStore();
-							setCarToViewGeneralInfo();
-							saveCarToViewDealerToLocalS(car.dealerId);
-							setCarToViewDealer();
-							setVehicleHistory();
-							setCarToviewDetails(); -->
 						<div v-if="car && car.carPicsUrls" class="vehicles-display-img">
 							<img :src="car.carPicsUrls[0]" :alt="`picture of ${car.model}`" />
 						</div>
@@ -114,6 +106,15 @@ export default {
 					</router-link>
 				</div>
 			</div>
+			<div v-else class="noResultMsg">
+				<!-- <div class="noResultMsg-text"> -->
+				<p>No Vehicles found with these criteria</p>
+				<p>Try modifying the filters!</p>
+				<!-- </div> -->
+				<router-link :to="{ name: 'Advance' }" class="btn-adjustSearch">
+					<div @click="clearFilters()">Adjust Search</div>
+				</router-link>
+			</div>
 		</div>
 		<router-link class="moreVehicleBtn" :to="{ name: 'searchResults' }">
 			<div
@@ -127,16 +128,6 @@ export default {
 				+ More Vehicles
 			</div>
 		</router-link>
-		<div class="noResultMsg" v-if="vehiclesToDisplay.length === 0">
-			<div class="noResultMsg-text">
-				<p>No Vehicles found with these criteria</p>
-				<p>Try modifying the filters!</p>
-			</div>
-
-			<router-link :to="{ name: 'Advance' }" class="btn-adjustSearch">
-				<div @click="clearFilters()">Adjust Search</div>
-			</router-link>
-		</div>
 	</div>
 </template>
 
@@ -212,9 +203,10 @@ export default {
 }
 
 .noResultMsg {
+	height: 100%;
 	display: grid;
+
 	place-items: center;
-	gap: 2em;
 	margin-block: 3em;
 	font: $font-mobile-m-bold;
 	color: $dark;
@@ -229,6 +221,7 @@ export default {
 	border: 1px solid transparent;
 	text-align: center;
 	color: $light;
+	width: 5em;
 	min-width: 50%;
 	font: $font-mobile-m-bold;
 	padding: 0.5em 1em;

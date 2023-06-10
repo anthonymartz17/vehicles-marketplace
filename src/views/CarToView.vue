@@ -1,5 +1,5 @@
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 import Dealers from "@/views/Dealers.vue";
 export default {
 	// resets the morePics prop back to false.
@@ -31,12 +31,13 @@ export default {
 	},
 	methods: {
 		...mapActions("vehicles", ["fetchVehicleById", "fetchDealerById"]),
-		// setvehicle(carsData) {
-		// 	let carId = this.$route.query.id;
-		// 	if (carId) {
-		// 		this.vehicle = carsData.find((x) => x.id == carId);
-		// 	}
-		// },
+		...mapMutations("vehicles", ["UPDATE_FILTERS", "FILTER_VEHICLES"]),
+		setvehicle(carsData) {
+			let carId = this.$route.query.id;
+			if (carId) {
+				this.vehicle = carsData.find((x) => x.id == carId);
+			}
+		},
 		setVehicleDetails(vehicle) {
 			this.vehicleDetails = [
 				{ key: "Location", val: vehicle.location },
@@ -111,6 +112,11 @@ export default {
 				},
 			];
 		},
+		getCarsByDealer() {
+			this.UPDATE_FILTERS({ dealerId: this.vehicle.dealerId });
+			this.FILTER_VEHICLES();
+			this.$router.replace({ name: "dealerInventory", query:{dealerId:this.vehicle.dealerId} });
+		},
 
 		// toggles the showMorePics btn
 		showMorePics() {
@@ -128,18 +134,7 @@ export default {
 			<p class="car2view-red-title">{{ vehicle.price | currency }}</p>
 		</div>
 		<div class="car-breakdown">
-			<div class="car2view-info">
-				<!-- <template v-for="(icon, key) in vehicleGeneralInfo">
-						<div class="car2view-info-children" v-if="icon.iconInfo" :key="key">
-							<img
-								class="car2view-info-icons"
-								:src="`/images/icons/${icon.icon}`"
-								:alt="`icon of ${icon.iconInfo}`"
-							/>
-							<p class="car2view-info-specs">{{ icon.iconInfo }}</p>
-						</div>
-					</template> -->
-			</div>
+			<div class="car2view-info"></div>
 			<div :class="['car2view-images', { hidePics: !morePics }]">
 				<div
 					class="car2view-images-wrapper"
@@ -198,9 +193,30 @@ export default {
 				</div>
 			</div>
 		</div>
-		<!-- </div> -->
+
 		<div class="dealer-wrapper">
-			<Dealers :dealer="dealer"/>
+			<div class="car-seller-title-logo-wrapper">
+				<h3 class="car2view-red-title car2view-titles">Seller</h3>
+				<p class="car-seller-logo">{{ dealer.name }}</p>
+			</div>
+			<div class="seller-container">
+				<h4 class="">{{ dealer.name }}</h4>
+				<p>
+					<span class="car2view-details-bold">Tel:</span>
+					<span class="car2view-details-text">{{ dealer.tel }}</span>
+				</p>
+				<p>
+					<span class="car2view-details-bold">E-mail:</span>
+					<span class="car2view-details-text">{{ dealer.email }}</span>
+				</p>
+				<p>
+					<span class="car2view-details-bold">Address:</span>
+					<span class="car2view-details-text">{{ dealer.address }}</span>
+				</p>
+			</div>
+			<div v-if="$route.name != 'dealerInventory'">
+				<div @click="getCarsByDealer" class="btn btn-local">Visit Our Inventory</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -406,6 +422,15 @@ export default {
 	&-text {
 		font: $font-mobile-m;
 	}
+}
+.seller-container {
+	padding-block: 1em;
+	display: grid;
+	gap: 0.5em;
+}
+.sub-title {
+	font: $font-mobile-l;
+	color: $dark;
 }
 .dealer-wrapper {
 	flex: 1.5;

@@ -22,6 +22,7 @@ export default {
 			mileage: "",
 			engine: "",
 			color: "",
+			dealerId:"",
 		},
 		mobileMenuToggler: false,
 	},
@@ -38,6 +39,7 @@ export default {
 		},
 		FILTER_VEHICLES(state) {
 			let results = state.vehicles;
+	   console.log('new filters empty',state.filters)
 			if (
 				state.filters.carCondition !== "" &&
 				state.filters.carCondition !== "New/Used"
@@ -46,13 +48,16 @@ export default {
 					(one) => one.carCondition === state.filters.carCondition
 				);
 			}
+		
 			if (state.filters.fuel !== "" && state.filters.fuel !== "All") {
 				results = results.filter((one) => one.fuel === state.filters.fuel);
 			}
+			
 			if (state.filters.dealerId !== "" && state.filters.dealerId !== "All") {
 				results = results.filter(
 					(one) => one.dealerId === state.filters.dealerId
 				);
+				console.log(results,'jdealers')
 			}
 			if (
 				state.filters.transmission !== "" &&
@@ -62,6 +67,7 @@ export default {
 					(one) => one.transmission === state.filters.transmission
 				);
 			}
+			
 			if (
 				state.filters.driveTrain !== "" &&
 				state.filters.driveTrain !== "All"
@@ -114,6 +120,7 @@ export default {
 			}
 			if (state.filters.priceFrom != 0) {
 				results = results.filter((one) => one.price >= state.filters.priceFrom);
+			
 			}
 			if (state.filters.priceTo != 0) {
 				results = results.filter((one) => one.price <= state.filters.priceTo);
@@ -143,7 +150,7 @@ export default {
 						.includes(state.filters.models.toLowerCase().trim())
 				);
 			}
-
+			console.log(results,'end',state.filters)
 			localStorage.setItem("searchResults", JSON.stringify(results));
 			state.showDropDownTextField = false;
 		},
