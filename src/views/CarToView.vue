@@ -124,7 +124,9 @@ export default {
 				query: { dealerId: this.vehicle.dealerId },
 			});
 		},
-
+		updateHeroImg(img) {
+			this.heroImg = img;
+		},
 		// toggles the showMorePics btn
 		showMorePics() {
 			this.morePics = !this.morePics;
@@ -133,55 +135,89 @@ export default {
 };
 </script>
 <template>
-	<div class="car2view">
-		<div class="car-hero">
-			<div class="car2view-title-price">
-				<h2 class="car2view-titles">
-					{{ vehicle.year }} {{ vehicle.make }} {{ vehicle.model }}
-				</h2>
-				<p class="car2view-red-title">{{ vehicle.price | currency }}</p>
-			</div>
-			<!-- <div class="car2view-images-wrapper">
-				<img :src="heroImg" alt="" />
-			</div> -->
-		</div>
-		<div class="car-breakdown">
-			<div class="car2view-info"></div>
-			<div :class="['car2view-images', { hidePics: !morePics }]">
-				<div
-					class="car2view-images-wrapper"
-					v-for="(img, key) in vehicle.carPicsUrls"
-					:key="key"
-				>
-					<img :src="img" :alt="`picture of ${vehicle.model}`" />
+	<div class="carToView">
+		<div class="carToView-section-top">
+			<div class="carToview-display-section">
+				<div class="carToView-title-price">
+					<h2 class="carToView-titles">
+						{{ vehicle.year }} {{ vehicle.make }} {{ vehicle.model }}
+					</h2>
+					<p class="carToView-red-title">{{ vehicle.price | currency }}</p>
+				</div>
+				<div class="carToView-img-display">
+					<div class="main-display">
+						<img :src="heroImg" alt="" />
+					</div>
+					<div :class="['carToView-images-list', { hidePics: !morePics }]">
+						<div
+							@click="updateHeroImg(img)"
+							:class="['carToView-image-item', { selectedImg: heroImg == img }]"
+							v-for="(img, key) in vehicle.carPicsUrls"
+							:key="key"
+						>
+							<img
+								class="item-img"
+								:src="img"
+								:alt="`picture of ${vehicle.model}`"
+							/>
+						</div>
+					</div>
+				</div>
+				<div class="showmore-btn" @click="showMorePics">
+					+ Show More Pictures
 				</div>
 			</div>
-			<div class="hiden-when-desktop" @click="showMorePics">
-				+ Show More Pictures
+			<div class="dealer-wrapper">
+				<div class="car-seller-title-logo-wrapper">
+					<h3 class="carToView-red-title carToView-titles">Seller</h3>
+					<p class="car-seller-logo">{{ dealer.name }}</p>
+				</div>
+				<div class="seller-container">
+					<h4 class="">{{ dealer.name }}</h4>
+					<p>
+						<span class="carToView-details-bold">Tel:</span>
+						<span class="carToView-details-text">{{ dealer.tel }}</span>
+					</p>
+					<p>
+						<span class="carToView-details-bold">E-mail:</span>
+						<span class="carToView-details-text">{{ dealer.email }}</span>
+					</p>
+					<p>
+						<span class="carToView-details-bold">Address:</span>
+						<span class="carToView-details-text">{{ dealer.address }}</span>
+					</p>
+				</div>
+				<div v-if="$route.name != 'dealerInventory'">
+					<div @click="getCarsByDealer" class="btn btn-local">
+						Visit Our Inventory
+					</div>
+				</div>
 			</div>
+		</div>
 
-			<div class="car2view-details">
-				<p class="car2view-red-title car2view-titles">Vehicle Details</p>
-				<div class="car2view-details-specs">
+		<div class="car-breakdown">
+			<div class="carToView-details">
+				<p class="carToView-red-title carToView-titles">Vehicle Details</p>
+				<div class="carToView-details-specs">
 					<template v-for="(detail, key) in vehicleDetails">
 						<div :key="key" v-if="detail.val">
-							<p class="car2view-details-bold">{{ detail.key }}:</p>
-							<p class="car2view-details-text">{{ detail.val }}</p>
+							<p class="carToView-details-bold">{{ detail.key }}:</p>
+							<p class="carToView-details-text">{{ detail.val }}</p>
 						</div>
 					</template>
 				</div>
 			</div>
-			<div class="car2view-accesories">
-				<p class="car2view-red-title car2view-titles">Accesories</p>
+			<div class="carToView-accesories">
+				<p class="carToView-red-title carToView-titles">Accesories</p>
 				<ul>
 					<li v-for="(accesory, key) in vehicle.accesories" :key="key">
 						{{ accesory }}
 					</li>
 				</ul>
 			</div>
-			<div class="car2view-history">
-				<p class="car2view-red-title car2view-titles">Vehicle History</p>
-				<div class="car2view-history-detailWrap">
+			<div class="carToView-history">
+				<p class="carToView-red-title carToView-titles">Vehicle History</p>
+				<div class="carToView-history-detailWrap">
 					<div
 						class="history-detail"
 						v-for="(detail, key) in vehicleHistory"
@@ -196,39 +232,12 @@ export default {
 								</i>
 							</div>
 
-							<div class="car2view-history-details">
-								<p class="car2view-details-bold">{{ detail.key }}:</p>
-								<p class="car2view-details-text">{{ detail.val }}</p>
+							<div class="carToView-history-details">
+								<p class="carToView-details-bold">{{ detail.key }}:</p>
+								<p class="carToView-details-text">{{ detail.val }}</p>
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="dealer-wrapper">
-			<div class="car-seller-title-logo-wrapper">
-				<h3 class="car2view-red-title car2view-titles">Seller</h3>
-				<p class="car-seller-logo">{{ dealer.name }}</p>
-			</div>
-			<div class="seller-container">
-				<h4 class="">{{ dealer.name }}</h4>
-				<p>
-					<span class="car2view-details-bold">Tel:</span>
-					<span class="car2view-details-text">{{ dealer.tel }}</span>
-				</p>
-				<p>
-					<span class="car2view-details-bold">E-mail:</span>
-					<span class="car2view-details-text">{{ dealer.email }}</span>
-				</p>
-				<p>
-					<span class="car2view-details-bold">Address:</span>
-					<span class="car2view-details-text">{{ dealer.address }}</span>
-				</p>
-			</div>
-			<div v-if="$route.name != 'dealerInventory'">
-				<div @click="getCarsByDealer" class="btn btn-local">
-					Visit Our Inventory
 				</div>
 			</div>
 		</div>
@@ -236,7 +245,7 @@ export default {
 </template>
 
 <style lang="scss">
-.hiden-when-desktop {
+.showmore-btn {
 	background: $primary;
 	height: 3em;
 	transition: all 0.3s ease-in-out;
@@ -252,24 +261,14 @@ export default {
 		background: lighten($primary, 15%);
 		border: 1px solid $light;
 	}
-	@include desktop {
-		display: none;
-	}
 }
 .hidePics {
 	overflow: hidden;
 	height: 40vh;
-	@include desktop {
-		height: 100%;
-		overflow: visible;
-	}
 }
-.car2view-history {
-	margin-block: 1em;
 
-	@include desktop {
-		grid-area: history;
-	}
+.carToView-history {
+	margin-block: 1em;
 	&-detailWrap {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
@@ -286,77 +285,36 @@ export default {
 	color: $light;
 	margin: 0.5em 0;
 }
-.car2view-car {
+.carToView-car {
 	flex: 3;
 }
-.car-breakdown {
-	@include desktop {
-		flex: 2;
-		display: grid;
-		grid-template-columns: 1.5fr 2fr;
-		grid-template-rows: 0.5fr 1fr 0.5fr;
-		column-gap: 1em;
-		grid-template-areas:
-			"carPics detail"
-			"carPics accesories"
-			"carPics history";
-	}
-}
 
-.car2view {
-	@include desktop {
-		border-top: 1px solid lighten($lightestDark, 20);
-		margin-block: 1em;
-		padding: 0;
-		display: flex;
-		gap: 1em;
-	}
-
+.carToView {
 	background: $light;
 	padding: 0.5em;
 
 	&-title-price {
 		margin-block: 1em;
-
-		@include desktop {
-			display: flex;
-			height: 3em;
-			justify-content: space-between;
-			align-items: baseline;
-			border-bottom: 2px solid $lightestDark;
-			font: $font-mobile-m;
-		}
 	}
 
 	&-red-title {
 		font: $font-mobile-xl;
 		color: $primary;
-		@include desktop {
-			color: $dark;
-		}
 	}
 }
-.car2view-titles {
-	@include desktop {
-		border-bottom: none;
-		color: $primary;
-	}
+.carToView-titles {
 	border-bottom: 2px solid $lightestDark;
 	padding-block: 0.5em;
 	margin-bottom: 1em;
 	font: $font-mobile-xl;
 }
 
-.car2view-info {
+.carToView-info {
 	display: grid;
 	justify-items: center;
 	gap: 0.5em 0.2em;
 	grid-template-columns: 1fr 1fr 1fr;
 	margin-block: 1em;
-
-	@include desktop {
-		display: none;
-	}
 
 	&-children {
 		text-align: center;
@@ -369,26 +327,20 @@ export default {
 	}
 }
 
-.car2view-images {
-	display: grid;
-	@include desktop {
-		grid-area: carPics;
-		align-content: start;
-	}
-
+.carToView-images-list {
 	&-wrapper {
 		box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-		@include desktop {
-			height: 75%;
-		}
 	}
 	img {
 		max-width: 100%;
 	}
 }
-.car2view-accesories {
-	// display: none;
-
+.main-display {
+	display: none;
+}
+.carToView-accesories {
+	border-bottom: 1px solid lighten($lightestDark, 30);
+	padding-block: 1em;
 	ul {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
@@ -402,24 +354,9 @@ export default {
 		content: "▪ ";
 		color: $primary;
 	}
-
-	@include desktop {
-		display: block;
-		padding-bottom: 1em;
-		border-bottom: 1px solid lighten($lightestDark, 30);
-	}
 }
 
-.car2view-details {
-	margin-block: 1em;
-
-	@include desktop {
-		margin: 0;
-		grid-area: detail;
-		padding-bottom: 1em;
-		border-bottom: 1px solid lighten($lightestDark, 30);
-	}
-
+.carToView-details {
 	&-specs {
 		margin-block: 0.5em;
 		display: grid;
@@ -429,9 +366,6 @@ export default {
 	}
 	&-bold {
 		font: $font-mobile-m-bold;
-		@include desktop {
-			font: $font-mobile-m;
-		}
 	}
 	&-text {
 		font: $font-mobile-m;
@@ -447,9 +381,125 @@ export default {
 	color: $dark;
 }
 .dealer-wrapper {
-	flex: 1.5;
-	@include desktop {
-		background: lighten($lightestDark, 35);
+	padding-block: 1em;
+}
+
+.carToView {
+	@include breakpoint(tablet) {
+		&-title-price {
+			display: flex;
+			height: 3em;
+			justify-content: space-between;
+			align-items: baseline;
+			border-bottom: 2px solid $lightestDark;
+			font: $font-mobile-m;
+			margin-bottom: 2em;
+			padding-inline: 2em;
+			padding-bottom: 0.5em;
+		}
+
+		.showmore-btn {
+			display: none;
+		}
+		.hidePics {
+			height: 100%;
+			overflow: visible;
+		}
+		.carToView-titles {
+			border-bottom: none;
+		}
+		.carToView-img-display {
+			display: flex;
+			gap: 0.2em;
+		}
+		.carToView-img-display {
+			border-bottom: 1px solid lighten($lightestDark, 30);
+			padding-block: 2em;
+		}
+		.main-display {
+			flex: 3;
+			max-width: 100%;
+			display: flex;
+			img {
+				max-width: 100%;
+				object-fit: cover;
+			}
+		}
+
+		.carToView-images-list {
+			flex: 1;
+		}
+		.carToView-history-detailWrap {
+			display: flex;
+			justify-content: space-between;
+		}
+		.dealer-wrapper {
+			border-bottom: 1px solid lighten($lightestDark, 30);
+		}
+		.carToView-accesories {
+			border-bottom: 1px solid lighten($lightestDark, 30);
+			padding-block: 1em;
+		}
+		.carToView-details {
+			border-bottom: 1px solid lighten($lightestDark, 30);
+			padding-block: 1em;
+		}
+		.selectedImg {
+			position: relative;
+			&::before {
+				content: "Viewing";
+				color: $light;
+				display: grid;
+				place-items: center;
+				font: $font-mobile-m-bold;
+				font-size: 1.2em;
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: $dark;
+				opacity: 0.4;
+			}
+		}
+	}
+	@include breakpoint(desktop) {
+		border-top: 1px solid lighten($lightestDark, 20);
+		margin-block: 1em;
+		padding: 0;
+		gap: 1em;
+		background: $light;
+		padding: 0.5em;
+
+		.carToView-titles {
+			border-bottom: none;
+			color: $primary;
+		}
+		.carToView-info {
+			display: none;
+		}
+		.carToView-section-top {
+			display: flex;
+			gap: 1em;
+		}
+		.carToview-display-section {
+			flex: 1;
+		}
+		.carToView-img-display {
+			display: flex;
+			flex-direction: column;
+		}
+		.dealer-wrapper {
+			flex: 1;
+			background: lighten($lightestDark, 35);
+		}
+		.carToView-images-list {
+			flex: 1;
+			display: flex;
+			gap: 0.1em;
+		}
+
+	
 	}
 }
 </style>
