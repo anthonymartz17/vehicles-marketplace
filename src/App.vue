@@ -81,7 +81,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .page-container {
-	// background:$lightestDark;
+
 	// min-height: 100%;
 	// min-width: 25em;
 	// overflow: auto;

@@ -140,5 +140,8 @@ export default {
 		.vehicles {
 		}
 	}
+	@include breakpoint(lg-device){
+		padding-inline: 5em;
+	}
 }
 </style>

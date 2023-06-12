@@ -26,9 +26,11 @@
 			<div class="active-component-wrapper">
 				<component :is="activeComponent" />
 			</div>
-			<router-link to="/forgot-password" class="text-muted forgot-pwd">
-				<i class="mdi mdi-lock me-1"></i> Forgot your password?
-			</router-link>
+			<a href="#" @click.prevent="checkLoginOption()" class="text-muted forgot-pwd">
+				{{
+					activeComponent == "Login" ? "Forgot your password?" : "Login instead"
+				}}
+			</a>
 		</div>
 	</div>
 </template>
@@ -47,6 +49,15 @@ export default {
 			activeComponent: "Login",
 		};
 	},
+	methods: {
+		checkLoginOption() {
+			if (this.activeComponent == 'Login') {
+				this.$router.replace({name:'forgot-password'})
+			} else {
+				this.activeComponent = 'Login'
+			}
+		}
+	}
 };
 </script>
 
@@ -58,6 +69,7 @@ export default {
 	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 	display: flex;
 	flex-direction: column;
+	height: auto;
 	min-height: 30em;
 }
 .component-tabs-container {
@@ -95,7 +107,8 @@ export default {
 }
 .forgot-pwd {
 	text-align: center;
-	margin-bottom: 1em;
+	margin-block: 1em;
+	text-decoration: underline;
 }
 .joinus-wrapper {
 	@include breakpoint(tablet) {

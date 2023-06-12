@@ -413,7 +413,7 @@ export default {
 			gap: 0.2em;
 		}
 		.carToView-img-display {
-			border-bottom: 1px solid lighten($lightestDark, 30);
+			// border-bottom: 1px solid lighten($lightestDark, 30);
 			padding-block: 2em;
 		}
 		.main-display {
@@ -422,6 +422,7 @@ export default {
 			display: flex;
 			img {
 				max-width: 100%;
+				max-height: 100%;
 				object-fit: cover;
 			}
 		}
@@ -464,7 +465,7 @@ export default {
 		}
 	}
 	@include breakpoint(desktop) {
-		border-top: 1px solid lighten($lightestDark, 20);
+		// border-top: 1px solid lighten($lightestDark, 20);
 		margin-block: 1em;
 		padding: 0;
 		gap: 1em;
@@ -482,6 +483,7 @@ export default {
 			display: flex;
 			gap: 1em;
 		}
+			
 		.carToview-display-section {
 			flex: 1;
 		}
@@ -497,9 +499,11 @@ export default {
 			flex: 1;
 			display: flex;
 			gap: 0.1em;
+		
 		}
-
-	
+	}
+	@include breakpoint(lg-device){
+		padding-inline: 5%;
 	}
 }
 </style>

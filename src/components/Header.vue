@@ -16,7 +16,7 @@ export default {
 			} else if (link == "Electric") {
 				//clear filters first, in case filters where set somewhere else and are still active
 				this.UPDATE_FILTERS(null);
-				this.UPDATE_FILTERS({fuel: "Electric"});
+				this.UPDATE_FILTERS({ fuel: "Electric" });
 				this.FILTER_VEHICLES();
 			}
 		},
@@ -37,6 +37,7 @@ export default {
 				</router-link>
 			</div>
 			<nav class="desktopNav-container">
+			
 				<ul class="desktopNav flex-a-c">
 					<li
 						v-for="(link, key) in desktopNav"
@@ -92,6 +93,7 @@ export default {
 .header-wrapper {
 	width: 100%;
 	justify-content: space-between;
+	
 }
 
 .desktopNav-container {
@@ -157,27 +159,34 @@ export default {
 		}
 	}
 }
+.header-container {
+	@include breakpoint(tablet) {
+	}
+	@include breakpoint(desktop) {
+		.sMedia {
+			display: flex;
+		}
+		.header-wrapper {
+			padding: 0 15em;
+			gap: 1em;
+		}
+		.desktopNav-container {
+			display: flex;
+			flex: 3;
+		}
 
-@include breakpoint(tablet) {
-}
-@include breakpoint(desktop) {
-	.sMedia {
-		display: flex;
+		.fa-bars {
+			display: none;
+		}
+		.fa-search {
+			display: none;
+		}
 	}
 	.header-wrapper {
-		padding: 0 15em;
-		gap: 1em;
-	}
-	.desktopNav-container {
-		display: flex;
-		flex: 3;
-	}
-
-	.fa-bars {
-		display: none;
-	}
-	.fa-search {
-		display: none;
-	}
+		
+		@include breakpoint(lg-device){
+			max-width: 1600px;
+		}
+		}
 }
 </style>

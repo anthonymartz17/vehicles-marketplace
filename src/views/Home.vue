@@ -1,24 +1,33 @@
+		<script>
+		import SearchMobile from "../components/searchFieldMobile/SearchMobile.vue";
+		import SearchDesktop from "../components/SearchDesktop.vue";
+		import VehiclesDisplay from "../components/VehiclesDisplay.vue";
+		
+		export default {
+			// fires shuffleHomeDisplayCars mutation to display vehicles ramdomly everytime the home component is created.
+			components: {
+				SearchMobile,
+				SearchDesktop,
+				VehiclesDisplay,
+			},
+		};
+		</script>
 <template>
-	<div>
-		<div class="search-type-carrousel-container">
+	<div class="home-container">
+		<div >
 			<SearchMobile />
 			<SearchDesktop />
 			<VehiclesDisplay />
 		</div>
 	</div>
 </template>
+<style lang="scss" scoped>
 
-<script>
-import SearchMobile from "../components/searchFieldMobile/SearchMobile.vue";
-import SearchDesktop from "../components/SearchDesktop.vue";
-import VehiclesDisplay from "../components/VehiclesDisplay.vue";
+.home-container{
+	@include breakpoint(lg-device){
+		padding-inline: 5em;
+	}
+}
 
-export default {
-	// fires shuffleHomeDisplayCars mutation to display vehicles ramdomly everytime the home component is created.
-	components: {
-		SearchMobile,
-		SearchDesktop,
-		VehiclesDisplay,
-	},
-};
-</script>
+</style>
+

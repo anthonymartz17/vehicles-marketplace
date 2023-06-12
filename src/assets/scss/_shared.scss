@@ -12,7 +12,7 @@
 $breakPoints: (
 	"tablet": 768px,
 	"desktop": 1024px,
-	"lg-device": 1200px,
+	"lg-device": 1800px,
 );
 
 @mixin breakpoint($size) {
@@ -70,6 +70,11 @@ $font-mobile-s: normal 300 0.75em$font-stack; //12px
 // $font-desktext: normal 300 0.8125em $font-stack;
 
 // flexing
+.d-flex{
+	display: flex;
+	gap: .5em;
+}
+
 .flex-gap {
 	display: flex;
 	align-items: center;
@@ -93,6 +98,10 @@ $font-mobile-s: normal 300 0.75em$font-stack; //12px
 	padding-block: 0.5em;
 	margin-bottom: 1em;
 	font: $font-mobile-xl;
+}
+.sub-title{
+	font: $font-mobile-l;
+	margin-bottom: .5em;
 }
 // search fields
 .search-fields-container {
