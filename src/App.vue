@@ -1,15 +1,3 @@
-<template>
-	<div class="page-container">
-		<AppModal />
-		<MobileMenu :desktopNav="desktopNav" />
-		<AppHeader :desktopNav="desktopNav" />
-		<!-- <HomeAd/> -->
-		<AppMain />
-		<CarSelectionCard />
-		<AppFooter />
-	</div>
-</template>
-
 <script>
 import AppModal from "./components/Modal.vue";
 import CarSelectionCard from "./components/searchFieldMobile/CarSelectionCard.vue";
@@ -19,18 +7,22 @@ import AppMain from "./components/Main.vue";
 import AppFooter from "./components/Footer.vue";
 import MobileMenu from "./components/MobileMenu.vue";
 import initializeFirebase from "./firebaseConfig";
-
+// import Loading from "vue-loading-overlay";
+// import "vue-loading-overlay/dist/css/index.css";
 import { mapActions, mapState, mapMutations } from "vuex";
 
 export default {
-	created() {
-		initializeFirebase;
-		this.fetchVehicles().then((data) => {
-			this.SET_FILTERS_OPTIONS(data);
-		});
+	components: {
+		AppHeader,
+		AppMain,
+		AppFooter,
+		CarSelectionCard,
+		MobileMenu,
+		AppModal,
 	},
 	data() {
 		return {
+			isLoading: false,
 			desktopNav: [
 				{
 					name: "Home",
@@ -60,31 +52,64 @@ export default {
 			],
 		};
 	},
-
+	created() {
+		initializeFirebase;
+		this.fetchVehicles().then((data) => {
+			this.SET_FILTERS_OPTIONS(data);
+		});
+	},
 	methods: {
 		...mapActions("vehicles", ["fetchVehicles", "fetchVehiclesImages"]),
 
-		...mapMutations(["toggleMobileMenu", "detectResize"]),
+		// ...mapMutations(["toggleMobileMenu", "detectResize"]),
 
 		...mapMutations("filterOptions", ["SET_FILTERS_OPTIONS"]),
 	},
-
-	components: {
-		AppHeader,
-		AppMain,
-		AppFooter,
-		CarSelectionCard,
-		MobileMenu,
-		AppModal,
+	computed: {
+		...mapState("vehicles", ["showSearchMenu"]),
 	},
 };
 </script>
+<template>
+	<div class="page-container">
+		<!-- <Loading v-model="isLoading" /> -->
+		<!-- toggleable menues -->
+		<MobileMenu :desktopNav="desktopNav" />
+		<!-- <div class="searchmenue">
+
+			<SearchMenue v-if="showSearchMenu" />
+	
+		</div> -->
+		<header>
+			<AppHeader :desktopNav="desktopNav" />
+		</header>
+		<main>
+			<AppMain />
+		</main>
+
+		<CarSelectionCard />
+		<footer>
+			<AppFooter />
+		</footer>
+	</div>
+</template>
+
 <style lang="scss" scoped>
 .page-container {
-
 	// min-height: 100%;
 	// min-width: 25em;
 	// overflow: auto;
 	position: relative;
+}
+
+.searchmenue {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 100%;
+	z-index: 100;
+	@include breakpoint(desktop) {
+		display: none;
+	}
 }
 </style>

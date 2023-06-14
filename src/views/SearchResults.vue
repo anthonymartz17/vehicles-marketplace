@@ -45,23 +45,14 @@ export default {
 					@input="SORT_VEHICLES(selectedSortId)"
 				></multiselect>
 
-				<!-- <select name="sort" id="sort" @input="SORT_VEHICLES()">
-					<option :value="null">Sort by</option>
-					<option
-						:value="filter.id"
-						v-for="(filter, key) in filters"
-						:key="key"
-					>
-						{{ filter.sortby }}
-					</option>
-				</select> -->
 			</div>
 		</div>
 		<div class="sideSearch">
 			<SideSearch />
 		</div>
-
+		
 		<div class="results">
+		
 			<VehiclesDisplay />
 		</div>
 	</div>

@@ -25,7 +25,8 @@ export default {
 			color: "",
 			dealerId: "",
 		},
-		mobileMenuToggler: false,
+		showMobileMenue: false,
+		searchMenuToggler: false,
 	},
 	mutations: {
 		SET_VEHICLES(state, payload) {
@@ -177,7 +178,11 @@ export default {
 		},
 
 		TOGGLE_MOBILE_MENUE(state) {
-			state.mobileMenuToggler = !state.mobileMenuToggler;
+			state.showMobileMenue = !state.showMobileMenue;
+		},
+		TOGGLE_SEARCH_MENU(state) {
+			state.showSearchMenu = !state.showSearchMenu;
+			console.log(state.showSearchMenu )
 		},
 		// sorts the vehicles that are displaying
 		SORT_VEHICLES(state, id) {

@@ -1,10 +1,11 @@
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapGetters, mapMutations, mapState } from "vuex";
 
 export default {
 	data() {
 		return {
 			pageTitle: "",
+			showSearchMenue: false,
 		};
 	},
 
@@ -13,6 +14,7 @@ export default {
 	},
 
 	methods: {
+		...mapMutations("vehicles", ["TOGGLE_SEARCH_MENU"]),
 		selectPageTitle(name) {
 			let titles = [
 				{ routeName: "Vehicles", title: "Vehicles" },
@@ -28,9 +30,9 @@ export default {
 				}
 			});
 		},
-		// setCarToViewInLS(car) {
-		// 	localStorage.setItem("carToView", JSON.stringify(car));
-		// },
+		// 	toggleSearchMenue() {
+		// 	this.showSearchMenue = !this.showSearchMenue
+		// }
 	},
 	computed: {
 		...mapGetters("vehicles", ["vehiclesList"]),
@@ -58,16 +60,19 @@ export default {
 		]"
 	>
 		<div :class="['vehicles', { 'vehicles-height': $route.name == 'Home' }]">
-			<h4 class="main-title">
-				<!-- <span v-if="$route.name === 'dealerInventory'"
-					>{{ carToViewDealer.name }} | </span -->
-				{{ pageTitle }}
-				<i
-					v-if="$route.name == 'Electric'"
-					:style="{ color: '#116530' }"
-					class="fas fa-leaf"
-				></i>
-			</h4>
+			<div class="title-container">
+				<h4 class="main-title">
+					{{ pageTitle }}
+					<i
+						v-if="$route.name == 'Electric'"
+						:style="{ color: '#116530' }"
+						class="fas fa-leaf"
+					></i>
+				</h4>
+				<router-link :to="{name:'Advance'}">
+					<div v-show="$route.name !== 'Home'" class="btn-adjustSearch">Adjust Search</div>
+				</router-link>
+			</div>
 
 			<div
 				v-if="vehiclesToDisplayList && vehiclesToDisplayList.length > 0"
@@ -105,9 +110,6 @@ export default {
 				<p>No Vehicles found with these criteria</p>
 				<p>Try modifying the filters!</p>
 				<!-- </div> -->
-				<router-link :to="{ name: 'Advance' }" class="btn-adjustSearch">
-					<div @click="clearFilters()">Adjust Search</div>
-				</router-link>
 			</div>
 		</div>
 		<router-link class="moreVehicleBtn" :to="{ name: 'searchResults' }">
@@ -133,6 +135,14 @@ export default {
 	font: $font-logo-S;
 	padding: 0.2em;
 	margin-bottom: 0.5em;
+}
+.title-container {
+	border-bottom: 2px solid $lightestDark;
+	padding-inline: 0.5em;
+	margin-top: 1em;
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
 }
 .vehicles-container {
 	padding: 0.5em;
@@ -215,8 +225,9 @@ export default {
 	border: 1px solid transparent;
 	text-align: center;
 	color: $light;
-	width: 5em;
-	min-width: 50%;
+	width: 10em;
+	height: 3em;
+	// min-width: 50%;
 	font: $font-mobile-m-bold;
 	padding: 0.5em 1em;
 	&:hover {

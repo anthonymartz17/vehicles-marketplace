@@ -6,7 +6,7 @@
 		>
 			<div
 				class="selected-field-options"
-				v-show="mobileMenuToggler"
+				v-show="showMobileMenue"
 				@click="TOGGLE_MOBILE_MENUE()"
 			></div>
 		</transition>
@@ -14,7 +14,7 @@
 			enter-active-class="animate__animated animate__slideInLeft animate__faster"
 			leave-active-class="animate__animated animate__slideOutLeft animate__faster"
 		>
-			<nav class="nav-menu-container" v-show="mobileMenuToggler">
+			<nav class="nav-menu-container" v-show="showMobileMenue">
 				<ul>
 					<li
 						v-for="(link, key) in desktopNav"
@@ -37,16 +37,15 @@
 </template>
 
 <script>
-import { mapMutations,mapState } from "vuex";
+import { mapMutations, mapState } from "vuex";
 export default {
-	props:["desktopNav"],
+	props: ["desktopNav"],
 	methods: {
-		...mapMutations("vehicles", ["clearFilters","TOGGLE_MOBILE_MENUE"]),
+		...mapMutations("vehicles", ["clearFilters", "TOGGLE_MOBILE_MENUE"]),
 	},
 	computed: {
-		...mapState("vehicles",["mobileMenuToggler"])
-	}
-
+		...mapState("vehicles", ["showMobileMenue"]),
+	},
 };
 </script>
 

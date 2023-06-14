@@ -1,9 +1,47 @@
+<script>
+import Login from "../joinus/login-page";
+import Register from "../joinus/register-page";
+import SuccessConfirmation from "../../components/utilities/sucessModalConfirmation.vue";
+import { mapState } from 'vuex';
+
+export default {
+	components: {
+		Login,
+		Register,
+		SuccessConfirmation,
+	},
+	data() {
+		return {
+			activeComponent: "Login",
+		};
+	},
+	methods: {
+		checkLoginOption(id) {
+			switch (id) {
+				case "forgotPassword":
+					this.$router.replace({ name: "forgot-password" });
+					break;
+				case "login":
+					this.activeComponent = "Login";
+					break;
+				case "register":
+					this.activeComponent = "Register";
+					break;
+			}
+		},
+	},
+	computed: {
+		...mapState("auth",["isSuccessRegistration"])
+	}
+};
+</script>
 <template>
 	<div class="joinus-wrapper">
+		<SuccessConfirmation v-show="isSuccessRegistration" @CheckLoginOptionEvent="checkLoginOption($event)" />
 		<div class="joinus-container">
 			<div class="component-tabs-container">
 				<button
-					@click="activeComponent = 'Login'"
+					@click="checkLoginOption('login')"
 					:class="[
 						'component-switch-btn',
 						{ 'active-component': activeComponent == 'Login' },
@@ -13,7 +51,7 @@
 				</button>
 
 				<button
-					@click="activeComponent = 'Register'"
+					@click="checkLoginOption('register')"
 					:class="[
 						'component-switch-btn ',
 						{ 'active-component': activeComponent == 'Register' },
@@ -26,7 +64,11 @@
 			<div class="active-component-wrapper">
 				<component :is="activeComponent" />
 			</div>
-			<a href="#" @click.prevent="checkLoginOption()" class="text-muted forgot-pwd">
+			<a
+				href="#"
+				@click.prevent="checkLoginOption('forgotPassword')"
+				class="text-muted forgot-pwd"
+			>
 				{{
 					activeComponent == "Login" ? "Forgot your password?" : "Login instead"
 				}}
@@ -35,31 +77,6 @@
 	</div>
 </template>
 
-<script>
-import Login from "../joinus/login-page";
-import Register from "../joinus/register-page";
-
-export default {
-	components: {
-		Login,
-		Register,
-	},
-	data() {
-		return {
-			activeComponent: "Login",
-		};
-	},
-	methods: {
-		checkLoginOption() {
-			if (this.activeComponent == 'Login') {
-				this.$router.replace({name:'forgot-password'})
-			} else {
-				this.activeComponent = 'Login'
-			}
-		}
-	}
-};
-</script>
 
 <style lang="scss" scoped>
 .joinus-wrapper {
@@ -120,7 +137,7 @@ export default {
 	}
 	@include breakpoint(desktop) {
 		.joinus-container {
-			width: 50%;
+			width: 60%;
 		}
 	}
 }

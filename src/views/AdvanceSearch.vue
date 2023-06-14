@@ -9,6 +9,7 @@ export default {
 	},
 	created() {
 		this.fetchDealers();
+		// this.UPDATE_FILTERS(null);
 	},
 	data() {
 		return {
@@ -78,6 +79,7 @@ export default {
 		...mapActions("vehicles", ["fetchDealers"]),
 
 		fireSearch() {
+			
 			this.UPDATE_FILTERS(this.filtersSelected);
 			this.FILTER_VEHICLES();
 			this.$router.replace({ name: "searchResults" });

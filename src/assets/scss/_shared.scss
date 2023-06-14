@@ -8,7 +8,6 @@
 
 // viewports
 
-
 $breakPoints: (
 	"tablet": 768px,
 	"desktop": 1024px,
@@ -21,15 +20,14 @@ $breakPoints: (
 	}
 }
 
-
 @mixin desktop {
-	@media (min-width:1024px) {
+	@media (min-width: 1024px) {
 		@content;
 	}
 }
 
 @mixin tablet {
-	@media (min-width:768px) {
+	@media (min-width: 768px) {
 		@content;
 	}
 }
@@ -41,6 +39,7 @@ $lightDark: lighten($dark, 10%);
 $lightestDark: lighten($dark, 40%);
 $light: white;
 $primary: #e40017;
+$success: #7aa874;
 
 // fonts
 $font-stack: "Poppins", sans-serif;
@@ -69,10 +68,13 @@ $font-mobile-s: normal 300 0.75em$font-stack; //12px
 // $font-desktext-bold: normal 500 0.8125em $font-stack;
 // $font-desktext: normal 300 0.8125em $font-stack;
 
+// utility classes
+
+.bg-
 // flexing
-.d-flex{
+.d-flex {
 	display: flex;
-	gap: .5em;
+	gap: 0.5em;
 }
 
 .flex-gap {
@@ -94,14 +96,14 @@ $font-mobile-s: normal 300 0.75em$font-stack; //12px
 	flex-direction: column;
 }
 .main-title {
-	border-bottom: 2px solid $lightestDark;
+	// border-bottom: 2px solid $lightestDark;
 	padding-block: 0.5em;
 	margin-bottom: 1em;
-	font: $font-mobile-xl;
-}
-.sub-title{
 	font: $font-mobile-l;
-	margin-bottom: .5em;
+}
+.sub-title {
+	font: $font-mobile-l;
+	margin-bottom: 0.5em;
 }
 // search fields
 .search-fields-container {
@@ -154,14 +156,13 @@ a {
 	background: $primary;
 	transition: all 0.3s ease-in-out;
 	color: $light;
-  display: grid;
+	display: grid;
 	place-items: center;
 	&:hover {
-    transform: scale(1.01);
-    cursor: pointer;
+		transform: scale(1.01);
+		cursor: pointer;
 		box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 	}
-	
 
 	@include desktop {
 		width: 30%;

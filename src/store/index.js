@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import vehicles from "./modules/vehicles";
 import filterOptions from "./modules/filterOptions";
+import auth from "./modules/auth";
 
 Vue.use(Vuex);
 
@@ -9,6 +10,7 @@ export default new Vuex.Store({
 	modules: {
 		vehicles,
 		filterOptions,
+		auth,
 	},
 	state: {
 		// Global
@@ -49,7 +51,7 @@ export default new Vuex.Store({
 		// },
 
 		// mobile nav links
-		mobileMenuToggler: false,
+		showMobileMenue: false,
 		// filter props
 		filters: {
 			make: {
@@ -369,160 +371,160 @@ export default new Vuex.Store({
 		},
 
 		// receives the data of the current car to view and sets the specifications in the setCarToViewGeneralInfo prop that is  in the state.
-		setCarToViewGeneralInfo(state) {
-			let owner, ownerIcon, fuelIcon, milesIcon;
-			if (state.carToView[0].owner == 0) {
-				owner = "Never owned";
-				ownerIcon = "owner.svg";
-			}
-			if (state.carToView[0].owner == 1) {
-				owner = `${state.carToView[0].owner} owner`;
-				ownerIcon = "owner.svg";
-			}
-			if (state.carToView[0].owner == 2) {
-				ownerIcon = "owners2.svg";
-			}
-			if (state.carToView[0].owner > 2) {
-				owner = `${state.carToView[0].owner} owners`;
-				ownerIcon = "ownersMany.svg";
-			}
+		// setCarToViewGeneralInfo(state) {
+		// 	let owner, ownerIcon, fuelIcon, milesIcon;
+		// 	if (state.carToView[0].owner == 0) {
+		// 		owner = "Never owned";
+		// 		ownerIcon = "owner.svg";
+		// 	}
+		// 	if (state.carToView[0].owner == 1) {
+		// 		owner = `${state.carToView[0].owner} owner`;
+		// 		ownerIcon = "owner.svg";
+		// 	}
+		// 	if (state.carToView[0].owner == 2) {
+		// 		ownerIcon = "owners2.svg";
+		// 	}
+		// 	if (state.carToView[0].owner > 2) {
+		// 		owner = `${state.carToView[0].owner} owners`;
+		// 		ownerIcon = "ownersMany.svg";
+		// 	}
 
-			if (state.carToView[0].fuel == "Electric") {
-				fuelIcon = "battery.svg";
-				milesIcon = "electricMiles.svg";
-			} else {
-				fuelIcon = "gas.svg";
-				milesIcon = "mpg.svg";
-			}
+		// 	if (state.carToView[0].fuel == "Electric") {
+		// 		fuelIcon = "battery.svg";
+		// 		milesIcon = "electricMiles.svg";
+		// 	} else {
+		// 		fuelIcon = "gas.svg";
+		// 		milesIcon = "mpg.svg";
+		// 	}
 
-			state.carToViewGeneralInfo = [
-				{
-					icon: "miles.svg",
-					iconInfo: `${state.carToView[0].miles} Miles`,
-				},
-				{
-					icon: "transmission.svg",
-					iconInfo: state.carToView.transmission,
-				},
-				{ icon: "drivetrain.svg", iconInfo: state.carToView[0].driveTrain },
-				{ icon: "engine.svg", iconInfo: state.carToView[0].engine },
-				{ icon: fuelIcon, iconInfo: state.carToView[0].fuel },
-				{ icon: milesIcon, iconInfo: `${state.carToView[0].mileage} MPG` },
-				{ icon: "excolor.svg", iconInfo: state.carToView[0].colorEx },
-				{ icon: "incolor.svg", iconInfo: state.carToView[0].colorIn },
-				{ icon: ownerIcon, iconInfo: owner },
-			];
-		},
+		// 	state.carToViewGeneralInfo = [
+		// 		{
+		// 			icon: "miles.svg",
+		// 			iconInfo: `${state.carToView[0].miles} Miles`,
+		// 		},
+		// 		{
+		// 			icon: "transmission.svg",
+		// 			iconInfo: state.carToView.transmission,
+		// 		},
+		// 		{ icon: "drivetrain.svg", iconInfo: state.carToView[0].driveTrain },
+		// 		{ icon: "engine.svg", iconInfo: state.carToView[0].engine },
+		// 		{ icon: fuelIcon, iconInfo: state.carToView[0].fuel },
+		// 		{ icon: milesIcon, iconInfo: `${state.carToView[0].mileage} MPG` },
+		// 		{ icon: "excolor.svg", iconInfo: state.carToView[0].colorEx },
+		// 		{ icon: "incolor.svg", iconInfo: state.carToView[0].colorIn },
+		// 		{ icon: ownerIcon, iconInfo: owner },
+		// 	];
+		// },
 
-		setCarToviewDetails(state) {
-			state.carToViewDetails = [
-				{ key: "Location", val: state.carToView[0].location },
-				{ key: "Engine", val: state.carToView[0].engine },
-				{ key: "Miles", val: state.carToView[0].miles },
-				{ key: "MPG", val: state.carToView[0].mileage },
-				{ key: "Fuel", val: state.carToView[0].fuel },
-				{ key: "transmission", val: state.carToView[0].transmission },
-				{ key: "Car type", val: state.carToView[0].carType },
-				{ key: "Drivetrain", val: state.carToView[0].driveTrain },
-				{ key: "Color Exterior", val: state.carToView[0].colorEx },
-				{ key: "Color Interior", val: state.carToView[0].colorIn },
-				{ key: "Vin", val: state.carToView[0].vin },
-			];
-		},
+		// setCarToviewDetails(state) {
+		// 	state.carToViewDetails = [
+		// 		{ key: "Location", val: state.carToView[0].location },
+		// 		{ key: "Engine", val: state.carToView[0].engine },
+		// 		{ key: "Miles", val: state.carToView[0].miles },
+		// 		{ key: "MPG", val: state.carToView[0].mileage },
+		// 		{ key: "Fuel", val: state.carToView[0].fuel },
+		// 		{ key: "transmission", val: state.carToView[0].transmission },
+		// 		{ key: "Car type", val: state.carToView[0].carType },
+		// 		{ key: "Drivetrain", val: state.carToView[0].driveTrain },
+		// 		{ key: "Color Exterior", val: state.carToView[0].colorEx },
+		// 		{ key: "Color Interior", val: state.carToView[0].colorIn },
+		// 		{ key: "Vin", val: state.carToView[0].vin },
+		// 	];
+		// },
 		//gets the dealer according to the car selected
-		saveCarToViewDealerToLocalS(state, dealerId) {
-			let dealer = state.dealersData.find((one) => dealerId === one.dealerId);
-			let dealerInventory = state.allModels.filter(
-				(one) => one.dealerId === dealerId
-			);
-			dealer["inventory"] = dealerInventory;
-			if (localStorage.getItem("carToViewDealer") === null) {
-				localStorage.setItem("carToViewDealer", JSON.stringify(dealer));
-			} else {
-				localStorage.setItem("carToViewDealer", JSON.stringify(dealer));
-			}
-		},
-		setCarToViewDealer(state) {
-			state.carToViewDealer = JSON.parse(
-				localStorage.getItem("carToViewDealer")
-			);
-		},
+		// saveCarToViewDealerToLocalS(state, dealerId) {
+		// 	let dealer = state.dealersData.find((one) => dealerId === one.dealerId);
+		// 	let dealerInventory = state.allModels.filter(
+		// 		(one) => one.dealerId === dealerId
+		// 	);
+		// 	dealer["inventory"] = dealerInventory;
+		// 	if (localStorage.getItem("carToViewDealer") === null) {
+		// 		localStorage.setItem("carToViewDealer", JSON.stringify(dealer));
+		// 	} else {
+		// 		localStorage.setItem("carToViewDealer", JSON.stringify(dealer));
+		// 	}
+		// },
+		// setCarToViewDealer(state) {
+		// 	state.carToViewDealer = JSON.parse(
+		// 		localStorage.getItem("carToViewDealer")
+		// 	);
+		// },
 
 		// receives the data of the current car to view and sets the car history of the current vehicle in the carToViewHistory prop that is in the state.
-		setVehicleHistory(state) {
-			let owner,
-				accidents,
-				titleCheck,
-				iconOwner,
-				bgOwner,
-				bgAccidents,
-				bgTitle;
+		// setVehicleHistory(state) {
+		// 	let owner,
+		// 		accidents,
+		// 		titleCheck,
+		// 		iconOwner,
+		// 		bgOwner,
+		// 		bgAccidents,
+		// 		bgTitle;
 
-			if (state.carToView[0].owner == 0) {
-				owner = "Never owned";
-				bgOwner = "green";
-				iconOwner = "fas fa-user";
-			} else if (state.carToView[0].owner == 1) {
-				owner = "One owner";
-				bgOwner = "green";
-				iconOwner = "fas fa-user";
-			} else {
-				owner = `${state.carToView[0].owner} onwers`;
-				bgOwner = "#333";
-				iconOwner = "fas fa-users";
-			}
+		// 	if (state.carToView[0].owner == 0) {
+		// 		owner = "Never owned";
+		// 		bgOwner = "green";
+		// 		iconOwner = "fas fa-user";
+		// 	} else if (state.carToView[0].owner == 1) {
+		// 		owner = "One owner";
+		// 		bgOwner = "green";
+		// 		iconOwner = "fas fa-user";
+		// 	} else {
+		// 		owner = `${state.carToView[0].owner} onwers`;
+		// 		bgOwner = "#333";
+		// 		iconOwner = "fas fa-users";
+		// 	}
 
-			if (state.carToView[0].accidents == 0) {
-				accidents = "No issues reported";
-				bgAccidents = "green";
-			} else if (state.carToView[0].accidents == 1) {
-				accidents = "One accident reported";
-				bgAccidents = "#FFCC1D";
-			} else {
-				accidents = `${state.carToView[0].accidents} accidents reported`;
-				bgAccidents = "#FFCC1D";
-			}
+		// 	if (state.carToView[0].accidents == 0) {
+		// 		accidents = "No issues reported";
+		// 		bgAccidents = "green";
+		// 	} else if (state.carToView[0].accidents == 1) {
+		// 		accidents = "One accident reported";
+		// 		bgAccidents = "#FFCC1D";
+		// 	} else {
+		// 		accidents = `${state.carToView[0].accidents} accidents reported`;
+		// 		bgAccidents = "#FFCC1D";
+		// 	}
 
-			if (state.carToView[0].titleCheck == "No issues") {
-				titleCheck = "No issues reported";
-				bgTitle = "green";
-			} else {
-				titleCheck = state.carToView[0].titleCheck;
-				bgTitle = "#FFCC1D";
-			}
+		// 	if (state.carToView[0].titleCheck == "No issues") {
+		// 		titleCheck = "No issues reported";
+		// 		bgTitle = "green";
+		// 	} else {
+		// 		titleCheck = state.carToView[0].titleCheck;
+		// 		bgTitle = "#FFCC1D";
+		// 	}
 
-			state.carToViewHistory = [
-				{
-					key: "Owners",
-					val: owner,
-					icon: iconOwner,
-					iconBg: bgOwner,
-				},
-				{
-					key: "Accidents",
-					val: accidents,
-					icon: "fas fa-car",
-					iconBg: bgAccidents,
-				},
-				{
-					key: "Title check",
-					val: titleCheck,
-					icon: "far fa-check-square ",
-					iconBg: bgTitle,
-				},
-			];
-		},
+		// 	state.carToViewHistory = [
+		// 		{
+		// 			key: "Owners",
+		// 			val: owner,
+		// 			icon: iconOwner,
+		// 			iconBg: bgOwner,
+		// 		},
+		// 		{
+		// 			key: "Accidents",
+		// 			val: accidents,
+		// 			icon: "fas fa-car",
+		// 			iconBg: bgAccidents,
+		// 		},
+		// 		{
+		// 			key: "Title check",
+		// 			val: titleCheck,
+		// 			icon: "far fa-check-square ",
+		// 			iconBg: bgTitle,
+		// 		},
+		// 	];
+		// },
 
-		SET_CARSData(state, vehicles) {
-			if (vehicles) {
-				state.carsData = vehicles;
-			}
-		},
-		setDealersData(state, data) {
-			if (data) {
-				state.dealersData = data;
-			}
-		},
+		// SET_CARSData(state, vehicles) {
+		// 	if (vehicles) {
+		// 		state.carsData = vehicles;
+		// 	}
+		// },
+		// setDealersData(state, data) {
+		// 	if (data) {
+		// 		state.dealersData = data;
+		// 	}
+		// },
 		// //  shuffles the vehicleDisplay array
 		// shuffleHomeDisplayCars(state) {
 		// 	let shuffledCars = JSON.parse(localStorage.getItem("allModels"));
@@ -545,66 +547,66 @@ export default new Vuex.Store({
 		// 	if (data.id == "yearFrom") state.yearsUnavailable = data.key;
 		// },
 		//sets the content in every array named 'type' of every filter prop object.
-		setItemsInArrayOfEveryPropType(state) {
-			let content = JSON.parse(localStorage.getItem("allModels"));
+		// setItemsInArrayOfEveryPropType(state) {
+		// 	let content = JSON.parse(localStorage.getItem("allModels"));
 
-			state.filters.make.type = [
-				"All Makes",
-				...new Set(content.map((one) => one.make)),
-			];
-			state.filters.priceFrom.type = [
-				...new Set(content.map((one) => one.price)),
-			].sort((a, b) => a - b);
-			state.filters.priceTo.type = [
-				...new Set(content.map((one) => one.price)),
-			].sort((a, b) => a - b);
-			state.filters.yearFrom.type = [
-				...new Set(content.map((one) => one.year)),
-			].sort((a, b) => a - b);
-			state.filters.yearTo.type = [
-				...new Set(content.map((one) => one.year)),
-			].sort((a, b) => a - b);
-			state.filters.carType.type = [
-				...new Set(content.map((one) => one.carType)),
-			];
-			state.filters.carCondition.type = ["New/Used", "New", "Used"];
-			state.filters.engine.type = ["All", "I4", "V6", "V8"];
-			// comeback see how to filter by mileage
-			state.filters.mileage.type = [
-				"All",
-				"0 to 10k",
-				"10 to 25k",
-				"25k to 50k",
-				"50k to 75k",
-				"75k to 100k",
-				"100k +",
-			];
-			// state.filters.mileage.type = [
-			// 	{min: "All"},
-			// 	{range: "0 to 10k", min: 0, max: 10000},
-			// 	{range: "10 to 25k", min: 10000, max: 25000},
-			// 	{range: "25k to 50k", min: 10000, max: 25000},
-			// 	{range: "50k to 75k", min: 50000, max: 75000},
-			// 	{range: "75k to 100k", min: 75000, max: 100000},
-			// 	{range: "100k +", min: 100000},
-			// ];
-			state.filters.fuel.type = [
-				"All",
-				...new Set(content.map((one) => one.fuel)),
-			];
-			state.filters.transmission.type = [
-				"All",
-				...new Set(content.map((one) => one.transmission)),
-			];
-			state.filters.driveTrain.type = [
-				"All",
-				...new Set(content.map((one) => one.driveTrain)),
-			];
-			state.filters.color.type = [
-				"All",
-				...new Set(content.map((one) => one.colorEx)),
-			].sort();
-		},
+		// 	state.filters.make.type = [
+		// 		"All Makes",
+		// 		...new Set(content.map((one) => one.make)),
+		// 	];
+		// 	state.filters.priceFrom.type = [
+		// 		...new Set(content.map((one) => one.price)),
+		// 	].sort((a, b) => a - b);
+		// 	state.filters.priceTo.type = [
+		// 		...new Set(content.map((one) => one.price)),
+		// 	].sort((a, b) => a - b);
+		// 	state.filters.yearFrom.type = [
+		// 		...new Set(content.map((one) => one.year)),
+		// 	].sort((a, b) => a - b);
+		// 	state.filters.yearTo.type = [
+		// 		...new Set(content.map((one) => one.year)),
+		// 	].sort((a, b) => a - b);
+		// 	state.filters.carType.type = [
+		// 		...new Set(content.map((one) => one.carType)),
+		// 	];
+		// 	state.filters.carCondition.type = ["New/Used", "New", "Used"];
+		// 	state.filters.engine.type = ["All", "I4", "V6", "V8"];
+		// 	// comeback see how to filter by mileage
+		// 	state.filters.mileage.type = [
+		// 		"All",
+		// 		"0 to 10k",
+		// 		"10 to 25k",
+		// 		"25k to 50k",
+		// 		"50k to 75k",
+		// 		"75k to 100k",
+		// 		"100k +",
+		// 	];
+		// state.filters.mileage.type = [
+		// 	{min: "All"},
+		// 	{range: "0 to 10k", min: 0, max: 10000},
+		// 	{range: "10 to 25k", min: 10000, max: 25000},
+		// 	{range: "25k to 50k", min: 10000, max: 25000},
+		// 	{range: "50k to 75k", min: 50000, max: 75000},
+		// 	{range: "75k to 100k", min: 75000, max: 100000},
+		// 	{range: "100k +", min: 100000},
+		// ];
+		// 	state.filters.fuel.type = [
+		// 		"All",
+		// 		...new Set(content.map((one) => one.fuel)),
+		// 	];
+		// 	state.filters.transmission.type = [
+		// 		"All",
+		// 		...new Set(content.map((one) => one.transmission)),
+		// 	];
+		// 	state.filters.driveTrain.type = [
+		// 		"All",
+		// 		...new Set(content.map((one) => one.driveTrain)),
+		// 	];
+		// 	state.filters.color.type = [
+		// 		"All",
+		// 		...new Set(content.map((one) => one.colorEx)),
+		// 	].sort();
+		// },
 
 		clearFilters(state) {
 			state.filters.make.typeSelected = "";
@@ -680,205 +682,205 @@ export default new Vuex.Store({
 		},
 
 		// toggleMobileMenu(state) {
-		// 	state.mobileMenuToggler = !state.mobileMenuToggler;
+		// 	state.showMobileMenue = !state.showMobileMenue;
 		// },
 
 		// togggles on and off to show the card with the options  of the selected field
-		toggleOptionsCard(state, e) {
-			if (
-				e.target.classList.contains("selected-field-options") ||
-				e.target.classList.contains("selected-field-options-card-content") ||
-				e.target.classList.contains("search-fields-container-field")
-			) {
-				state.optionsCardToggler = !state.optionsCardToggler;
-			}
-		},
-		closeSelectionCard(state, e) {
-			if (
-				e.target.classList.contains("modal-clear-card-content") ||
-				e.target.classList.contains("search-fields-container-field")
-			) {
-				state.modalToggler = false;
-			}
-		},
+		// toggleOptionsCard(state, e) {
+		// 	if (
+		// 		e.target.classList.contains("selected-field-options") ||
+		// 		e.target.classList.contains("selected-field-options-card-content") ||
+		// 		e.target.classList.contains("search-fields-container-field")
+		// 	) {
+		// 		state.optionsCardToggler = !state.optionsCardToggler;
+		// 	}
+		// },
+		// closeSelectionCard(state, e) {
+		// 	if (
+		// 		e.target.classList.contains("modal-clear-card-content") ||
+		// 		e.target.classList.contains("search-fields-container-field")
+		// 	) {
+		// 		state.modalToggler = false;
+		// 	}
+		// },
 		// determines which content card will be display according to which search field is clicked on in the mobile view
-		whichFieldContent(state, field) {
-			state.fieldContent = field.id;
-		},
+		// whichFieldContent(state, field) {
+		// 	state.fieldContent = field.id;
+		// },
 
-		assignValueToTypeSelected(state, event) {
-			let filters = Object.values(state.filters);
-			let selectedField = filters.find((one) => {
-				// did the following if statement like this, so that i can add a string id + key to radio btn in the sidebarsearch component, so i can match the id to the label of the radio btn, and still be able to filter here,using the id coming from the selection
-				if (event.target.id.toLowerCase().includes(one.id.toLowerCase())) {
-					return one;
-				}
-			});
+		// assignValueToTypeSelected(state, event) {
+		// 	let filters = Object.values(state.filters);
+		// 	let selectedField = filters.find((one) => {
+		// 		// did the following if statement like this, so that i can add a string id + key to radio btn in the sidebarsearch component, so i can match the id to the label of the radio btn, and still be able to filter here,using the id coming from the selection
+		// 		if (event.target.id.toLowerCase().includes(one.id.toLowerCase())) {
+		// 			return one;
+		// 		}
+		// 	});
 
-			//in mobile view the fields selections are textcontent of event target because  they are divs. In desktop the fields selections are value of event target, they come from inputs
+		// 	//in mobile view the fields selections are textcontent of event target because  they are divs. In desktop the fields selections are value of event target, they come from inputs
 
-			// checks to use event.target.value
-			if (event.type == "input") {
-				if (
-					(selectedField.id === "priceFrom" ||
-						selectedField.id === "priceTo") &&
-					event.target.value
-				) {
-					selectedField.typeSelected = parseFloat(
-						event.target.value.replace(/\$|,/g, "")
-					);
-				} else if (
-					(selectedField.id === "priceFrom" ||
-						selectedField.id === "priceTo") &&
-					!event.target.value
-				) {
-					selectedField.typeSelected = 0;
-				} else {
-					selectedField.typeSelected = event.target.value;
-				}
-			}
-			// checks to use event.target.textcontent, instead
-			else {
-				if (
-					(selectedField.id === "priceFrom" ||
-						selectedField.id === "priceTo") &&
-					event.target.textContent
-				) {
-					selectedField.typeSelected = parseFloat(
-						event.target.textContent.replace(/\$|,/g, "")
-					);
-				} else if (
-					(selectedField.id === "priceFrom" ||
-						selectedField.id === "priceTo") &&
-					!event.target.textContent
-				) {
-					selectedField.typeSelected = 0;
-				} else {
-					selectedField.typeSelected = event.target.textContent;
-				}
-			}
-		},
+		// 	// checks to use event.target.value
+		// 	if (event.type == "input") {
+		// 		if (
+		// 			(selectedField.id === "priceFrom" ||
+		// 				selectedField.id === "priceTo") &&
+		// 			event.target.value
+		// 		) {
+		// 			selectedField.typeSelected = parseFloat(
+		// 				event.target.value.replace(/\$|,/g, "")
+		// 			);
+		// 		} else if (
+		// 			(selectedField.id === "priceFrom" ||
+		// 				selectedField.id === "priceTo") &&
+		// 			!event.target.value
+		// 		) {
+		// 			selectedField.typeSelected = 0;
+		// 		} else {
+		// 			selectedField.typeSelected = event.target.value;
+		// 		}
+		// 	}
+		// 	// checks to use event.target.textcontent, instead
+		// 	else {
+		// 		if (
+		// 			(selectedField.id === "priceFrom" ||
+		// 				selectedField.id === "priceTo") &&
+		// 			event.target.textContent
+		// 		) {
+		// 			selectedField.typeSelected = parseFloat(
+		// 				event.target.textContent.replace(/\$|,/g, "")
+		// 			);
+		// 		} else if (
+		// 			(selectedField.id === "priceFrom" ||
+		// 				selectedField.id === "priceTo") &&
+		// 			!event.target.textContent
+		// 		) {
+		// 			selectedField.typeSelected = 0;
+		// 		} else {
+		// 			selectedField.typeSelected = event.target.textContent;
+		// 		}
+		// 	}
+		// },
 
 		// receives the id of the clicked field, compares it to the id of car description data to decide which content to show in the card
-		updateClickedFieldContent(state, id) {
-			let filters = Object.values(state.filters);
-			if (
-				(id == "model" && state.filters.make.typeSelected == "") ||
-				(id == "model" && state.filters.make.typeSelected == "All Makes")
-			) {
-				state.clickedFieldContent = {
-					id: "model",
-					type: ["Select Make First"],
-				};
-			} else {
-				state.clickedFieldContent = filters.find(
-					(one) => one.id.toLowerCase() === id.toLowerCase()
-				);
-			}
-		},
+		// updateClickedFieldContent(state, id) {
+		// 	let filters = Object.values(state.filters);
+		// 	if (
+		// 		(id == "model" && state.filters.make.typeSelected == "") ||
+		// 		(id == "model" && state.filters.make.typeSelected == "All Makes")
+		// 	) {
+		// 		state.clickedFieldContent = {
+		// 			id: "model",
+		// 			type: ["Select Make First"],
+		// 		};
+		// 	} else {
+		// 		state.clickedFieldContent = filters.find(
+		// 			(one) => one.id.toLowerCase() === id.toLowerCase()
+		// 		);
+		// 	}
+		// },
 		// selects the car models to show according to the make selected
 
-		selectModelByMake(state, data) {
-			if (data.id == "make") {
-				state.carsData.forEach((one) => {
-					if (state.filters.make.typeSelected == one.make) {
-						state.filters.models.type = one.model.map((one) => {
-							return one.model;
-						});
-					}
-				});
-				// adds the option (all makes) and puts it in the first position in the array
-				if (state.filters.make.typeSelected != "All Makes") {
-					state.filters.models.type.unshift(
-						`All ${state.filters.make.typeSelected}`
-					);
-				}
-			}
-		},
+		// selectModelByMake(state, data) {
+		// 	if (data.id == "make") {
+		// 		state.carsData.forEach((one) => {
+		// 			if (state.filters.make.typeSelected == one.make) {
+		// 				state.filters.models.type = one.model.map((one) => {
+		// 					return one.model;
+		// 				});
+		// 			}
+		// 		});
+		// 		// adds the option (all makes) and puts it in the first position in the array
+		// 		if (state.filters.make.typeSelected != "All Makes") {
+		// 			state.filters.models.type.unshift(
+		// 				`All ${state.filters.make.typeSelected}`
+		// 			);
+		// 		}
+		// 	}
+		// },
 
-		selectPriceAndYear(state, data) {
-			let priceYear = [
-				state.filters.priceFrom,
-				state.filters.priceTo,
-				state.filters.yearFrom,
-				state.filters.yearTo,
-			];
-			priceYear.forEach((one) => {
-				if (one.id == data.clickedFieldContent.id) {
-					one.typeSelected = data.$event.currentTarget.textContent;
-				}
-			});
-		},
+		// selectPriceAndYear(state, data) {
+		// 	let priceYear = [
+		// 		state.filters.priceFrom,
+		// 		state.filters.priceTo,
+		// 		state.filters.yearFrom,
+		// 		state.filters.yearTo,
+		// 	];
+		// 	priceYear.forEach((one) => {
+		// 		if (one.id == data.clickedFieldContent.id) {
+		// 			one.typeSelected = data.$event.currentTarget.textContent;
+		// 		}
+		// 	});
+		// },
 		// sorts the vehicles that are displaying
-		sortBy(state, event) {
-			switch (event.target.value) {
-				case "lowestPrice":
-					state.vehiclesDisplay.sort((a, b) => a.price - b.price);
-					break;
-				case "highestPrice":
-					state.vehiclesDisplay.sort((a, b) => b.price - a.price);
-					break;
+		// sortBy(state, event) {
+		// 	switch (event.target.value) {
+		// 		case "lowestPrice":
+		// 			state.vehiclesDisplay.sort((a, b) => a.price - b.price);
+		// 			break;
+		// 		case "highestPrice":
+		// 			state.vehiclesDisplay.sort((a, b) => b.price - a.price);
+		// 			break;
 
-				case "lowestMileage":
-					state.vehiclesDisplay.sort((a, b) => {
-						return +a.miles.replace(/,/g, "") - +b.miles.replace(/,/g, "");
-					});
-					break;
+		// 		case "lowestMileage":
+		// 			state.vehiclesDisplay.sort((a, b) => {
+		// 				return +a.miles.replace(/,/g, "") - +b.miles.replace(/,/g, "");
+		// 			});
+		// 			break;
 
-				case "highestMileage":
-					state.vehiclesDisplay.sort((a, b) => {
-						return +b.miles.replace(/,/g, "") - +a.miles.replace(/,/g, "");
-					});
-					break;
+		// 		case "highestMileage":
+		// 			state.vehiclesDisplay.sort((a, b) => {
+		// 				return +b.miles.replace(/,/g, "") - +a.miles.replace(/,/g, "");
+		// 			});
+		// 			break;
 
-				case "newest":
-					state.vehiclesDisplay.sort((a, b) => b.year - a.year);
-					break;
+		// 		case "newest":
+		// 			state.vehiclesDisplay.sort((a, b) => b.year - a.year);
+		// 			break;
 
-				case "oldest":
-					state.vehiclesDisplay.sort((a, b) => a.year - b.year);
-					break;
+		// 		case "oldest":
+		// 			state.vehiclesDisplay.sort((a, b) => a.year - b.year);
+		// 			break;
 
-				default:
-					return;
-			}
-		},
+		// 		default:
+		// 			return;
+		// 	}
+		// },
 	},
 
-	actions: {
-		//fetches the cars data, then commits mutations in charge of setting data in the state.
-		async getCarsData({ commit, state }) {
-			// try {
-			// 	const response = await fetch(state.endPoints.carsUrl);
-			// 	const vehicles = await response.json();
-			// 	commit("SET_CARSData", vehicles);
-			// 	// commit("setMakes", vehicles);
-			// 	commit("saveAllModelsToLocal", vehicles);
-			// 	commit("getAllModelsFromLocal");
-			// 	commit("setItemsInArrayOfEveryPropType");
-			// } catch (error) {
-			// 	console.log(error);
-			// }
-		},
+	// actions: {
+	//fetches the cars data, then commits mutations in charge of setting data in the state.
+	// async getCarsData({ commit, state }) {
+	// try {
+	// 	const response = await fetch(state.endPoints.carsUrl);
+	// 	const vehicles = await response.json();
+	// 	commit("SET_CARSData", vehicles);
+	// 	// commit("setMakes", vehicles);
+	// 	commit("saveAllModelsToLocal", vehicles);
+	// 	commit("getAllModelsFromLocal");
+	// 	commit("setItemsInArrayOfEveryPropType");
+	// } catch (error) {
+	// 	console.log(error);
+	// }
+	// },
 
-		async getDealersData({ commit, state }) {
-			try {
-				const response = await fetch(state.endPoints.dealersUrl);
-				const carDealers = await response.json();
+	// 		async getDealersData({ commit, state }) {
+	// 			try {
+	// 				const response = await fetch(state.endPoints.dealersUrl);
+	// 				const carDealers = await response.json();
 
-				commit("setDealersData", carDealers);
-			} catch (error) {
-				console.log(error);
-			}
-		},
-	},
+	// 				commit("setDealersData", carDealers);
+	// 			} catch (error) {
+	// 				console.log(error);
+	// 			}
+	// 		},
+	// 	},
 
-	getters: {
-		carsDataReady(state) {
-			return state.carsData;
-		},
-		carToViewComputed(state) {
-			return state.carToView;
-		},
-	},
+	// 	getters: {
+	// 		carsDataReady(state) {
+	// 			return state.carsData;
+	// 		},
+	// 		carToViewComputed(state) {
+	// 			return state.carToView;
+	// 		},
+	// },
 });
