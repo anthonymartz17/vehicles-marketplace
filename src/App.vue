@@ -23,7 +23,7 @@ export default {
 	data() {
 		return {
 			isLoading: false,
-			desktopNav: [
+			navItems: [
 				{
 					name: "Home",
 					link: "Home",
@@ -40,7 +40,7 @@ export default {
 					icon: "fas fa-charging-station",
 				},
 				{
-					name: "Contacto",
+					name: "Contact",
 					link: "Contact",
 					icon: "fas fa-phone-volume",
 				},
@@ -48,6 +48,12 @@ export default {
 					name: "Join Us",
 					link: "JoinUs",
 					icon: "fas fa-phone-volume",
+				},
+				{
+					name: "LogOut",
+					link: "JoinUs",
+					icon: "fas fa-phone-volume",
+					auth:true
 				},
 			],
 		};
@@ -74,14 +80,14 @@ export default {
 	<div class="page-container">
 		<!-- <Loading v-model="isLoading" /> -->
 		<!-- toggleable menues -->
-		<MobileMenu :desktopNav="desktopNav" />
+		<MobileMenu :navItems="navItems" />
 		<!-- <div class="searchmenue">
 
 			<SearchMenue v-if="showSearchMenu" />
 	
 		</div> -->
 		<header>
-			<AppHeader :desktopNav="desktopNav" />
+			<AppHeader :navItems="navItems" />
 		</header>
 		<main>
 			<AppMain />

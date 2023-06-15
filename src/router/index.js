@@ -1,13 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
-import Electric from "../views/Electric.vue";
-import Contact from "../views/Contact.vue";
-import Advance from "../views/AdvanceSearch.vue";
-import CarToView from "../views/CarToView.vue";
-import SearchResults from "../views/SearchResults";
-import JoinUs from "../views/joinus/joinUs";
-import Dealers from "../views/Dealers";
 
 Vue.use(VueRouter);
 
@@ -15,42 +7,42 @@ const routes = [
 	{
 		path: "/",
 		name: "Home",
-		component: Home,
+		component: () => import("../views/Home.vue"),
 	},
 	{
 		path: "/electric",
 		name: "Electric",
-		component: Electric,
+		component: () => import("../views/Electric.vue"),
 	},
 	{
 		path: "/contact",
 		name: "Contact",
-		component: Contact,
+		component: () => import("../views/Contact.vue"),
 	},
 	{
 		path: "/advance",
 		name: "Advance",
-		component: Advance,
+		component: () => import("../views/AdvanceSearch.vue"),
 	},
 	{
 		path: "/cartToView",
 		name: "CarToView",
-		component: CarToView,
+		component: () => import("../views/CarToView.vue"),
 	},
 	{
 		path: "/searchResults",
 		name: "searchResults",
-		component: SearchResults,
+		component: () => import("../views/SearchResults"),
 	},
 	{
 		path: "/dealerInventory",
 		name: "dealerInventory",
-		component: Dealers,
+		component: () => import("../views/Dealers"),
 	},
 	{
 		path: "/joinUs",
 		name: "JoinUs",
-		component: JoinUs,
+		component: () => import("../views/authentication/joinUs"),
 	},
 ];
 

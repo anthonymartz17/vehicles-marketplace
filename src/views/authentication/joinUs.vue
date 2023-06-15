@@ -1,8 +1,8 @@
 <script>
-import Login from "../joinus/login-page";
-import Register from "../joinus/register-page";
-import SuccessConfirmation from "../../components/utilities/sucessModalConfirmation.vue";
-import { mapState } from 'vuex';
+import Login from "../authentication/login-page";
+import Register from "../authentication/register-page";
+import SuccessConfirmation from "../../components/utilities/alert-msg.vue";
+import { mapState } from "vuex";
 
 export default {
 	components: {
@@ -31,13 +31,19 @@ export default {
 		},
 	},
 	computed: {
-		...mapState("auth",["isSuccessRegistration"])
-	}
+		...mapState("auth", ["alert"]),
+	},
 };
 </script>
 <template>
 	<div class="joinus-wrapper">
-		<SuccessConfirmation v-show="isSuccessRegistration" @CheckLoginOptionEvent="checkLoginOption($event)" />
+		<SuccessConfirmation
+			v-show="alert.type"
+			@CheckLoginOptionEvent="checkLoginOption($event)"
+			alert="error"
+			title="Error"
+			msg="somehting went wrong"
+		/>
 		<div class="joinus-container">
 			<div class="component-tabs-container">
 				<button
@@ -76,7 +82,6 @@ export default {
 		</div>
 	</div>
 </template>
-
 
 <style lang="scss" scoped>
 .joinus-wrapper {

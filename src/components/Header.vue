@@ -1,7 +1,7 @@
 <script>
 import { mapMutations, mapState } from "vuex";
 export default {
-	props: ["desktopNav"],
+	props: ["navItems"],
 	methods: {
 		...mapMutations("vehicles", [
 			"TOGGLE_MOBILE_MENUE",
@@ -36,11 +36,10 @@ export default {
 					<img src="/images/icons/logo.png" alt="site logo" class="logo" />
 				</router-link>
 			</div>
-			<nav class="desktopNav-container">
-			
-				<ul class="desktopNav flex-a-c">
+			<nav class="navItems-container">
+				<ul class="navItems flex-a-c">
 					<li
-						v-for="(link, key) in desktopNav"
+						v-for="(link, key) in navItems"
 						:key="key"
 						@click="getCars(link.link)"
 					>
@@ -93,16 +92,15 @@ export default {
 .header-wrapper {
 	width: 100%;
 	justify-content: space-between;
-	
 }
 
-.desktopNav-container {
+.navItems-container {
 	display: none;
 	justify-content: center;
 	flex: 3;
 }
 
-.desktopNav {
+.navItems {
 	min-width: 35vw;
 	justify-content: space-around;
 
@@ -170,7 +168,7 @@ export default {
 			padding: 0 15em;
 			gap: 1em;
 		}
-		.desktopNav-container {
+		.navItems-container {
 			display: flex;
 			flex: 3;
 		}
@@ -183,10 +181,9 @@ export default {
 		}
 	}
 	.header-wrapper {
-		
-		@include breakpoint(lg-device){
+		@include breakpoint(lg-device) {
 			max-width: 1600px;
 		}
-		}
+	}
 }
 </style>

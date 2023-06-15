@@ -1,5 +1,5 @@
 <script>
-import { required, email } from "vuelidate/lib/validators";
+import { required,email } from "vuelidate/lib/validators";
 import { mapActions, mapMutations } from "vuex";
 
 export default {
@@ -11,40 +11,41 @@ export default {
 	},
 	validations: {
 		user: {
-			email: { required, email },
+			email: { required,email },
 			password: { required },
 		},
 	},
 	methods: {
-		...mapActions("auth", ["signUp"]),
-		...mapMutations("auth", ["SET_CONFIRMATION_MSG"]),
+		...mapActions("auth", ["signIn"]),
+		...mapMutations("auth", ["SET_ALERT_MSG"]),
 
-		async tryToRegisterIn() {
+		async tryToLogIn() {
 			this.submitted = true;
+			// stop here if form is invalid
+			this.$v.$touch();
+
 			if (this.$v.$invalid) {
 				return;
 			} else {
 				try {
-					await this.signUp({
+					let user = await this.signIn({
 						email: this.user.email,
 						password: this.user.password,
 					});
-
-					this.SET_CONFIRMATION_MSG(true);
+					console.log(user,'loggedin')
 				} catch (error) {
-					throw error;
+					this.SET_ALERT_MSG({ type: "error", title: "Error", msg: error });
 				}
 			}
 		},
 	},
 };
 </script>
-
 <template>
 	<div>
-		<form class="form" @submit.prevent="tryToRegisterIn">
-			<div class="form-field-container form-field-size">
-				<label for="email" class="form-label">Email address</label>
+		<form class="form" @submit.prevent="tryToLogIn">
+			<div class="form-field-container">
+				<label for="email" class="form-label">User email</label>
 				<input
 					id="email"
 					v-model="user.email"
@@ -52,17 +53,14 @@ export default {
 					placeholder="Enter email"
 					:class="[
 						'form-input',
-						{
-							'is-invalid ':
-								submitted && (!$v.user.email.required || !$v.user.email.email),
-						},
+						{ 'is-invalid ': submitted && !$v.user.email.required },
 					]"
 				/>
 				<div
 					v-if="submitted && !$v.user.email.required"
 					class="invalid-feedback"
 				>
-					Email is required.
+					Username is required.
 				</div>
 				<div
 					v-else-if="submitted && !$v.user.email.email"
@@ -72,8 +70,8 @@ export default {
 				</div>
 			</div>
 
-			<div class="form-field-container form-field-size">
-				<label for="input-2" class="form-label">Create password</label>
+			<div class="form-field-container">
+				<label for="input-2" class="form-label">Password</label>
 				<input
 					id="input-2"
 					v-model="user.password"
@@ -91,9 +89,21 @@ export default {
 					Password is required.
 				</div>
 			</div>
-
+			<!-- <div class="form-check mb-3">
+				<input
+					class="form-check-input"
+					id="customControlInline"
+					name="checkbox-1"
+					value="accepted"
+					:unchecked-value="not_accepted"
+					type="checkbox"
+				/>
+				<label class="form-check-label" for="customControlInline">
+					Remember me
+				</label>
+			</div> -->
 			<div class="submit-btn">
-				<button type="submit" class="btn">Register</button>
+				<button type="submit" class="btn">Login</button>
 			</div>
 		</form>
 	</div>
@@ -108,7 +118,7 @@ export default {
 }
 .form {
 	margin: 1em;
-	// height: 20em;
+	min-height: 20em;
 }
 .form-label {
 	font: $font-text-bold;
@@ -124,18 +134,5 @@ export default {
 	flex-direction: column;
 	margin-bottom: 1em;
 	//  font: $font-text;
-}
-
-.form {
-	@include breakpoint(tablet) {
-		.field-flex {
-			display: flex;
-			gap: 1em;
-			flex-wrap: wrap;
-		}
-		.form-field-size {
-			flex: 1;
-		}
-	}
 }
 </style>

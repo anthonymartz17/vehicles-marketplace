@@ -17,7 +17,7 @@
 			<nav class="nav-menu-container" v-show="showMobileMenue">
 				<ul>
 					<li
-						v-for="(link, key) in desktopNav"
+						v-for="(link, key) in navItems"
 						:key="key"
 						@click="
 							TOGGLE_MOBILE_MENUE();
@@ -39,7 +39,7 @@
 <script>
 import { mapMutations, mapState } from "vuex";
 export default {
-	props: ["desktopNav"],
+	props: ["navItems"],
 	methods: {
 		...mapMutations("vehicles", ["clearFilters", "TOGGLE_MOBILE_MENUE"]),
 	},
