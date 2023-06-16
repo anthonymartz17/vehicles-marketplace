@@ -43,8 +43,8 @@ export default {
 						:key="key"
 						@click="getCars(link.link)"
 					>
-						<router-link :to="{ name: link.link }">
-							<p>{{ link.name }}</p>
+						<router-link :to="{ name: link.routename }">
+							<p>{{ link.link }}</p>
 						</router-link>
 					</li>
 				</ul>

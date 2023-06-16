@@ -25,33 +25,38 @@ export default {
 			isLoading: false,
 			navItems: [
 				{
-					name: "Home",
 					link: "Home",
+					routename: "Home",
 					icon: "fas fa-home",
 				},
 				{
-					name: "Vehicles",
 					link: "searchResults",
+					routename: "Vehicles",
 					icon: "fas fa-car",
 				},
 				{
-					name: "Electric Cars",
+					routename: "Electric Cars",
 					link: "Electric",
 					icon: "fas fa-charging-station",
 				},
 				{
-					name: "Contact",
 					link: "Contact",
+					routename: "Contact",
 					icon: "fas fa-phone-volume",
 				},
 				{
-					name: "Join Us",
-					link: "JoinUs",
+					link: "Join Us",
+					routename: "JoinUs",
 					icon: "fas fa-phone-volume",
 				},
 				{
-					name: "LogOut",
-					link: "JoinUs",
+					link: "Dashboard",
+					routename: "Dashboard",
+					icon: "fas fa-phone-volume",
+				},
+				{
+					link: "LogOut",
+					routename: "JoinUs",
 					icon: "fas fa-phone-volume",
 					auth:true
 				},

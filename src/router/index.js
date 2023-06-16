@@ -44,6 +44,11 @@ const routes = [
 		name: "JoinUs",
 		component: () => import("../views/authentication/joinUs"),
 	},
+	{
+		path: "/dealer-info-form",
+		name: "dealer-info-form",
+		component: () => import("../views/dealer-views/dealer-info-form"),
+	},
 ];
 
 const router = new VueRouter({
