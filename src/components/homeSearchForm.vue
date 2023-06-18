@@ -15,7 +15,11 @@ export default {
 			searchLabels: ["Condition", "Make", "Model", "Year", "Price"],
 		};
 	},
+	created() {
+		//keeps local filter object updated with the state main object filters
 
+		Object.assign(this.filtersSelected, this.filteredObject);
+	},
 	methods: {
 		...mapMutations("filterOptions", ["SET_MODEL_OPTIONS"]),
 
@@ -32,11 +36,22 @@ export default {
 	},
 
 	computed: {
+		...mapState("vehicles", ["filters"]),
 		...mapGetters("vehicles", ["vehiclesList"]),
 		cartypes() {
 			return [
 				...new Set(this.vehiclesList.map((x) => x.carType.toLowerCase())),
 			];
+		},
+
+		filteredObject() {
+			return Object.keys(this.filters).reduce((acc, key) => {
+				const value = this.filters[key];
+				if (value !== "" && value !== 0 && value !== null) {
+					acc[key] = value;
+				}
+				return acc;
+			}, {});
 		},
 
 		...mapGetters("filterOptions", [
@@ -96,151 +111,164 @@ export default {
 };
 </script>
 <template>
-	<div class="search-vehicle">
-		<p class="search-title-desktop"><span> Search</span> Your Vehicle!</p>
+	<form class="form">
+		<div :class="['field', { 'align-block': $route.name == 'searchResults' }]">
+			<label for="condition">Condition:</label>
+			<multiselect
+				@input="$route.name == 'searchResults' ? fireSearch() : null"
+				class="dropdown"
+				v-model="filtersSelected.carCondition"
+				:options="carConditionOptions"
+				:searchable="false"
+				:show-labels="false"
+				placeholder="New/Used"
+			></multiselect>
+		</div>
 
-		<form>
-			<div class="field carCondition">
-				<label for="condition">Condition:</label>
+		<div :class="['field', { 'align-block': $route.name == 'searchResults' }]">
+			<label class="field-label" for="condition">Make:</label>
+			<multiselect
+				class="dropdown"
+				v-model="filtersSelected.make"
+				:options="makeOptions"
+				:searchable="false"
+				:show-labels="false"
+				placeholder="All makes"
+				@input="
+					filtersSelected.model ? (filtersSelected.model = '') : null;
+					SET_MODEL_OPTIONS({
+						list: vehiclesList,
+						make: filtersSelected.make,
+					});
+					$route.name == 'searchResults' ? fireSearch() : null;
+				"
+			></multiselect>
+		</div>
+
+		<div :class="['field', { 'align-block': $route.name == 'searchResults' }]">
+			<label for="condition">Model:</label>
+			<multiselect
+				@input="$route.name == 'searchResults' ? fireSearch() : null"
+				class="dropdown"
+				v-model="filtersSelected.model"
+				:options="modelOptions"
+				:searchable="false"
+				:show-labels="false"
+				:placeholder="
+					filtersSelected.make && filtersSelected.make !== 'All Makes'
+						? `All ${filtersSelected.make}S`
+						: 'All Models'
+				"
+			></multiselect>
+		</div>
+		<div :class="['field', { 'align-block': $route.name == 'searchResults' }]">
+			<label for="condition">Year:</label>
+			<div
+				:class="[
+					'double-input-container',
+					{ 'full-width': $route.name == 'searchResults' },
+				]"
+			>
 				<multiselect
+					@input="$route.name == 'searchResults' ? fireSearch() : null"
 					class="dropdown"
-					v-model="filtersSelected.carCondition"
-					:options="carConditionOptions"
+					v-model="filtersSelected.yearFrom"
+					:options="yearOptionsDynamic.from"
 					:searchable="false"
 					:show-labels="false"
-					placeholder="New/Used"
+					placeholder="From"
+				></multiselect>
+				<multiselect
+					@input="$route.name == 'searchResults' ? fireSearch() : null"
+					class="dropdown"
+					v-model="filtersSelected.yearTo"
+					:options="yearOptionsDynamic.to"
+					:searchable="false"
+					:show-labels="false"
+					placeholder="To"
 				></multiselect>
 			</div>
-			<div class="field">
-				<label for="condition">Make:</label>
+		</div>
+		<div :class="['field', { 'align-block': $route.name == 'searchResults' }]">
+			<label for="condition">Price:</label>
+			<div
+				:class="[
+					'double-input-container',
+					{ 'full-width': $route.name == 'searchResults' },
+				]"
+			>
 				<multiselect
+					@input="$route.name == 'searchResults' ? fireSearch() : null"
 					class="dropdown"
-					v-model="filtersSelected.make"
-					:options="makeOptions"
-					:searchable="false"
-					:show-labels="false"
-					placeholder="All makes"
-					@input="
-						SET_MODEL_OPTIONS({
-							list: vehiclesList,
-							make: filtersSelected.make,
-						})
+					v-model="filtersSelected.priceFrom"
+					:options="priceOptionsDynamic.from.map((x) => x.fromNumType)"
+					:custom-label="
+						(opt) => {
+							return priceOptionsDynamic.from.find((x) => x.fromNumType == opt)
+								.fromFormatted;
+						}
 					"
-				></multiselect>
-			</div>
-
-			<div class="field">
-				<label for="condition">Model:</label>
-				<multiselect
-					class="dropdown"
-					v-model="filtersSelected.model"
-					:options="modelOptions"
 					:searchable="false"
 					:show-labels="false"
-					:placeholder="
-						filtersSelected.make && filtersSelected.make !== 'All Makes'
-							? `All ${filtersSelected.make}S`
-							: 'All Models'
+					placeholder="From"
+				></multiselect>
+				<multiselect
+					@input="$route.name == 'searchResults' ? fireSearch() : null"
+					class="dropdown"
+					v-model="filtersSelected.priceTo"
+					:options="priceOptionsDynamic.to.map((x) => x.toNumType)"
+					:custom-label="
+						(opt) => {
+							return priceOptionsDynamic.to.find((x) => x.toNumType == opt)
+								.toFormatted;
+						}
 					"
+					:searchable="false"
+					:show-labels="false"
+					placeholder="To"
 				></multiselect>
 			</div>
-			<div class="field">
-				<label for="condition">Year:</label>
-				<div class="double-input-container">
-					<multiselect
-						class="dropdown"
-						v-model="filtersSelected.yearFrom"
-						:options="yearOptionsDynamic.from"
-						:searchable="false"
-						:show-labels="false"
-						placeholder="From"
-					></multiselect>
-					<multiselect
-						class="dropdown"
-						v-model="filtersSelected.yearTo"
-						:options="yearOptionsDynamic.to"
-						:searchable="false"
-						:show-labels="false"
-						placeholder="To"
-					></multiselect>
-				</div>
-			</div>
-			<div class="field">
-				<label for="condition">Price:</label>
-				<!-- <p>{{ priceOptions.from }}</p> -->
-				<div class="double-input-container">
-					<multiselect
-						class="dropdown"
-						v-model="filtersSelected.priceFrom"
-						:options="priceOptionsDynamic.from.map((x) => x.fromNumType)"
-						:custom-label="
-							(opt) => {
-								return priceOptionsDynamic.from.find(
-									(x) => x.fromNumType == opt
-								).fromFormatted;
-							}
-						"
-						:searchable="false"
-						:show-labels="false"
-						placeholder="From"
-					></multiselect>
-					<multiselect
-						class="dropdown"
-						v-model="filtersSelected.priceTo"
-						:options="priceOptionsDynamic.to.map((x) => x.toNumType)"
-						:custom-label="
-							(opt) => {
-								return priceOptionsDynamic.to.find((x) => x.toNumType == opt)
-									.toFormatted;
-							}
-						"
-						:searchable="false"
-						:show-labels="false"
-						placeholder="To"
-					></multiselect>
-				</div>
-			</div>
+		</div>
 
-			<div class="btn-container">
-				<div class="btn-search" @click="fireSearch()">Search</div>
-			</div>
-		</form>
-	</div>
+		<div v-show="$route.name !== 'searchResults'" class="btn-container">
+			<div class="btn-search" @click="fireSearch()">Search</div>
+		</div>
+	</form>
 </template>
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+
 <style lang="scss" scoped>
 .types-icon-container {
 	max-height: 100%;
 }
-.typesCarList {
-	height: 100%;
-	list-style: none;
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: 2em;
-	flex-wrap: wrap;
-	flex: 2;
+// .typesCarList {
+// 	height: 100%;
+// 	list-style: none;
+// 	display: grid;
+// 	grid-template-columns: 1fr 1fr;
+// 	gap: 2em;
+// 	flex-wrap: wrap;
+// 	flex: 2;
 
-	li {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		transition: all 0.3s ease-in-out;
-		&:hover {
-			background: lighten($lightestDark, 35);
-		}
+// 	li {
+// 		flex: 1;
+// 		display: flex;
+// 		flex-direction: column;
+// 		align-items: center;
+// 		justify-content: center;
+// 		transition: all 0.3s ease-in-out;
+// 		&:hover {
+// 			background: lighten($lightestDark, 35);
+// 		}
 
-		p {
-			font: $font-text-bold;
-			pointer-events: none;
-		}
-		.routerlink {
-			height: 100%;
-		}
-	}
-}
+// 		p {
+// 			font: $font-text-bold;
+// 			pointer-events: none;
+// 		}
+// 		.routerlink {
+// 			height: 100%;
+// 		}
+// 	}
+// }
 .type-cars-icons {
 	max-width: 40%;
 	pointer-events: none;
@@ -278,29 +306,37 @@ export default {
 	display: flex;
 	gap: 1em;
 }
+.full-width {
+	width: 100%;
+}
 .dropdown {
 	flex: 3;
 }
 .carCondition {
-	display: none;
+	// display: none;
 }
 .field {
 	margin-bottom: 1em;
-	// display: flex;
+	display: flex;
 	align-items: center;
 	font: $font-mobile-m-bold;
 
 	label {
 		flex: 1;
-		color: $light;
+		// color: $light;
 	}
 
-	select {
-		flex: 3;
-		font: $font-mobile-m-bold;
-		color: $dark;
-		padding: 0.2em;
-	}
+	// select {
+	// 	flex: 3;
+	// 	font: $font-mobile-m-bold;
+	// 	color: $dark;
+	// 	padding: 0.2em;
+	// }
+}
+
+.align-block {
+	flex-direction: column;
+	align-items: flex-start;
 }
 .btn-container {
 	height: 3em;
@@ -331,7 +367,7 @@ export default {
 	place-items: center;
 }
 
-.search-vehicle {
+.form {
 	@include breakpoint(tablet) {
 	}
 	@include breakpoint(desktop) {
@@ -341,10 +377,8 @@ export default {
 			margin-block: 1em;
 		}
 		.field {
-			display: flex;
-			label {
-				color: $dark;
-			}
+			// flex-direction: column;
+			// align-items: flex-start;
 		}
 		.btn-container {
 			display: flex;

@@ -43,8 +43,10 @@ export default {
 </script>
 <template>
 	<div class="search-type-wrapper">
-		<HomeSearchForm />
-
+		<div class="search-types">
+			<p class="search-title-desktop"><span> Searcch</span> your Vehicles!</p>
+			<HomeSearchForm />
+		</div>
 		<div class="search-types">
 			<p class="search-title-desktop"><span> Types</span> of Vehicles</p>
 			<ul class="typesCarList">

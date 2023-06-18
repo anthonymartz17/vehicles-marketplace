@@ -1,181 +1,7 @@
-<template>
-	<div class="sideBar">
-		<div class="field-and-checkbox">
-			<div class="field">
-				<label for="typeIn">Make | Model | Type of Vehicle</label>
-				<!-- added searchbyinput on focus, so that when the user clicks out but clicks back in the field and there is still something written, the search fires. -->
-				<input
-					placeholder=" Search your Vehicle"
-					@focus="fireSearchByInputText($event)"
-					@input="searchAfterFinishTyping"
-					class="field-box"
-					id="userInputId"
-					type="text"
-					:value="inputTextUser"
-				/>
-				<div class="inputDropDown" v-show="showDropDownTextField">
-					<div v-if="dropDownError">
-						<p>{{ dropDownErrorMsg }}</p>
-					</div>
-					<div v-else>
-						<div v-show="filters.make.typeSelected != ''">
-							<p class="list-title">Make</p>
-							<p
-								class="hover-list"
-								id="make"
-								@click="
-									onChangeMultiple($event);
-									selectModelByMake({$event, id: 'make'});
-								"
-								>{{ filters.make.typeSelected }}</p
-							>
-						</div>
-						<div v-show="filters.carType.typeSelected != ''">
-							<p class="list-title">CarType</p>
-							<p
-								class="hover-list"
-								id="carType"
-								@click="
-									onChangeMultiple($event);
-									selectModelByMake({$event, id: 'make'});
-								"
-								>{{ filters.carType.typeSelected }}</p
-							>
-						</div>
-						<div>
-							<p class="list-title">Models</p>
-							<ul>
-								<li
-									class="hover-list"
-									v-for="(model, key) in filters.models.type"
-									:key="key"
-									id="model"
-									@click="
-										onChangeMultiple($event);
-										selectModelByMake({$event, id: 'make'});
-									"
-									>{{ model.model }}</li
-								>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="field-checkbox">
-				<div v-for="(option, key) in filters.fuel.type" :key="key">
-					<input
-						type="radio"
-						:checked="
-							option === 'All'
-								? filters.fuel.typeSelected === ''
-								: option === filters.fuel.typeSelected
-						"
-						:value="option"
-						:id="`fuel ${key}`"
-						name="fuel"
-						@input="onChangeMultiple($event)"
-					/>
-					<label :for="`fuel ${key}`">{{ option }}</label>
-				</div>
-			</div>
-			<!-- <div class="year-price">
-				<PriceYear />
-			</div> -->
-			<div
-				class="make-models"
-				v-if="filters.make.typeSelected !== '' && !showDropDownTextField"
-			>
-				<p>Models</p>
-				<ul :class="['list']">
-					<li
-						v-for="(model, key) in filters.models.type"
-						:key="key"
-						:class="{
-							selected:
-								model.toLowerCase() ===
-								filters.models.typeSelected.toLowerCase(),
-						}"
-					>
-						<span id="model" @click="onChangeMultiple($event)">{{
-							model
-						}}</span>
-					</li>
-				</ul>
-				<small
-					id="clear-models"
-					@click="
-						clearInputTextUser('clear-models');
-						clearMakeModel('clear-models');
-					"
-					v-if="filters.models.typeSelected"
-					class="btn-search clear-btn"
-					>Clear this filter</small
-				>
-			</div>
-			<div class="make-models">
-				<p>Makes</p>
-				<ul :class="['listMakes', {showMoreMakes: moreLessMakes}]">
-					<li
-						v-for="(car, key) in carsData"
-						:key="key"
-						:class="{selected: car.make === filters.make.typeSelected}"
-					>
-						<span
-							id="make"
-							@click="
-								onChangeMultiple($event);
-								selectModelByMake({$event, id: 'make'});
-								clearInputTextUser('clear-models');
-								clearMakeModel('clear-models');
-							"
-							>{{ car.make }}</span
-						>
-						<span>({{ car.model.length }})</span>
-					</li>
-				</ul>
-				<small
-					id="clear-makes"
-					@click="
-						clearInputTextUser('clear-makes');
-						clearMakeModel('clear-makes');
-					"
-					v-if="filters.make.typeSelected && !showDropDownTextField"
-					class="btn-search clear-btn"
-					>Clear this filter</small
-				>
-				<p class="moreMakesBtn" @click="switchMoreMakes">{{
-					moreLessMakesBtn
-				}}</p>
-			</div>
-			<div class="other-options-wrapper">
-				<p class="title">Other options</p>
-				<ul class="other-options-list">
-					<li v-for="(filter, key) in otherOptions" :key="key">
-						<label>{{ filter.filter }}</label>
-						<select
-							@input="onChangeMultiple($event)"
-							:name="filter.filter"
-							:id="filter.id"
-						>
-							<option
-								v-for="(option, key) in filter.options"
-								:key="key"
-								:selected="option == filters.carCondition.typeSelected"
-							>
-								<p v-if="filter.id !== 'mileage'">{{ option }}</p>
-								<p v-else>{{ option }}</p>
-							</option>
-						</select>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</div>
-</template>
-
 <script>
-import {mapMutations, mapState} from "vuex";
-// import PriceYear from "./priceYearDesktop.vue";
+import { mapMutations, mapState } from "vuex";
+import HomeSearchForm from "./homeSearchForm.vue";
+import FullSearchForm from "./full-search-form.vue";
 export default {
 	data() {
 		return {
@@ -186,7 +12,8 @@ export default {
 		};
 	},
 	components: {
-		// PriceYear,
+		HomeSearchForm,
+		FullSearchForm,
 	},
 	mounted() {
 		this.scrollSelectedMakeOrModelIntoView();
@@ -330,8 +157,24 @@ export default {
 	},
 };
 </script>
+<template>
+	<div class="sideBar">
+		<fullSearchForm />
+	</div>
+</template>
 
 <style lang="scss" scoped>
+.top-buttons-container {
+	display: flex;
+
+	button {
+		flex: 1;
+		height: 3em;
+		font: $font-mobile-m-bold;
+		color: $dark;
+		cursor: pointer;
+	}
+}
 .selected {
 	color: $primary;
 }
@@ -363,9 +206,8 @@ export default {
 	background: darken($light, 20);
 }
 .sideBar {
-	background: lighten($lightestDark, 30);
+	background: $dark;
 	height: auto;
-	padding: 1em;
 }
 
 .field {

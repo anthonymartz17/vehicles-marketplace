@@ -10,11 +10,11 @@ export default {
 		vehiclesToDisplay: [],
 		filters: {
 			make: "",
-			models: "",
-			priceFrom: 0,
-			priceTo: 0,
-			yearFrom: 0,
-			yearTo: 0,
+			model: "",
+			priceFrom: null,
+			priceTo: null,
+			yearFrom: null,
+			yearTo: null,
 			carType: "",
 			carCondition: "",
 			fuel: "",
@@ -40,11 +40,11 @@ export default {
 			if (payload == null) {
 				state.filters = {
 					make: "",
-					models: "",
-					priceFrom: 0,
-					priceTo: 0,
-					yearFrom: 0,
-					yearTo: 0,
+					model: "",
+					priceFrom: null,
+					priceTo: null,
+					yearFrom: null,
+					yearTo: null,
 					carType: "",
 					carCondition: "",
 					fuel: "",
@@ -61,7 +61,6 @@ export default {
 		},
 		FILTER_VEHICLES(state) {
 			let results = state.vehicles;
-			console.log("new filterssss", state.filters);
 			if (
 				state.filters.carCondition !== "" &&
 				state.filters.carCondition !== "New/Used"
@@ -79,7 +78,6 @@ export default {
 				results = results.filter(
 					(one) => one.dealerId === state.filters.dealerId
 				);
-				console.log(results, "jdealers");
 			}
 			if (
 				state.filters.transmission !== "" &&
@@ -140,16 +138,16 @@ export default {
 
 				// state.inputTextUser = state.filters.carType;
 			}
-			if (state.filters.priceFrom != 0) {
+			if (state.filters.priceFrom != null) {
 				results = results.filter((one) => one.price >= state.filters.priceFrom);
 			}
-			if (state.filters.priceTo != 0) {
+			if (state.filters.priceTo != null) {
 				results = results.filter((one) => one.price <= state.filters.priceTo);
 			}
-			if (state.filters.yearFrom > 0) {
+			if (state.filters.yearFrom != null) {
 				results = results.filter((one) => one.year >= state.filters.yearFrom);
 			}
-			if (state.filters.yearTo > 0) {
+			if (state.filters.yearTo != null) {
 				results = results.filter((one) => one.year <= state.filters.yearTo);
 			}
 			// the following condition ensures to show selected make, and in case all makes is selected, it doesnt get into the condition which makes the program run as if nothing was selected and shows all makes avalables.
@@ -162,16 +160,15 @@ export default {
 			}
 
 			if (
-				state.filters.models != "" &&
-				state.filters.models != `All ${state.filters.make}`
+				state.filters.model != "" &&
+				state.filters.model != `All ${state.filters.make}`
 			) {
 				results = results.filter((one) =>
 					one.model
 						.toLowerCase()
-						.includes(state.filters.models.toLowerCase().trim())
+						.includes(state.filters.model.toLowerCase().trim())
 				);
 			}
-			console.log(results, "end", state.filters);
 			localStorage.setItem("searchResults", JSON.stringify(results));
 			state.vehiclesToDisplay = results;
 			state.showDropDownTextField = false;
@@ -182,11 +179,9 @@ export default {
 		},
 		TOGGLE_SEARCH_MENU(state) {
 			state.showSearchMenu = !state.showSearchMenu;
-			console.log(state.showSearchMenu )
 		},
 		// sorts the vehicles that are displaying
 		SORT_VEHICLES(state, id) {
-			console.log(id, "klk");
 			switch (id) {
 				case "lowestPrice":
 					state.vehiclesToDisplay.sort((a, b) => a.price - b.price);

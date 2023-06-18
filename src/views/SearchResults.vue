@@ -1,18 +1,20 @@
 <script>
 import VehiclesDisplay from "../components/VehiclesDisplay.vue";
-import SideSearch from "../components/sideBarSearch.vue";
+// import SideSearch from "../components/sideBarSearch.vue";
 import Multiselect from "vue-multiselect";
-import { mapMutations } from "vuex";
+import { mapMutations, mapState } from "vuex";
+import FullSearchForm from "../components/full-search-form.vue";
 
 export default {
 	components: {
 		VehiclesDisplay,
-		SideSearch,
+		// SideSearch,
 		Multiselect,
+		FullSearchForm,
 	},
 	data() {
 		return {
-			selectedSortId:'',
+			selectedSortId: "",
 			sortingOptions: [
 				{ name: "Lowest price first", id: "lowestPrice" },
 				{ name: "Highest price first", id: "highestPrice" },
@@ -21,38 +23,71 @@ export default {
 				{ name: "Newest first (by Car year)", id: "newest" },
 				{ name: "Oldest first (by Car year)", id: "oldest" },
 			],
+	
 		};
 	},
 	methods: {
-		...mapMutations("vehicles", ["SORT_VEHICLES"]),
+		...mapMutations("vehicles", ["SORT_VEHICLES", "UPDATE_FILTERS"]),
+	},
+
+	// beforeRouteLeave(to, from, next) {
+	// 	if (to !== "Advance") {
+	// 		this.UPDATE_FILTERS(null);
+	// 		next()
+	// 	}
+	// },
+	computed: {
+		...mapState("vehicles", ["filters"]),
+		appliedFilters() {
+			let list =  Object.keys(this.filters).reduce((acc, key) => {
+				const value = this.filters[key];
+				if (value !== "" && value !== 0 && value !== null) {
+					acc[key] = value;
+				}
+				return acc;
+			}, {});
+			return Object.keys(list)
+		}
 	},
 };
 </script>
 <template>
 	<div class="resultsWrapper">
-		<div class="sort-ad-wrapper">
+		<div class="sort-filter-wrapper">
 			<div class="sort">
 				<multiselect
-				v-model="selectedSortId"
+					v-model="selectedSortId"
 					:options="sortingOptions.map((x) => x.id)"
-					:custom-label="(opt)=>{
-						const selected = sortingOptions.find(x => x.id == opt)
-						return selected.name
-					}"
+					:custom-label="
+						(opt) => {
+							const selected = sortingOptions.find((x) => x.id == opt);
+							return selected.name;
+						}
+					"
 					:searchable="false"
 					:show-labels="false"
 					placeholder="Sort by:"
 					@input="SORT_VEHICLES(selectedSortId)"
 				></multiselect>
-
+			</div>
+			<h3 v-show="appliedFilters.length > 0" class="small-sub-title">Filtering by:</h3>
+			<div class="applied-filters">
+				<div
+					class="filter-applied"
+					v-for="filter in appliedFilters"
+					:key="filter"
+				>
+					<p>{{ filter }}</p>
+					<button>X</button>
+				</div>
 			</div>
 		</div>
 		<div class="sideSearch">
-			<SideSearch />
+			<!-- <SideSearch /> -->
+			<FullSearchForm />
 		</div>
-		
+
 		<div class="results">
-		
 			<VehiclesDisplay />
 		</div>
 	</div>
@@ -69,11 +104,14 @@ export default {
 			"sideSearch results results";
 	}
 }
-.sort-ad-wrapper {
+.sort-filter-wrapper {
 	display: none;
 	@include desktop {
 		grid-area: head;
 		display: flex;
+		flex-direction: column;
+		align-items: baseline;
+		padding-inline: .5em;
 	}
 }
 
@@ -81,15 +119,41 @@ export default {
 	display: none;
 	@include desktop {
 		display: flex;
-		flex: 1;
-		align-items: flex-end;
+		width: 15em;
 		padding: 0.2em;
+	}
+}
+.applied-filters {
+	display: flex;
+	flex-wrap: wrap;
+	gap: .5em;
 
-		select {
-			height: 2em;
-			border: 1px solid $lightestDark;
-			font: $font-mobile-m-bold;
-		}
+
+}
+.small-sub-title{
+	font: $font-text-bold;
+	color: $dark;
+	margin-bottom: .3em;
+
+}
+.filter-applied {
+	background: $dark;
+	color: $light;
+	font: $font-mobile-m-bold;
+	border: 1px solid;
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	
+	p {
+		flex: 1;
+		padding-inline: .2em;
+	}
+	button {
+		cursor: pointer;
+		background:$primary;
+		color: $light;
+		padding: .2em;
 	}
 }
 .results {
@@ -102,7 +166,8 @@ export default {
 	@include desktop {
 		display: block;
 		grid-area: sideSearch;
-		padding-inline: 1em;
+		background: $dark;
+		// padding-inline: 1em;
 	}
 }
 </style>

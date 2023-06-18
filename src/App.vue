@@ -30,8 +30,8 @@ export default {
 					icon: "fas fa-home",
 				},
 				{
-					link: "searchResults",
-					routename: "Vehicles",
+					link: "Vehicles",
+					routename: "searchResults",
 					icon: "fas fa-car",
 				},
 				{
@@ -58,7 +58,7 @@ export default {
 					link: "LogOut",
 					routename: "JoinUs",
 					icon: "fas fa-phone-volume",
-					auth:true
+					auth: true,
 				},
 			],
 		};
@@ -72,7 +72,6 @@ export default {
 	methods: {
 		...mapActions("vehicles", ["fetchVehicles", "fetchVehiclesImages"]),
 
-		// ...mapMutations(["toggleMobileMenu", "detectResize"]),
 
 		...mapMutations("filterOptions", ["SET_FILTERS_OPTIONS"]),
 	},

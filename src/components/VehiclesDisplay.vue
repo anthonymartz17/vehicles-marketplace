@@ -177,7 +177,7 @@ export default {
 .vehicles-display {
 	&-car {
 		display: flex;
-		justify-content: space-around;
+		// justify-content: space-around;
 		gap: 0.5em;
 		padding-block: 0.3em;
 	}
