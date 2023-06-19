@@ -36,7 +36,6 @@ export default {
 			}
 		},
 		removeFilter({ id }) {
-			console.log(this.filtersSelected, "b");
 			switch (id) {
 				case "year":
 					this.filtersSelected.yearFrom = null;
@@ -56,8 +55,6 @@ export default {
 			}
 
 			this.fireSearch();
-			console.log(this.filters, "state");
-			console.log(this.filtersSelected, "local");
 		},
 	},
 	computed: {

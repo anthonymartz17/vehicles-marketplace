@@ -23,31 +23,38 @@ export default {
 				{ name: "Newest first (by Car year)", id: "newest" },
 				{ name: "Oldest first (by Car year)", id: "oldest" },
 			],
-	
 		};
 	},
 	methods: {
-		...mapMutations("vehicles", ["SORT_VEHICLES", "UPDATE_FILTERS"]),
+		...mapMutations("vehicles", ["SORT_VEHICLES", "UPDATE_FILTERS","FILTER_VEHICLES"]),
+		fireRemoveFilter(id) {
+			if (id == "yearFrom" || id == "yearTo") {
+				id = "year";
+			}
+			if (id == "priceFrom" || id == "priceTo") {
+				id = "price";
+			}
+			this.$refs.removeFilter.removeFilter({ id });
+		},
 	},
-
-	// beforeRouteLeave(to, from, next) {
-	// 	if (to !== "Advance") {
-	// 		this.UPDATE_FILTERS(null);
-	// 		next()
-	// 	}
-	// },
+// 	created() {
+// 		let list = JSON.parse(localStorage.getItem('searchResults'))
+// 		if (!list) {
+// 		this.FILTER_VEHICLES()
+// 	}
+// },
 	computed: {
 		...mapState("vehicles", ["filters"]),
 		appliedFilters() {
-			let list =  Object.keys(this.filters).reduce((acc, key) => {
+			let list = Object.keys(this.filters).reduce((acc, key) => {
 				const value = this.filters[key];
 				if (value !== "" && value !== 0 && value !== null) {
 					acc[key] = value;
 				}
 				return acc;
 			}, {});
-			return Object.keys(list)
-		}
+			return Object.keys(list);
+		},
 	},
 };
 </script>
@@ -70,7 +77,9 @@ export default {
 					@input="SORT_VEHICLES(selectedSortId)"
 				></multiselect>
 			</div>
-			<h3 v-show="appliedFilters.length > 0" class="small-sub-title">Filtering by:</h3>
+			<h3 v-show="appliedFilters.length > 0" class="small-sub-title">
+				Filtering by:
+			</h3>
 			<div class="applied-filters">
 				<div
 					class="filter-applied"
@@ -78,13 +87,13 @@ export default {
 					:key="filter"
 				>
 					<p>{{ filter }}</p>
-					<button>X</button>
+					<button @click="fireRemoveFilter(filter)">X</button>
 				</div>
 			</div>
 		</div>
 		<div class="sideSearch">
 			<!-- <SideSearch /> -->
-			<FullSearchForm />
+			<FullSearchForm ref="removeFilter" />
 		</div>
 
 		<div class="results">
@@ -111,7 +120,7 @@ export default {
 		display: flex;
 		flex-direction: column;
 		align-items: baseline;
-		padding-inline: .5em;
+		padding-inline: 0.5em;
 	}
 }
 
@@ -126,15 +135,12 @@ export default {
 .applied-filters {
 	display: flex;
 	flex-wrap: wrap;
-	gap: .5em;
-
-
+	gap: 0.5em;
 }
-.small-sub-title{
+.small-sub-title {
 	font: $font-text-bold;
 	color: $dark;
-	margin-bottom: .3em;
-
+	margin-bottom: 0.3em;
 }
 .filter-applied {
 	background: $dark;
@@ -144,16 +150,16 @@ export default {
 	display: flex;
 	justify-content: space-between;
 	align-items: baseline;
-	
+
 	p {
 		flex: 1;
-		padding-inline: .2em;
+		padding-inline: 0.2em;
 	}
 	button {
 		cursor: pointer;
-		background:$primary;
+		background: $primary;
 		color: $light;
-		padding: .2em;
+		padding: 0.2em;
 	}
 }
 .results {
