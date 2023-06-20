@@ -7,6 +7,7 @@ export default {
 		Multiselect,
 		SearchBtn,
 	},
+
 	data() {
 		return {
 			filtersSelected: {},
@@ -35,6 +36,11 @@ export default {
 				this.$router.replace({ name: "searchResults" });
 			}
 		},
+		clearFilters() {
+			this.filtersSelected = {};
+			this.UPDATE_FILTERS(null);
+			this.FILTER_VEHICLES();
+		},
 		removeFilter({ id }) {
 			switch (id) {
 				case "year":
@@ -58,7 +64,11 @@ export default {
 		},
 	},
 	computed: {
-		...mapGetters("vehicles", ["vehiclesList", "dealersList"]),
+		...mapGetters("vehicles", [
+			"vehiclesList",
+			"dealersList",
+			"appliedFilters",
+		]),
 		...mapState("vehicles", ["filters"]),
 
 		...mapGetters("filterOptions", [
@@ -130,8 +140,19 @@ export default {
 <template>
 	<form action="">
 		<div class="advance-search">
-			<div class="">
-				<!-- <h5 class="sub-title">Advanced Search!</h5> -->
+			<div>
+				<div v-if="$route.name !== 'searchResults'" class="btn-container">
+					<router-link class="cancel-btn" :to="{ name: 'searchResults' }"
+						>Cancel</router-link
+					>
+					<h3 @click="clearFilters" class="cancel-btn">
+						Clear {{ appliedFilters.length }} filter<span
+							v-show="appliedFilters.length > 1"
+							>s</span
+						>
+					</h3>
+					<div class="btn-search" @click="fireSearch()">Apply</div>
+				</div>
 				<div>
 					<div class="field">
 						<label for="condition">Condition:</label>
@@ -420,11 +441,35 @@ export default {
 </template>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style lang="scss">
+.cancel-btn {
+	flex: 1;
+	transition: all 0.3s ease-in-out;
+	word-break:break-all;
+	color: $light;
+	font: $font-text-bold;
+	display: grid;
+	place-items: center;
+	border: 0.5px solid $light;
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+	&:hover {
+		transform: scale(1.01);
+		cursor: pointer;
+	}
+}
+.clear-btn {
+	padding: 0.2em;
+	border: 1px solid $primary;
+	cursor: pointer;
+	font: $font-text-bold;
+	color: $dark;
+	margin-bottom: 0.3em;
+}
 .advance-search {
 	padding-bottom: 3em;
 	// background: $dark;
 	padding-inline: 0.5em;
 }
+
 .eliminate-filter {
 	color: $primary;
 	cursor: pointer;
@@ -433,13 +478,17 @@ export default {
 
 .btn-container {
 	height: 3em;
+	display: flex;
+	gap: 1em;
+	justify-content: space-around;
 }
 .btn-search {
-	font: $font-text-bold;
-	background: $primary;
-	height: 100%;
-	outline: none;
-	border: none;
+	flex: 1;
+
+	// background: $primary;
+
+	// height: 100%;
+	// border: none;
 }
 .sub-title {
 	font: $font-mobile-l;

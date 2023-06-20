@@ -2,7 +2,7 @@
 import VehiclesDisplay from "../components/VehiclesDisplay.vue";
 // import SideSearch from "../components/sideBarSearch.vue";
 import Multiselect from "vue-multiselect";
-import { mapMutations, mapState } from "vuex";
+import { mapGetters, mapMutations, mapState } from "vuex";
 import FullSearchForm from "../components/full-search-form.vue";
 
 export default {
@@ -26,7 +26,11 @@ export default {
 		};
 	},
 	methods: {
-		...mapMutations("vehicles", ["SORT_VEHICLES", "UPDATE_FILTERS","FILTER_VEHICLES"]),
+		...mapMutations("vehicles", [
+			"SORT_VEHICLES",
+			"UPDATE_FILTERS",
+			"FILTER_VEHICLES",
+		]),
 		fireRemoveFilter(id) {
 			if (id == "yearFrom" || id == "yearTo") {
 				id = "year";
@@ -36,25 +40,35 @@ export default {
 			}
 			this.$refs.removeFilter.removeFilter({ id });
 		},
-	},
-// 	created() {
-// 		let list = JSON.parse(localStorage.getItem('searchResults'))
-// 		if (!list) {
-// 		this.FILTER_VEHICLES()
-// 	}
-// },
-	computed: {
-		...mapState("vehicles", ["filters"]),
-		appliedFilters() {
-			let list = Object.keys(this.filters).reduce((acc, key) => {
-				const value = this.filters[key];
-				if (value !== "" && value !== 0 && value !== null) {
-					acc[key] = value;
-				}
-				return acc;
-			}, {});
-			return Object.keys(list);
+		fireClearFilters() {
+			this.$refs.removeFilter.clearFilters();
 		},
+	},
+	// 	created() {
+	// 		let list = JSON.parse(localStorage.getItem('searchResults'))
+	// 		if (!list) {
+	// 		this.FILTER_VEHICLES()
+	// 	}
+	// },
+	computed: {
+		// ...mapState("vehicles", ["filters"]),
+		...mapGetters("vehicles", ["appliedFilters"]),
+		// appliedFilters() {
+		// 	let list = Object.keys(this.filters).reduce((acc, key) => {
+		// 		const value = this.filters[key];
+		// 		if (value !== "" && value !== 0 && value !== null) {
+		// 			acc[key] = value;
+		// 		}
+		// 		return acc;
+		// 	}, {});
+		// 	// only keeps first word that s before cap lette. so priceFrom,priceto become price and its only one word in the array reffereing to the price. same with year.
+		// 	let finalList = Object.keys(list).map((one) => {
+		// 		const match = one.match(/[A-Z]/);
+		// 		return one.split(match)[0];
+		// 	});
+		// 	//get rid of duplicate elements in the array
+		// 	return [...new Set(finalList)];
+		// },
 	},
 };
 </script>
@@ -77,18 +91,28 @@ export default {
 					@input="SORT_VEHICLES(selectedSortId)"
 				></multiselect>
 			</div>
-			<h3 v-show="appliedFilters.length > 0" class="small-sub-title">
+			<!-- <h3 v-show="appliedFilters.length > 0" class="small-sub-title">
 				Filtering by:
-			</h3>
+			</h3> -->
 			<div class="applied-filters">
-				<div
+				<!-- <div
 					class="filter-applied"
 					v-for="filter in appliedFilters"
 					:key="filter"
 				>
 					<p>{{ filter }}</p>
 					<button @click="fireRemoveFilter(filter)">X</button>
-				</div>
+				</div> -->
+				<h3
+					@click="fireClearFilters"
+					v-show="appliedFilters.length > 0"
+					class="clear-btn"
+				>
+					Clear {{ appliedFilters.length }} filter<span
+						v-show="appliedFilters.length > 1"
+						>s</span
+					>
+				</h3>
 			</div>
 		</div>
 		<div class="sideSearch">
@@ -103,6 +127,14 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.clear-btn {
+	padding: 0.2em;
+	border: 1px solid $primary;
+	cursor: pointer;
+	font: $font-text-bold;
+	color: $dark;
+	margin-bottom: 0.3em;
+}
 .resultsWrapper {
 	@include desktop {
 		display: grid;
@@ -137,11 +169,7 @@ export default {
 	flex-wrap: wrap;
 	gap: 0.5em;
 }
-.small-sub-title {
-	font: $font-text-bold;
-	color: $dark;
-	margin-bottom: 0.3em;
-}
+
 .filter-applied {
 	background: $dark;
 	color: $light;

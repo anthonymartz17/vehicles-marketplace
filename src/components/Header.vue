@@ -32,7 +32,7 @@ export default {
 			<i class="fas fa-bars fa-2x" @click="TOGGLE_MOBILE_MENUE()"></i>
 
 			<div class="logo-container">
-				<router-link :to="{ name: 'Home' }">
+				<router-link :to="{ name: 'home' }">
 					<img src="/images/icons/logo.png" alt="site logo" class="logo" />
 				</router-link>
 			</div>
@@ -52,7 +52,7 @@ export default {
 			<div class="searchIcon">
 				<router-link
 					@click="clearFilters()"
-					:to="{ name: 'Advance' }"
+					:to="{ name: 'advance' }"
 					tag="div"
 				>
 					<i class="fas fa-search"></i>

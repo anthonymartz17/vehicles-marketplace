@@ -3,7 +3,7 @@
 		<p class="search-fields-container-title">Search for Your Vehicle!</p>
 
 		<HomeSearchForm />
-		<router-link :to="{ name: 'Advance' }">
+		<router-link :to="{ name: 'advance' }">
 			<div class="btn btn-advanceSearch" @click="clearFilters()">
 				Advanced Search
 			</div>

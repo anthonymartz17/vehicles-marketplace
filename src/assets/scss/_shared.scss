@@ -158,6 +158,8 @@ a {
 	color: $light;
 	display: grid;
 	place-items: center;
+	font: $font-text-bold;
+		border: .5px solid $light;
 	&:hover {
 		transform: scale(1.01);
 		cursor: pointer;

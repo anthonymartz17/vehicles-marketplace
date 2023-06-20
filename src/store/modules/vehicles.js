@@ -171,7 +171,7 @@ export default {
 			}
 			localStorage.setItem("searchResults", JSON.stringify(results));
 			state.vehiclesToDisplay = results;
-			state.showDropDownTextField = false;
+			// state.showDropDownTextField = false;
 		},
 
 		TOGGLE_MOBILE_MENUE(state) {
@@ -227,9 +227,22 @@ export default {
 				return state.dealers;
 			}
 		},
-		// vehiclesToDisplayList(state) {
-		// 	return state.vehiclesToDisplay = JSON.parse(localStorage.getItem("searchResults"));
-		// }
+		appliedFilters(state) {
+			let list = Object.keys(state.filters).reduce((acc, key) => {
+				const value = state.filters[key];
+				if (value !== "" && value !== 0 && value !== null) {
+					acc[key] = value;
+				}
+				return acc;
+			}, {});
+			// only keeps first word that s before cap lette. so priceFrom,priceto become price and its only one word in the array reffereing to the price. same with year.
+			let finalList = Object.keys(list).map((one) => {
+				const match = one.match(/[A-Z]/);
+				return one.split(match)[0];
+			});
+			//get rid of duplicate elements in the array
+			return [...new Set(finalList)];
+		},
 	},
 
 	actions: {

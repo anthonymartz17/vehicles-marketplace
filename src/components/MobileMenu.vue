@@ -17,15 +17,16 @@
 			<nav class="nav-menu-container" v-show="showMobileMenue">
 				<ul>
 					<li
+					v-show="SHOULD_SHOW_NAV(link.link)"
 						v-for="(link, key) in navItems"
 						:key="key"
 						@click="
 							TOGGLE_MOBILE_MENUE();
-							clearFilters();
-							link.link === 'Vehicles' ? clearFilters() : null;
-						"
+							UPDATE_FILTERS()
+							"
 					>
-						<router-link :to="{ name: link.link }" class="tabs">
+					<!-- link.link === 'Vehicles' ? clearFilters() : null; -->
+						<router-link :to="{ name: link.routename }" class="tabs">
 							<i :class="link.icon"></i>
 							<p>{{ link.link }}</p>
 						</router-link>
@@ -41,7 +42,8 @@ import { mapMutations, mapState } from "vuex";
 export default {
 	props: ["navItems"],
 	methods: {
-		...mapMutations("vehicles", ["clearFilters", "TOGGLE_MOBILE_MENUE"]),
+		...mapMutations("vehicles", ["UPDATE_FILTERS", "TOGGLE_MOBILE_MENUE","SHOULD_SHOW_NAV"]),
+		...mapMutations("auth", ["SHOULD_SHOW_NAV"]),
 	},
 	computed: {
 		...mapState("vehicles", ["showMobileMenue"]),

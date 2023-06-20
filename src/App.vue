@@ -26,7 +26,7 @@ export default {
 			navItems: [
 				{
 					link: "Home",
-					routename: "Home",
+					routename: "home",
 					icon: "fas fa-home",
 				},
 				{
@@ -34,29 +34,29 @@ export default {
 					routename: "searchResults",
 					icon: "fas fa-car",
 				},
-				{
-					routename: "Electric Cars",
-					link: "Electric",
-					icon: "fas fa-charging-station",
-				},
+				// {
+				// 	routename: "Electric Cars",
+				// 	link: "Electric",
+				// 	icon: "fas fa-charging-station",
+				// },
 				{
 					link: "Contact",
-					routename: "Contact",
+					routename: "contact",
 					icon: "fas fa-phone-volume",
 				},
 				{
 					link: "Join Us",
-					routename: "JoinUs",
+					routename: "joinUs",
 					icon: "fas fa-phone-volume",
 				},
 				{
 					link: "Dashboard",
-					routename: "Dashboard",
+					routename: "dashboard",
 					icon: "fas fa-phone-volume",
 				},
 				{
 					link: "LogOut",
-					routename: "JoinUs",
+					routename: "joinUs",
 					icon: "fas fa-phone-volume",
 					auth: true,
 				},
@@ -71,7 +71,6 @@ export default {
 	},
 	methods: {
 		...mapActions("vehicles", ["fetchVehicles", "fetchVehiclesImages"]),
-
 
 		...mapMutations("filterOptions", ["SET_FILTERS_OPTIONS"]),
 	},

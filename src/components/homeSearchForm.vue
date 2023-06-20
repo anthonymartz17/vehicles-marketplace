@@ -113,7 +113,7 @@ export default {
 <template>
 	<form class="form">
 		<div :class="['field', { 'align-block': $route.name == 'searchResults' }]">
-			<label for="condition">Condition:</label>
+			<label class="field-label" for="condition">Condition:</label>
 			<multiselect
 				@input="$route.name == 'searchResults' ? fireSearch() : null"
 				class="dropdown"
@@ -317,7 +317,7 @@ export default {
 }
 .field {
 	margin-bottom: 1em;
-	display: flex;
+
 	align-items: center;
 	font: $font-mobile-m-bold;
 
@@ -377,8 +377,11 @@ export default {
 			margin-block: 1em;
 		}
 		.field {
-			// flex-direction: column;
-			// align-items: flex-start;
+			display: flex;
+
+			label{
+				color: $dark;
+			}
 		}
 		.btn-container {
 			display: flex;

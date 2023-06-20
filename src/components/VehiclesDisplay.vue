@@ -40,7 +40,7 @@ export default {
 
 		vehiclesToDisplayList() {
 			let list;
-			if (this.$route.name == "Home") {
+			if (this.$route.name == "home") {
 				// shuffles the list
 				const shuffledArray = this.vehiclesList.sort(() => Math.random() - 0.5);
 				list = shuffledArray.slice(0, 8);
@@ -69,8 +69,10 @@ export default {
 						class="fas fa-leaf"
 					></i>
 				</h4>
-				<router-link :to="{name:'Advance'}">
-					<div v-show="$route.name !== 'Home'" class="btn-adjustSearch">Adjust Search</div>
+				<router-link :to="{ name: 'Advance' }">
+					<div v-show="$route.name !== 'Home'" class="btn-adjustSearch">
+						Adjust Search
+					</div>
 				</router-link>
 			</div>
 
@@ -87,7 +89,7 @@ export default {
 					v-for="(car, key) in vehiclesToDisplayList"
 					:key="key"
 				>
-					<router-link :to="{ name: 'CarToView', query: { id: car.id } }">
+					<router-link :to="{ name: 'carToView', query: { id: car.id } }">
 						<div v-if="car && car.carPicsUrls" class="vehicles-display-img">
 							<img :src="car.carPicsUrls[0]" :alt="`picture of ${car.model}`" />
 						</div>
@@ -113,14 +115,7 @@ export default {
 			</div>
 		</div>
 		<router-link class="moreVehicleBtn" :to="{ name: 'searchResults' }">
-			<div
-				@click="
-					searchVehicles();
-					setDataInVehiclesDisplayFromLocal();
-				"
-				v-show="$route.name == 'Home'"
-				class="btn-search btn"
-			>
+			<div v-show="$route.name == 'Home'" class="btn-search btn">
 				+ More Vehicles
 			</div>
 		</router-link>

@@ -16,6 +16,17 @@ export default {
 			state.alert = payload;
 			console.log(state.alert,'el test')
 		},
+		SHOULD_SHOW_NAV(link) {
+			let showNav = true;
+			if (
+				(link == "DASHBOARD" && !this.isLoggedIn) ||
+				(link == "JOIN US" && this.isLoggedIn) ||
+				(link == "SIGN OUT" && !this.isLoggedIn)
+			) {
+				showNav = false;
+			}
+			return showNav;
+		},
 	},
 	actions: {
 		async signUp({ commit }, { email, password }) {
