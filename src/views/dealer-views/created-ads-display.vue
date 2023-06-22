@@ -1,54 +1,24 @@
 <script>
-import { mapGetters, mapMutations, mapState } from "vuex";
+import { mapGetters, mapActions, mapState } from "vuex";
 
 export default {
 	data() {
 		return {
 			pageTitle: "",
 			showSearchMenue: false,
+		
 		};
 	},
 
 	created() {
-		this.selectPageTitle(this.$route.name);
+		this.fetchAds();
 	},
 
 	methods: {
-		...mapMutations("vehicles", ["TOGGLE_SEARCH_MENU"]),
-		selectPageTitle(name) {
-			let titles = [
-				{ routeName: "Vehicles", title: "Vehicles" },
-				{ routeName: "Electric", title: "Electrics and Hybrids" },
-				{ routeName: "home", title: "Vehicles" },
-				{ routeName: "searchResults", title: "Search Results" },
-				{ routeName: "dealerInventory", title: "Our Inventory" },
-			];
-
-			titles.forEach((one) => {
-				if (name == one.routeName) {
-					this.pageTitle = one.title;
-				}
-			});
-		},
-		// 	toggleSearchMenue() {
-		// 	this.showSearchMenue = !this.showSearchMenue
-		// }
+		...mapActions("adsCrud", ["fetchAds"]),
 	},
 	computed: {
-		...mapGetters("vehicles", ["vehiclesList"]),
-		...mapState("vehicles", ["vehiclesToDisplay"]),
-
-		vehiclesToDisplayList() {
-			let list;
-			if (this.$route.name == "home") {
-				// shuffles the list
-				const shuffledArray = this.vehiclesList.sort(() => Math.random() - 0.5);
-				list = shuffledArray.slice(0, 8);
-			} else {
-				list = this.vehiclesToDisplay;
-			}
-			return list;
-		},
+		...mapGetters("adsCrud",["adsList"])
 	},
 };
 </script>
@@ -56,10 +26,10 @@ export default {
 	<div
 		:class="[
 			'vehicles-container',
-			{ 'vehicles-container-height': $route.name == 'home' },
+			{ 'vehicles-container-height': $route.name == 'Home' },
 		]"
 	>
-		<div :class="['vehicles', { 'vehicles-height': $route.name == 'home' }]">
+		<div :class="['vehicles', { 'vehicles-height': $route.name == 'Home' }]">
 			<div class="title-container">
 				<h4 class="main-title">
 					{{ pageTitle }}
@@ -70,23 +40,23 @@ export default {
 					></i>
 				</h4>
 				<router-link :to="{ name: 'advance' }">
-					<div v-show="$route.name !== 'home'" class="btn-adjustSearch">
+					<div v-show="$route.name !== 'Home'" class="btn-adjustSearch">
 						Adjust Search
 					</div>
 				</router-link>
 			</div>
 
 			<div
-				v-if="vehiclesToDisplayList && vehiclesToDisplayList.length > 0"
+				v-if="adsList && adsList.length > 0"
 				:class="[
 					'vehicles-display',
-					{ 'space-even': vehiclesToDisplayList.length > 4 },
+					{ 'space-even': adsList.length > 4 },
 					{ 'vehicles-display-height-flow ': $route.name == 'searchResults' },
 				]"
 			>
 				<div
 					class="vehicles-display-car"
-					v-for="(car, key) in vehiclesToDisplayList"
+					v-for="(car, key) in adsList"
 					:key="key"
 				>
 					<router-link :to="{ name: 'carToView', query: { id: car.id } }">
@@ -115,7 +85,7 @@ export default {
 			</div>
 		</div>
 		<router-link class="moreVehicleBtn" :to="{ name: 'searchResults' }">
-			<div v-show="$route.name == 'home'" class="btn-search btn">
+			<div v-show="$route.name == 'Home'" class="btn-search btn">
 				+ More Vehicles
 			</div>
 		</router-link>

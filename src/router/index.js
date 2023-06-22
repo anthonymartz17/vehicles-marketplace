@@ -51,8 +51,15 @@ const routes = [
 	},
 	{
 		path: "/dashboard",
-		name: "dashboard",
 		component: () => import("../views/dealer-views/dashboard"),
+		children: [
+			{
+				path: "",
+				name: "dashboard",
+				component: () =>
+					import("../views/dealer-views/created-ads-display"),
+			},
+		],
 	},
 ];
 

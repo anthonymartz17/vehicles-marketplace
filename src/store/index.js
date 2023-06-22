@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import vehicles from "./modules/vehicles";
 import filterOptions from "./modules/filterOptions";
 import auth from "./modules/auth";
+import adsCrud from "./modules/adsCrud";
 
 Vue.use(Vuex);
 
@@ -11,6 +12,7 @@ export default new Vuex.Store({
 		vehicles,
 		filterOptions,
 		auth,
+		adsCrud,
 	},
 	state: {
 		// Global

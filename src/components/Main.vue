@@ -40,7 +40,7 @@ export default {
 }
 .centered{
   @include desktop{
-     padding: 0 15em;
+    //  padding: 0 15em;
   }
 
 }
