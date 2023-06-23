@@ -1,5 +1,5 @@
 <script>
-import { required,email } from "vuelidate/lib/validators";
+import { required, email } from "vuelidate/lib/validators";
 import { mapActions, mapMutations } from "vuex";
 
 export default {
@@ -11,12 +11,13 @@ export default {
 	},
 	validations: {
 		user: {
-			email: { required,email },
+			email: { required, email },
 			password: { required },
 		},
 	},
 	methods: {
 		...mapActions("auth", ["signIn"]),
+		...mapActions("profile", ["getProfileById"]),
 		...mapMutations("auth", ["SET_ALERT_MSG"]),
 
 		async tryToLogIn() {
@@ -28,11 +29,13 @@ export default {
 				return;
 			} else {
 				try {
-					let user = await this.signIn({
+					const response = await this.signIn({
 						email: this.user.email,
 						password: this.user.password,
 					});
-					console.log(user,'loggedin')
+					response
+						? this.$router.push({ name: "dashboard" })
+						: this.$router.push({ name: "activationForm" });
 				} catch (error) {
 					this.SET_ALERT_MSG({ type: "error", title: "Error", msg: error });
 				}

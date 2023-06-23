@@ -1,5 +1,6 @@
 <script>
-import { required, email } from "vuelidate/lib/validators";
+import { required } from "vuelidate/lib/validators";
+import { mapActions,mapMutations } from "vuex";
 
 export default {
 	data() {
@@ -20,38 +21,26 @@ export default {
 		},
 	},
 	methods: {
-		tryActivateAccount() {
+		...mapActions("profile", ["update"]),
+		...mapMutations("auth", ["SET_ALERT_MSG"]),
+		async tryActivateAccount() {
 			this.submitted = true;
 			if (this.$v.$invalid) {
+				console.log(this.$v)
 				return;
 			} else {
-				// Perform registration logic here
-				// Example: calling an action from Vuex store
-				this.$store
-					.dispatch("auth/signUp", {
-						username: this.user.user_name,
-						email: this.user.email,
-						password: this.user.password,
-					})
-					.then(() => {
-						// Handle successful registration
-						localStorage.setItem(
-							"userToConfirm",
-							JSON.stringify({
-								user: this.user.user_name,
-								email: this.user.email,
-							})
-						);
-						this.$router.replace({ name: "email-verification" });
-					})
-					.catch((error) => {
-						// Handle registration error
-						this.ALERT({
-							isSuccess: false,
-							isError: true,
-							error: error,
-						});
+				try {
+					const user = await this.update({ active: 1, ...this.user });
+					console.log(user, "updated");
+					this.$router.replace({ name: "dashboard" });
+				} catch (error) {
+					console.log('we have an errrroorrr')
+					this.SET_ALERT_MSG({
+						title: "ERROR",
+						type: "error",
+						msg: error,
 					});
+				}
 			}
 		},
 	},
@@ -137,7 +126,7 @@ export default {
 						]"
 					/>
 					<div
-						v-if="submitted && !$v.user.email.required"
+						v-if="submitted && !$v.user.address.required"
 						class="invalid-feedback"
 					>
 						Address is required.
@@ -220,7 +209,7 @@ export default {
 
 <style lang="scss" scoped>
 .wrapper-dealer-form {
-padding-block: 2em;
+	padding-block: 2em;
 }
 .invalid-feedback {
 	color: red;
@@ -263,9 +252,8 @@ padding-block: 2em;
 			width: 80%;
 			box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 		}
-	
 	}
-	@include breakpoint(desktop){
+	@include breakpoint(desktop) {
 		.card-dealer {
 			width: 60%;
 		}

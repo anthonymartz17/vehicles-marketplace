@@ -16,8 +16,9 @@ export default {
 		},
 	},
 	methods: {
-		...mapActions("auth", ["signUp"]),
+		...mapActions("auth", ["signUp", "signIn"]),
 		...mapMutations("auth", ["SET_ALERT_MSG"]),
+		...mapActions("profile", ["createProfile"]),
 
 		async tryToRegisterIn() {
 			this.submitted = true;
@@ -25,15 +26,28 @@ export default {
 				return;
 			} else {
 				try {
-					await this.signUp({
+					const newUser = await this.signUp({
 						email: this.user.email,
 						password: this.user.password,
 					});
+					await this.createProfile({
+						active: 0,
+						email: this.user.email,
+						auth_Id: newUser.uid,
+					});
 
-					this.SET_ALERT_MSG({type:'success',title:'Success',msg:'Successful registration. You can login!!'});
+					const response = await this.signIn({
+						email: this.user.email,
+						password: this.user.password,
+					});
+					console.log(response,'y kll')
+					response
+						? this.$router.push({ name: "dashboard" })
+						: this.$router.push({ name: "activationForm" });
+					// this.SET_ALERT_MSG({type:'success',title:'Success',msg:'Successful registration. Login to activate account!!'});
 				} catch (error) {
-					this.SET_ALERT_MSG({ type: 'error', title: 'Error', msg: error });
-					console.log(error)
+					this.SET_ALERT_MSG({ type: "error", title: "Error", msg: error });
+					console.log(error);
 				}
 			}
 		},

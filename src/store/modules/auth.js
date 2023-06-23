@@ -1,11 +1,17 @@
-import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth";
+import {
+	getAuth,
+	createUserWithEmailAndPassword,
+	signInWithEmailAndPassword,
+} from "firebase/auth";
+
+import apiProfile from "../../helpers/apiProfile";
 const auth = getAuth();
 
 export default {
 	namespaced: true,
 	state: {
 		user: null,
-		alert:{},
+		alert: {},
 	},
 	mutations: {
 		SET_USER(state, payload) {
@@ -14,7 +20,7 @@ export default {
 		},
 		SET_ALERT_MSG(state, payload) {
 			state.alert = payload;
-			console.log(state.alert,'el test')
+			console.log(state.alert, "el test");
 		},
 		SHOULD_SHOW_NAV(link) {
 			let showNav = true;
@@ -36,19 +42,20 @@ export default {
 					email,
 					password
 				);
-				console.log(response.user);
+				return response.user;
 			} catch (error) {
 				throw error;
 			}
 		},
 		async signIn({ commit }, { email, password }) {
 			try {
-				let response = await signInWithEmailAndPassword(
-					auth,
-					email,
-					password
-				);
-				console.log(response.user);
+				let response = await signInWithEmailAndPassword(auth, email, password);
+
+				//returns profile status to handle navigation
+				const profile = await apiProfile.getByAuthId(response.user.uid);
+				commit("SET_USER", response.user);
+				return profile.active;
+				
 			} catch (error) {
 				throw error;
 			}

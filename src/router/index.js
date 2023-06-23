@@ -45,9 +45,9 @@ const routes = [
 		component: () => import("../views/authentication/joinUs"),
 	},
 	{
-		path: "/dealer-info-form",
-		name: "dealer-info-form",
-		component: () => import("../views/dealer-views/dealer-info-form"),
+		path: "/activationform",
+		name: "activationForm",
+		component: () => import("../views/authentication/activationform.vue"),
 	},
 	{
 		path: "/dashboard",
@@ -56,8 +56,7 @@ const routes = [
 			{
 				path: "",
 				name: "dashboard",
-				component: () =>
-					import("../views/dealer-views/created-ads-display"),
+				component: () => import("../views/dealer-views/created-ads-display"),
 			},
 		],
 	},

@@ -6,7 +6,6 @@ export default {
 		return {
 			pageTitle: "",
 			showSearchMenue: false,
-		
 		};
 	},
 
@@ -18,42 +17,18 @@ export default {
 		...mapActions("adsCrud", ["fetchAds"]),
 	},
 	computed: {
-		...mapGetters("adsCrud",["adsList"])
+		...mapGetters("adsCrud", ["adsList"]),
 	},
 };
 </script>
 <template>
-	<div
-		:class="[
-			'vehicles-container',
-			{ 'vehicles-container-height': $route.name == 'Home' },
-		]"
-	>
-		<div :class="['vehicles', { 'vehicles-height': $route.name == 'Home' }]">
-			<div class="title-container">
-				<h4 class="main-title">
-					{{ pageTitle }}
-					<i
-						v-if="$route.name == 'Electric'"
-						:style="{ color: '#116530' }"
-						class="fas fa-leaf"
-					></i>
-				</h4>
-				<router-link :to="{ name: 'advance' }">
-					<div v-show="$route.name !== 'Home'" class="btn-adjustSearch">
-						Adjust Search
-					</div>
-				</router-link>
-			</div>
+	<div class="vehicles-container">
+		<div class="vehicles">
+			<!-- <div class="title-container"> -->
+				<h4 class="main-title">Your Publications</h4>
+			<!-- </div> -->
 
-			<div
-				v-if="adsList && adsList.length > 0"
-				:class="[
-					'vehicles-display',
-					{ 'space-even': adsList.length > 4 },
-					{ 'vehicles-display-height-flow ': $route.name == 'searchResults' },
-				]"
-			>
+			<div v-if="adsList && adsList.length > 0" class="vehicles-display">
 				<div
 					class="vehicles-display-car"
 					v-for="(car, key) in adsList"
@@ -78,17 +53,9 @@ export default {
 				</div>
 			</div>
 			<div v-else class="noResultMsg">
-				<!-- <div class="noResultMsg-text"> -->
-				<p>No Vehicles found with these criteria</p>
-				<p>Try modifying the filters!</p>
-				<!-- </div> -->
+				<p>No posts have been added</p>
 			</div>
 		</div>
-		<router-link class="moreVehicleBtn" :to="{ name: 'searchResults' }">
-			<div v-show="$route.name == 'Home'" class="btn-search btn">
-				+ More Vehicles
-			</div>
-		</router-link>
 	</div>
 </template>
 
@@ -101,14 +68,14 @@ export default {
 	padding: 0.2em;
 	margin-bottom: 0.5em;
 }
-.title-container {
-	border-bottom: 2px solid $lightestDark;
-	padding-inline: 0.5em;
-	margin-top: 1em;
-	display: flex;
-	justify-content: space-between;
-	align-items: baseline;
-}
+// .title-container {
+// 	border-bottom: 2px solid $lightestDark;
+// 	padding-inline: 0.5em;
+// 	margin-top: 1em;
+// 	display: flex;
+// 	justify-content: space-between;
+// 	align-items: baseline;
+// }
 .vehicles-container {
 	padding: 0.5em;
 	flex: 1;
