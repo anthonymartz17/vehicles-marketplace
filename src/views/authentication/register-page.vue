@@ -40,10 +40,12 @@ export default {
 						email: this.user.email,
 						password: this.user.password,
 					});
-					console.log(response,'y kll')
-					response
-						? this.$router.push({ name: "dashboard" })
-						: this.$router.push({ name: "activationForm" });
+
+					this.$router.push({
+						name: "activationForm",
+						query: { authId: response.uid },
+					});
+
 					// this.SET_ALERT_MSG({type:'success',title:'Success',msg:'Successful registration. Login to activate account!!'});
 				} catch (error) {
 					this.SET_ALERT_MSG({ type: "error", title: "Error", msg: error });

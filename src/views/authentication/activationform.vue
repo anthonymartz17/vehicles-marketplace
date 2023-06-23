@@ -1,6 +1,6 @@
 <script>
 import { required } from "vuelidate/lib/validators";
-import { mapActions,mapMutations } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 
 export default {
 	data() {
@@ -20,21 +20,29 @@ export default {
 			zipcode: { required },
 		},
 	},
+
 	methods: {
-		...mapActions("profile", ["update"]),
+		...mapActions("profile", ["update", "fetchByAuthId"]),
 		...mapMutations("auth", ["SET_ALERT_MSG"]),
 		async tryActivateAccount() {
 			this.submitted = true;
 			if (this.$v.$invalid) {
-				console.log(this.$v)
 				return;
 			} else {
 				try {
-					const user = await this.update({ active: 1, ...this.user });
-					console.log(user, "updated");
+					const authId = this.$route.query.authId;
+
+					if (authId) {
+						const profile = await this.fetchByAuthId(authId);
+
+						await this.update({
+							dealerId: profile[0].id,
+							profileData: { active: 1, ...this.user },
+						});
+					}
+
 					this.$router.replace({ name: "dashboard" });
 				} catch (error) {
-					console.log('we have an errrroorrr')
 					this.SET_ALERT_MSG({
 						title: "ERROR",
 						type: "error",

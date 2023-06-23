@@ -17,7 +17,7 @@ export default {
 	},
 	methods: {
 		...mapActions("auth", ["signIn"]),
-		...mapActions("profile", ["getProfileById"]),
+		...mapActions("profile", ["fetchByAuthId"]),
 		...mapMutations("auth", ["SET_ALERT_MSG"]),
 
 		async tryToLogIn() {
@@ -33,9 +33,11 @@ export default {
 						email: this.user.email,
 						password: this.user.password,
 					});
-					response
+					//checks user status to see if active, if not redirect to activate account
+					const profile = await this.fetchByAuthId(response.uid)
+					profile.active
 						? this.$router.push({ name: "dashboard" })
-						: this.$router.push({ name: "activationForm" });
+						: this.$router.push({ name: "activationForm" ,query:{authId:response.uid} });
 				} catch (error) {
 					this.SET_ALERT_MSG({ type: "error", title: "Error", msg: error });
 				}

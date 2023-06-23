@@ -36,6 +36,7 @@ export default {
 			// commit("SWITCH_LOADING");
 			try {
 				let data = await apiProfile.getProfile();
+
 				// fetch images url in firestore storage & adds each corresponding list of urls to the proper car in cars list.
 				// let dataUrl = await apiCarsImages.getCarsImages(data);
 				// data.forEach((one) => {
@@ -52,9 +53,11 @@ export default {
 			}
 		},
 
-		async fetchProfileById(_, dealerId) {
+		async fetchByAuthId(_, authId) {
 			try {
-				let profile = await apiProfile.getProfileById(dealerId);
+				let profile = await apiProfile.getByAuthId(authId);
+
+				// commit('SET',profile)
 				// let imagesUrl = await apiCarsImages.getImagesById(vehicle.pics);
 				// vehicle.carPicsUrls = imagesUrl;
 				return profile;

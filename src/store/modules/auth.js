@@ -51,11 +51,8 @@ export default {
 			try {
 				let response = await signInWithEmailAndPassword(auth, email, password);
 
-				//returns profile status to handle navigation
-				const profile = await apiProfile.getByAuthId(response.user.uid);
 				commit("SET_USER", response.user);
-				return profile.active;
-				
+				return response.user;
 			} catch (error) {
 				throw error;
 			}

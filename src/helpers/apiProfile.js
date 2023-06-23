@@ -5,9 +5,9 @@ import {
 	getDoc,
 	getDocs,
 	addDoc,
-  updateDoc,
-  query,
-  where,
+	updateDoc,
+	query,
+	where,
 } from "firebase/firestore";
 // import { v4 as uuidv4 } from "uuid";
 
@@ -50,37 +50,39 @@ export default {
 		} catch (error) {
 			throw error;
 		}
-  },
-  async getByAuthId(authId) {
-    try {
-      const colRef = collection(db, "dealers");
-			const q = query(colRef, where("auth_id", "==", authId));
+	},
+	async getByAuthId(authId) {
+		try {
+			const colRef = collection(db, "dealers");
+			const q = query(colRef, where("auth_Id", "==", authId));
 			const snapshot = await getDocs(q);
 			const data = snapshot.docs.map((doc) => ({
 				id: doc.id,
 				...doc.data(),
-      }));
+			}));
+
 			return data;
-    } catch (error) {
-      throw error;
-    }
-  },
-	async createProfile(data) {
-		try {
-			const colRef = collection(db, "dealers");
-      const response = await addDoc(colRef, data);
-      console.log(response,'from api profile')
-      // const profile = { id: response.id, ...response.data() };
-			console.log("Item created successfully!");
-      // return profile
 		} catch (error) {
 			throw error;
 		}
 	},
-	async updateProfile(dealerId, updateData) {
+	async createProfile(data) {
 		try {
+			const colRef = collection(db, "dealers");
+			const response = await addDoc(colRef, data);
+
+			return response;
+
+			// return profile
+		} catch (error) {
+			throw error;
+		}
+	},
+	async updateProfile({ dealerId, profileData }) {
+		try {
+			console.log(dealerId, profileData);
 			const colRef = doc(db, "dealers", dealerId);
-			await updateDoc(colRef, updateData);
+			await updateDoc(colRef, profileData);
 			console.log("Item updated successfully!");
 		} catch (error) {
 			throw error;
