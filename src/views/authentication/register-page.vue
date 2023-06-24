@@ -26,24 +26,20 @@ export default {
 				return;
 			} else {
 				try {
+					//after signup firebase sign user in automaticaly
 					const newUser = await this.signUp({
 						email: this.user.email,
 						password: this.user.password,
 					});
 					await this.createProfile({
-						active: 0,
+						active: false,
 						email: this.user.email,
 						auth_Id: newUser.uid,
 					});
 
-					const response = await this.signIn({
-						email: this.user.email,
-						password: this.user.password,
-					});
-
 					this.$router.push({
 						name: "activationForm",
-						query: { authId: response.uid },
+						query: { authId: newUser.uid },
 					});
 
 					// this.SET_ALERT_MSG({type:'success',title:'Success',msg:'Successful registration. Login to activate account!!'});

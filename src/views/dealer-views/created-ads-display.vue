@@ -15,6 +15,7 @@ export default {
 
 	methods: {
 		...mapActions("adsCrud", ["fetchAds"]),
+		...mapActions("profile", ["fetchAds"]),
 	},
 	computed: {
 		...mapGetters("adsCrud", ["adsList"]),

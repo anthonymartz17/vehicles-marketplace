@@ -1,6 +1,6 @@
 <script>
 import { required, email } from "vuelidate/lib/validators";
-import { mapActions, mapMutations } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 
 export default {
 	data() {
@@ -15,10 +15,30 @@ export default {
 			password: { required },
 		},
 	},
+
 	methods: {
 		...mapActions("auth", ["signIn"]),
 		...mapActions("profile", ["fetchByAuthId"]),
 		...mapMutations("auth", ["SET_ALERT_MSG"]),
+
+		adjustErrorMsg(error) {
+			let errorMsg;
+			switch (error) {
+				case "auth/invalid-email":
+					errorMsg = "Invalid email";
+					break;
+				case "auth/user-not-found":
+					errorMsg = "No account found with this email";
+					break;
+				case "auth/wrong-password":
+					errorMsg = "Incorrect password";
+					break;
+				default:
+					errorMsg = "Email or password was incorrect";
+					break;
+			}
+			return errorMsg;
+		},
 
 		async tryToLogIn() {
 			this.submitted = true;
@@ -34,16 +54,24 @@ export default {
 						password: this.user.password,
 					});
 					//checks user status to see if active, if not redirect to activate account
-					const profile = await this.fetchByAuthId(response.uid)
-					profile.active
+					// const profile = await this.fetchByAuthId(response.uid);
+					console.log(this.isLoggedIn,'isLOGIN')
+					this.isLoggedIn
 						? this.$router.push({ name: "dashboard" })
-						: this.$router.push({ name: "activationForm" ,query:{authId:response.uid} });
+						: this.$router.push({
+								name: "activationForm",
+								query: { authId: response.uid },
+						  });
 				} catch (error) {
+					// const errorMsg = this.adjustErrorMsg(error);
 					this.SET_ALERT_MSG({ type: "error", title: "Error", msg: error });
 				}
 			}
 		},
 	},
+	computed: {
+		...mapGetters("auth",["isLoggedIn"])
+	}
 };
 </script>
 <template>

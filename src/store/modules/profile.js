@@ -57,7 +57,7 @@ export default {
 			try {
 				let profile = await apiProfile.getByAuthId(authId);
 
-				// commit('SET',profile)
+				commit("SET", profile);
 				// let imagesUrl = await apiCarsImages.getImagesById(vehicle.pics);
 				// vehicle.carPicsUrls = imagesUrl;
 				return profile;

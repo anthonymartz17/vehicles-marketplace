@@ -1,5 +1,5 @@
 <script>
-import { mapMutations, mapState } from "vuex";
+import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
 export default {
 	props: ["navItems"],
 	methods: {
@@ -8,7 +8,18 @@ export default {
 			"UPDATE_FILTERS",
 			"FILTER_VEHICLES",
 		]),
-
+		...mapActions("auth", ["signOutUser"]),
+		shouldShowNavs(link) {
+			let showNav = true;
+			if (
+				(link == "Dashboard" && !this.isLoggedIn) ||
+				(link == "Join Us" && this.isLoggedIn) ||
+				(link == "Sign Out" && !this.isLoggedIn)
+			) {
+				showNav = false;
+			}
+			return showNav;
+		},
 		getCars(link) {
 			if (link == "searchResults") {
 				this.UPDATE_FILTERS(null);
@@ -20,9 +31,19 @@ export default {
 				this.FILTER_VEHICLES();
 			}
 		},
+		async signOut(link) {
+			if (link == "LogOut")
+				try {
+					await this.signOutUser();
+					this.$router.replace({ name: "joinUs" });
+				} catch (error) {
+					throw error;
+				}
+		},
 	},
 	computed: {
 		...mapState("vehicles", ["filters"]),
+		...mapGetters("auth", ["isLoggedIn"]),
 	},
 };
 </script>
@@ -39,9 +60,13 @@ export default {
 			<nav class="navItems-container">
 				<ul class="navItems flex-a-c">
 					<li
+						v-show="shouldShowNavs(link.link)"
 						v-for="(link, key) in navItems"
 						:key="key"
-						@click="getCars(link.link)"
+						@click="
+							getCars(link.link);
+							signOut();
+						"
 					>
 						<router-link :to="{ name: link.routename }">
 							<p>{{ link.link }}</p>

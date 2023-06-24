@@ -14,7 +14,6 @@ const db = getFirestore();
 
 export default {
 	async getAds(dealerId = "jRYOADMZlECdVyuGuSbg") {
-		console.log("fired api");
 		try {
 			const colRef = collection(db, "cars");
 			const q = query(colRef, where("dealerId", "==", dealerId));
@@ -22,7 +21,7 @@ export default {
 			const data = snapshot.docs.map((doc) => ({
 				id: doc.id,
 				...doc.data(),
-      }));
+			}));
 			return data;
 		} catch (error) {
 			throw error;

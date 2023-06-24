@@ -56,9 +56,7 @@ export default {
 				},
 				{
 					link: "LogOut",
-					routename: "joinUs",
 					icon: "fas fa-phone-volume",
-					auth: true,
 				},
 			],
 		};

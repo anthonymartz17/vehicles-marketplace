@@ -15,8 +15,6 @@ export default {
 	},
 	created() {
 		this.fetchDealers();
-		console.log(this.filters, "state");
-		console.log(this.filtersSelected, "local");
 
 		//keeps local filter object updated with the state main object filters
 		Object.assign(this.filtersSelected, this.filteredObject);
@@ -29,7 +27,6 @@ export default {
 		...mapActions("vehicles", ["fetchDealers"]),
 
 		fireSearch() {
-			console.log(this.filtersSelected);
 			this.UPDATE_FILTERS(this.filtersSelected);
 			this.FILTER_VEHICLES();
 			if (this.$route.name !== "searchResults") {
@@ -444,7 +441,7 @@ export default {
 .cancel-btn {
 	flex: 1;
 	transition: all 0.3s ease-in-out;
-	word-break:break-all;
+	word-break: break-all;
 	color: $light;
 	font: $font-text-bold;
 	display: grid;

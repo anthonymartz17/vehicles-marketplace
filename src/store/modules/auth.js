@@ -2,11 +2,12 @@ import {
 	getAuth,
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
+	signOut,
 } from "firebase/auth";
-
 import apiProfile from "../../helpers/apiProfile";
-const auth = getAuth();
 
+//global timer for expiration token
+let timer;
 export default {
 	namespaced: true,
 	state: {
@@ -16,11 +17,9 @@ export default {
 	mutations: {
 		SET_USER(state, payload) {
 			state.user = payload;
-			console.log(payload);
 		},
 		SET_ALERT_MSG(state, payload) {
 			state.alert = payload;
-			console.log(state.alert, "el test");
 		},
 		SHOULD_SHOW_NAV(link) {
 			let showNav = true;
@@ -38,7 +37,7 @@ export default {
 		async signUp({ commit }, { email, password }) {
 			try {
 				let response = await createUserWithEmailAndPassword(
-					auth,
+					getAuth(),
 					email,
 					password
 				);
@@ -47,16 +46,58 @@ export default {
 				throw error;
 			}
 		},
-		async signIn({ commit }, { email, password }) {
+		async signIn({ commit, dispatch }, { email, password }) {
 			try {
-				let response = await signInWithEmailAndPassword(auth, email, password);
+				let response = await signInWithEmailAndPassword(
+					getAuth(),
+					email,
+					password
+				);
 
-				commit("SET_USER", response.user);
+				const currentUser = response._tokenResponse.email;
+				const token = response._tokenResponse.idToken;
+				const expiresIn = response._tokenResponse.expiresIn;
+				const userProfile = await apiProfile.getByAuthId(response.user.uid);
+				const isActive = userProfile[0].active;
+
+				clearTimeout(timer);
+				timer = setTimeout(() => {
+					dispatch("singOutUser");
+					//expects timer in miliseconds
+				}, expiresIn * 1000);
+
+				commit("SET_USER", { currentUser, token, isActive });
+				localStorage.setItem(
+					"currentUserDealer",
+					JSON.stringify({ currentUser, token, isActive })
+				);
+
 				return response.user;
 			} catch (error) {
 				throw error;
 			}
 		},
+		async autoLogIn({ commit }) {
+			const currentUserDealer = JSON.parse(
+				localStorage.getItem("currentUserDealer")
+			);
+			if (currentUserDealer)
+				if (currentUserDealer.currentUser && currentUserDealer.token) {
+					commit("SET_USER", currentUserDealer);
+				}
+		},
+		async signOutUser({ commit }) {
+			try {
+				await signOut(getAuth());
+				localStorage.removeItem("currentUserDealer");
+				commit("SET_USER", null);
+				clearTimeout(timer);
+			} catch (error) {
+				throw error;
+			}
+		},
 	},
-	getters: {},
+	getters: {
+		isLoggedIn: (state) => !!(state.user && state.user.isActive),
+	},
 };
