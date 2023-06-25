@@ -11,8 +11,10 @@ export default {
 	},
 
 	computed: {
-		...mapState("auth",["alert"]),
+		...mapState("auth", ["alert","showAlert"]),
+		
 		headerBg() {
+			
 			return this.alert.type == "success"
 				? { "success-alert": true }
 				: { "error-alert": true };
@@ -29,7 +31,7 @@ export default {
 			</div>
 			<div class="card-body">
 				<p >{{ alert.msg }}</p>
-				<button class="card-btn" v-show="alert.type == 'success'" @click="emitLogin">
+				<button class="card-btn" v-show="$route.name == 'activationForm' && alert.type == 'success'" @click="emitLogin">
 					Login now!!
 				</button>
 			</div>

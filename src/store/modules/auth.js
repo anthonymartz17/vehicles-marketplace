@@ -1,8 +1,12 @@
+import { auth } from "../../firebaseConfig";
+console.log(auth);
 import {
-	getAuth,
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
 	signOut,
+	EmailAuthProvider,
+	reauthenticateWithCredential,
+	updatePassword,
 } from "firebase/auth";
 import apiProfile from "../../helpers/apiProfile";
 
@@ -20,14 +24,14 @@ export default {
 		},
 		SET_ALERT_MSG(state, payload) {
 			state.alert = payload;
-			console.log({...state.alert})
+			console.log({ ...state.alert });
 		},
-		SHOULD_SHOW_NAV(link) {
+		TOGGLE_LINK_VISIBILITY(state, { link, isLoggedIn }) {
 			let showNav = true;
 			if (
-				(link == "DASHBOARD" && !this.isLoggedIn) ||
-				(link == "JOIN US" && this.isLoggedIn) ||
-				(link == "SIGN OUT" && !this.isLoggedIn)
+				(link == "Dashboard" && !isLoggedIn) ||
+				(link == "Join Us" && isLoggedIn) ||
+				(link == "Log Out" && !isLoggedIn)
 			) {
 				showNav = false;
 			}
@@ -38,7 +42,7 @@ export default {
 		async signUp({ commit }, { email, password }) {
 			try {
 				let response = await createUserWithEmailAndPassword(
-					getAuth(),
+					auth,
 					email,
 					password
 				);
@@ -49,11 +53,7 @@ export default {
 		},
 		async signIn({ commit, dispatch }, { email, password }) {
 			try {
-				let response = await signInWithEmailAndPassword(
-					getAuth(),
-					email,
-					password
-				);
+				let response = await signInWithEmailAndPassword(auth, email, password);
 
 				const currentUser = response._tokenResponse.email;
 				const token = response._tokenResponse.idToken;
@@ -97,7 +97,7 @@ export default {
 		},
 		async signOutUser({ commit }) {
 			try {
-				await signOut(getAuth());
+				await signOut(auth);
 				localStorage.removeItem("currentUserDealer");
 				commit("SET_USER", null);
 				clearTimeout(timer);
@@ -105,9 +105,28 @@ export default {
 				throw error;
 			}
 		},
+		async changePassword(_, { currentPassword, newPassword }) {
+			try {
+				const user = auth.currentUser;
+
+				let credential = EmailAuthProvider.credential(
+					user.email,
+					currentPassword
+				);
+
+				// Re-authenticate the user with their current password
+				const test = await reauthenticateWithCredential(user, credential);
+				console.log(test, "test");
+
+				// // Change the password
+				await updatePassword(user, newPassword);
+			} catch (error) {
+				throw error;
+			}
+		},
 	},
 	getters: {
 		isLoggedIn: (state) => !!(state.user && state.user.isActive),
-		showAlert: (state) => !!state.alert,
+		showAlert: (state) => !!Object.keys(state.alert).length,
 	},
 };

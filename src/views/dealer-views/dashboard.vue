@@ -1,8 +1,9 @@
 <script>
 import { mapGetters, mapMutations, mapState } from "vuex";
+import LoggedInUserLinks from "../../components/dashboard/Loggedin-user-links.vue";
 
 export default {
-	components: {},
+	components: { LoggedInUserLinks },
 	data() {
 		return {};
 	},
@@ -12,6 +13,21 @@ export default {
 
 	computed: {
 		...mapGetters("vehicles", []),
+		title() {
+			let title;
+			switch (this.$route.name) {
+				case "dashboard":
+					title = "My Posts";
+					break;
+				case "profile":
+					title = "Profile";
+					break;
+				case "password":
+					title = "Password";
+					break;
+			}
+			return title;
+		},
 	},
 };
 </script>
@@ -21,9 +37,13 @@ export default {
 			<div class="dashboard-sidebar">
 				<div class="sidebar-container">
 					<div class="button">+ Create New</div>
+					<div class="link-list">
+						<LoggedInUserLinks />
+					</div>
 				</div>
 			</div>
 			<div class="dashboard-routerview">
+				<h3 class="main-title">{{ title }}</h3>
 				<router-view />
 			</div>
 		</div>
@@ -31,6 +51,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+
 .clear-btn {
 	padding: 0.2em;
 	border: 1px solid $primary;
@@ -48,13 +69,20 @@ export default {
 	text-align: center;
 	transition: all 250ms ease-in-out;
 	border: 1px solid $light;
-
+	margin: 0.5em;
 	&:hover {
 		transform: scale(1.01);
 	}
 }
+.link-list{
+			display: none;
+		}
+.dashboard-routerview {
+	// padding: 1em;
+}
 .dashboard-wrapper {
 	@include breakpoint(tablet) {
+		
 	}
 	@include breakpoint(desktop) {
 		.dashboard-wrapper {
@@ -69,13 +97,16 @@ export default {
 		}
 		.dashboard-routerview {
 			flex: 3;
-			padding: 1em;
+	
 		}
 		.dashboard-sidebar {
 			background: $dark;
 			min-height: 70vh;
 			flex: 1;
-			padding: 0.5em;
+		}
+
+		.link-list {
+			display: block;
 		}
 	}
 }

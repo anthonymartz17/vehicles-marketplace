@@ -1,6 +1,8 @@
 <script>
 import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
+import LoggedInUserLinks from "../dashboard/Loggedin-user-links.vue";
 export default {
+	components: { LoggedInUserLinks },
 	data() {
 		return {
 			popOptions: [
@@ -39,16 +41,9 @@ export default {
 				<p class="popup-email">{{ user ? user.currentUser : null }}</p>
 			</div>
 		</div>
-		<ul class="popup-list">
-			<li
-				@click="reRoute(item.route)"
-				class="list-item"
-				v-for="item in popOptions"
-				:key="item.name"
-			>
-				{{ item.name }}
-			</li>
-		</ul>
+		<div class="linkList">
+			<LoggedInUserLinks v-on="$listeners"/>
+		</div>
 	</div>
 </template>
 
@@ -59,6 +54,7 @@ export default {
 	flex-direction: column;
 	align-items: center;
 }
+
 .user-logo {
 	height: 3em;
 	width: 3em;
@@ -105,17 +101,11 @@ export default {
 .popup-email {
 	font: $font-text;
 }
-
-.list-item {
-	font: $font-text;
-	padding: 0.5em;
-	transition: all 250ms ease-in-out;
-	cursor: pointer;
-
-	&:hover {
-		background: $lightDark;
-	}
+.linkList{
+	margin-bottom: 1em;
 }
+
+
 
 .popUp-container {
 	@include breakpoint(tablet) {
@@ -124,6 +114,8 @@ export default {
 	@include breakpoint(desktop) {
 		top: 80px;
 		right: 100px;
+
+		
 	}
 }
 </style>

@@ -7,16 +7,6 @@ export default {
 		return {
 			userProfile: {},
 			submitted: false,
-			popOptions: [
-				{
-					name: "Profile",
-					route: "profile",
-				},
-				{
-					name: "Password",
-					route: "password",
-				},
-			],
 		};
 	},
 	validations: {
@@ -30,8 +20,8 @@ export default {
 			zipcode: { required },
 		},
 	},
-  created() {
-    console.log(this.user)
+	created() {
+		console.log(this.user);
 		this.fetchProfileById(this.user.dealerId).then((data) => {
 			this.userProfile = data;
 		});
@@ -156,6 +146,7 @@ export default {
 						Address is required.
 					</div>
 				</div>
+				<!-- <div class="field-flex"> -->
 
 				<div class="form-field-container form-field-size">
 					<label for="city" class="form-label">City</label>
@@ -221,6 +212,7 @@ export default {
 						zipcode is required.
 					</div>
 				</div>
+				<!-- </div> -->
 
 				<div class="submit-btn">
 					<button type="submit" class="update-btn">Update Info</button>
@@ -294,7 +286,7 @@ export default {
 			flex-wrap: wrap;
 		}
 		.form-field-size {
-			flex: 1;
+			// flex: 1;
 		}
 		.submit-btn {
 			display: flex;

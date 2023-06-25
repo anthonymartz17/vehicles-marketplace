@@ -49,7 +49,7 @@ export default {
 			}
 		},
 		async signOut(link) {
-			if (link == "Log out" && this.$route.name !== "joinUs") {
+			if (link == "Log Out" && this.$route.name !== "joinUs") {
 				try {
 					await this.signOutUser();
 					this.$router.replace({ name: "joinUs" });
@@ -109,7 +109,7 @@ export default {
 				<!-- <p>{{ user ? user.username : null }}</p> -->
 			</div>
 			<div @click.self="togglePopup()" class="popup-overlay" v-show="showPopup">
-				<PopupProfile @closeModal="togglePopup()"/>
+				<PopupProfile @closeModal="togglePopup()" />
 			</div>
 
 			<!-- <div class="sMedia">

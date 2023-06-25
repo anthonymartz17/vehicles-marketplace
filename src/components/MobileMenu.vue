@@ -1,3 +1,29 @@
+<script>
+import { mapGetters, mapMutations, mapState } from "vuex";
+export default {
+	props: ["navItems"],
+
+	methods: {
+		...mapMutations("vehicles", ["UPDATE_FILTERS", "TOGGLE_MOBILE_MENUE"]),
+		// ...mapMutations("auth", ["TOGGLE_LINK_VISIBILITY"]),
+		shouldShowNavs(link) {
+			let showNav = true;
+			if (
+				(link == "Dashboard" && !this.isLoggedIn) ||
+				(link == "Join Us" && this.isLoggedIn) ||
+				(link == "Log out" && !this.isLoggedIn)
+			) {
+				showNav = false;
+			}
+			return showNav;
+		},
+	},
+	computed: {
+		...mapState("vehicles", ["showMobileMenue"]),
+		...mapGetters("auth", ["isLoggedIn"]),
+	},
+};
+</script>
 <template>
 	<div>
 		<transition
@@ -17,15 +43,15 @@
 			<nav class="nav-menu-container" v-show="showMobileMenue">
 				<ul>
 					<li
-					v-show="SHOULD_SHOW_NAV(link.link)"
+						v-show="shouldShowNavs(link.link)"
 						v-for="(link, key) in navItems"
 						:key="key"
 						@click="
 							TOGGLE_MOBILE_MENUE();
-							UPDATE_FILTERS()
-							"
+							UPDATE_FILTERS();
+						"
 					>
-					<!-- link.link === 'Vehicles' ? clearFilters() : null; -->
+						<!-- link.link === 'Vehicles' ? clearFilters() : null; -->
 						<router-link :to="{ name: link.routename }" class="tabs">
 							<i :class="link.icon"></i>
 							<p>{{ link.link }}</p>
@@ -37,23 +63,10 @@
 	</div>
 </template>
 
-<script>
-import { mapMutations, mapState } from "vuex";
-export default {
-	props: ["navItems"],
-	methods: {
-		...mapMutations("vehicles", ["UPDATE_FILTERS", "TOGGLE_MOBILE_MENUE","SHOULD_SHOW_NAV"]),
-		...mapMutations("auth", ["SHOULD_SHOW_NAV"]),
-	},
-	computed: {
-		...mapState("vehicles", ["showMobileMenue"]),
-	},
-};
-</script>
-
 <style lang="scss" scoped>
 a.active {
-	border-block: 0.2px solid $light;
+background: $lightDark;
+border-bottom: 1px solid $lightestDark;
 }
 .tabs {
 	color: $light;

@@ -65,6 +65,11 @@ const routes = [
 				name: "profile",
 				component: () => import("../views/dealer-views/profile-app"),
 			},
+			{
+				path: "/password-app",
+				name: "password",
+				component: () => import("../views/dealer-views/password-app"),
+			},
 		],
 	},
 ];

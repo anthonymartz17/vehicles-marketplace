@@ -36,11 +36,7 @@ export default {
 					routename: "searchResults",
 					icon: "fas fa-car",
 				},
-				// {
-				// 	routename: "Electric Cars",
-				// 	link: "Electric",
-				// 	icon: "fas fa-charging-station",
-				// },
+			
 				{
 					link: "Contact",
 					routename: "contact",
@@ -57,7 +53,7 @@ export default {
 					icon: "fas fa-phone-volume",
 				},
 				{
-					link: "Log out",
+					link: "Log Out",
 					icon: "fas fa-phone-volume",
 				},
 			],

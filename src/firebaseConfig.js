@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 
 // import { v4 as uuidv4 } from "uuid";
 
@@ -18,8 +19,11 @@ const firebase = require("firebase/app");
 require("firebase/storage");
 
 // Initialize Firebase
-export default initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 
+const auth = getAuth();
+
+export { auth };
 // collection refference
 // const colRef = collection(db, "cars");
 

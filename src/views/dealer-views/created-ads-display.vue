@@ -28,9 +28,7 @@ export default {
 <template>
 	<div class="vehicles-container">
 		<div class="vehicles">
-			<!-- <div class="title-container"> -->
-				<h4 class="main-title">Your Publications</h4>
-			<!-- </div> -->
+		
 
 			<div v-if="adsList && adsList.length > 0" class="vehicles-display">
 				<div
