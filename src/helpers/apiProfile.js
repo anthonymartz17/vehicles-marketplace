@@ -54,7 +54,7 @@ export default {
 	async getByAuthId(authId) {
 		try {
 			const colRef = collection(db, "dealers");
-			const q = query(colRef, where("auth_Id", "==", authId));
+			const q = query(colRef, where("auth_id", "==", authId));
 			const snapshot = await getDocs(q);
 			const data = snapshot.docs.map((doc) => ({
 				id: doc.id,

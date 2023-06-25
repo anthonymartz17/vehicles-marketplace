@@ -1,15 +1,16 @@
 <script>
 import AppModal from "./components/Modal.vue";
 import CarSelectionCard from "./components/searchFieldMobile/CarSelectionCard.vue";
-import AppHeader from "./components/Header.vue";
+import AppHeader from "./components/header/Header.vue";
 // import HomeAd from './components/Advertisements.vue'
 import AppMain from "./components/Main.vue";
 import AppFooter from "./components/Footer.vue";
 import MobileMenu from "./components/MobileMenu.vue";
 import initializeFirebase from "./firebaseConfig";
+import AlertMsg from "./components/utilities/alert-msg.vue";
 // import Loading from "vue-loading-overlay";
 // import "vue-loading-overlay/dist/css/index.css";
-import { mapActions, mapState, mapMutations } from "vuex";
+import { mapActions, mapState, mapMutations, mapGetters } from "vuex";
 
 export default {
 	components: {
@@ -19,6 +20,7 @@ export default {
 		CarSelectionCard,
 		MobileMenu,
 		AppModal,
+		AlertMsg,
 	},
 	data() {
 		return {
@@ -55,7 +57,7 @@ export default {
 					icon: "fas fa-phone-volume",
 				},
 				{
-					link: "LogOut",
+					link: "Log out",
 					icon: "fas fa-phone-volume",
 				},
 			],
@@ -74,11 +76,13 @@ export default {
 	},
 	computed: {
 		...mapState("vehicles", ["showSearchMenu"]),
+		...mapGetters("auth", ["showAlert"]),
 	},
 };
 </script>
 <template>
 	<div class="page-container">
+		<AlertMsg v-show="showAlert"/>
 		<!-- <Loading v-model="isLoading" /> -->
 		<!-- toggleable menues -->
 		<MobileMenu :navItems="navItems" />

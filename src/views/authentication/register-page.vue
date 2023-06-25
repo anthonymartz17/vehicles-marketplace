@@ -34,7 +34,7 @@ export default {
 					await this.createProfile({
 						active: false,
 						email: this.user.email,
-						auth_Id: newUser.uid,
+						auth_id: newUser.uid,
 					});
 
 					this.$router.push({

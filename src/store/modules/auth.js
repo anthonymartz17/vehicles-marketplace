@@ -20,6 +20,7 @@ export default {
 		},
 		SET_ALERT_MSG(state, payload) {
 			state.alert = payload;
+			console.log({...state.alert})
 		},
 		SHOULD_SHOW_NAV(link) {
 			let showNav = true;
@@ -58,6 +59,8 @@ export default {
 				const token = response._tokenResponse.idToken;
 				const expiresIn = response._tokenResponse.expiresIn;
 				const userProfile = await apiProfile.getByAuthId(response.user.uid);
+				const username = userProfile[0].name;
+				const dealerId = userProfile[0].id;
 				const isActive = userProfile[0].active;
 
 				clearTimeout(timer);
@@ -66,10 +69,16 @@ export default {
 					//expects timer in miliseconds
 				}, expiresIn * 1000);
 
-				commit("SET_USER", { currentUser, token, isActive });
+				commit("SET_USER", {
+					currentUser,
+					token,
+					isActive,
+					dealerId,
+					username,
+				});
 				localStorage.setItem(
 					"currentUserDealer",
-					JSON.stringify({ currentUser, token, isActive })
+					JSON.stringify({ currentUser, token, isActive, dealerId, username })
 				);
 
 				return response.user;
@@ -99,5 +108,6 @@ export default {
 	},
 	getters: {
 		isLoggedIn: (state) => !!(state.user && state.user.isActive),
+		showAlert: (state) => !!state.alert,
 	},
 };

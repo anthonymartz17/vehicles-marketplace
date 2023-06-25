@@ -21,11 +21,11 @@ export default {
 };
 </script>
 <template>
-	<div @click="emitLogin()" class="successful">
+	<div @click="SET_ALERT_MSG({})" class="successful">
 		<div class="card">
 			<div :class="['card-header', headerBg]">
 				<h3 class="sub-title text-light">{{ alert.title }}</h3>
-				<h3 @click="emitLogin()" class="sub-title text-light close">X</h3>
+				<h3 @click="SET_ALERT_MSG({})" class="sub-title text-light close">X</h3>
 			</div>
 			<div class="card-body">
 				<p >{{ alert.msg }}</p>

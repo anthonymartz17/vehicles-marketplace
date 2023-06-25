@@ -10,15 +10,18 @@ export default {
 	},
 
 	created() {
-		this.fetchAds();
+
+		this.fetchAds(this.user.dealerId);
 	},
 
 	methods: {
 		...mapActions("adsCrud", ["fetchAds"]),
-		...mapActions("profile", ["fetchAds"]),
+		// ...mapActions("profile", ["fetchAds"]),
 	},
 	computed: {
 		...mapGetters("adsCrud", ["adsList"]),
+		...mapState("auth", ["user"]),
+	
 	},
 };
 </script>

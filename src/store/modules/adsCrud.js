@@ -35,11 +35,11 @@ export default {
 	},
 
 	actions: {
-		async fetchAds({ commit }) {
+		async fetchAds({ commit },dealerId) {
 			// shows loading animation while getting the data
 			// commit("SWITCH_LOADING");
 			try {
-				let data = await apiAds.getAds();
+				let data = await apiAds.getAds(dealerId);
 				// fetch images url in firestore storage & adds each corresponding list of urls to the proper car in cars list.
 				let dataUrl = await apiCarsImages.getCarsImages(data);
 				data.forEach((one) => {

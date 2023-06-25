@@ -44,6 +44,9 @@ export default {
 			this.$refs.removeFilter.clearFilters();
 		},
 	},
+	destroyed() {
+		this.fireClearFilters() 
+	},
 	// 	created() {
 	// 		let list = JSON.parse(localStorage.getItem('searchResults'))
 	// 		if (!list) {

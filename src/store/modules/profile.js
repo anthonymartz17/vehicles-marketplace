@@ -53,6 +53,20 @@ export default {
 			}
 		},
 
+		async fetchProfileById(_, id) {
+			try {
+				let profile = await apiProfile.getProfileById(id);
+
+				// let imagesUrl = await apiCarsImages.getImagesById(vehicle.pics);
+				// vehicle.carPicsUrls = imagesUrl;
+				return profile;
+			} catch (error) {
+				throw error;
+			} finally {
+				// turns loading to false
+				// commit("SWITCH_LOADING");
+			}
+		},
 		async fetchByAuthId(_, authId) {
 			try {
 				let profile = await apiProfile.getByAuthId(authId);

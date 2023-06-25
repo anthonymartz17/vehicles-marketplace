@@ -1,6 +1,15 @@
 <script>
 import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
+import PopupProfile from "./popUp-profile.vue";
 export default {
+	components: {
+		PopupProfile,
+	},
+	data() {
+		return {
+			showPopup: false,
+		};
+	},
 	props: ["navItems"],
 	methods: {
 		...mapMutations("vehicles", [
@@ -9,12 +18,20 @@ export default {
 			"FILTER_VEHICLES",
 		]),
 		...mapActions("auth", ["signOutUser"]),
+		togglePopup() {
+			this.showPopup = !this.showPopup;
+			if (this.showPopup) {
+				document.body.classList.add("no-scroll");
+			} else {
+				document.body.classList.remove("no-scroll");
+			}
+		},
 		shouldShowNavs(link) {
 			let showNav = true;
 			if (
 				(link == "Dashboard" && !this.isLoggedIn) ||
 				(link == "Join Us" && this.isLoggedIn) ||
-				(link == "Sign Out" && !this.isLoggedIn)
+				(link == "Log out" && !this.isLoggedIn)
 			) {
 				showNav = false;
 			}
@@ -32,17 +49,19 @@ export default {
 			}
 		},
 		async signOut(link) {
-			if (link == "LogOut")
+			if (link == "Log out" && this.$route.name !== "joinUs") {
 				try {
 					await this.signOutUser();
 					this.$router.replace({ name: "joinUs" });
 				} catch (error) {
 					throw error;
 				}
+			}
 		},
 	},
 	computed: {
 		...mapState("vehicles", ["filters"]),
+		...mapState("auth", ["user"]),
 		...mapGetters("auth", ["isLoggedIn"]),
 	},
 };
@@ -65,7 +84,7 @@ export default {
 						:key="key"
 						@click="
 							getCars(link.link);
-							signOut();
+							signOut(link.link);
 						"
 					>
 						<router-link :to="{ name: link.routename }">
@@ -74,7 +93,7 @@ export default {
 					</li>
 				</ul>
 			</nav>
-			<div class="searchIcon">
+			<!-- <div class="searchIcon">
 				<router-link
 					@click="clearFilters()"
 					:to="{ name: 'advance' }"
@@ -82,17 +101,29 @@ export default {
 				>
 					<i class="fas fa-search"></i>
 				</router-link>
+			</div> -->
+			<div @click="togglePopup()" class="user-logo-container">
+				<div v-if="isLoggedIn" class="user-logo">
+					<img src="/images/icons/logo.png" alt="" />
+				</div>
+				<!-- <p>{{ user ? user.username : null }}</p> -->
+			</div>
+			<div @click.self="togglePopup()" class="popup-overlay" v-show="showPopup">
+				<PopupProfile @closeModal="togglePopup()"/>
 			</div>
 
-			<div class="sMedia">
+			<!-- <div class="sMedia">
 				<div><i class="fab fa-facebook sMedia-icons"></i></div>
 				<div><i class="fab fa-instagram sMedia-icons"></i></div>
-			</div>
+			</div> -->
 		</div>
 	</header>
 </template>
 
 <style lang="scss" scoped>
+.no-scroll {
+	overflow: hidden;
+}
 .header-container {
 	background: $dark;
 	min-height: 10vh;
@@ -182,6 +213,39 @@ export default {
 		}
 	}
 }
+
+.user-logo-container {
+	// position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.user-logo {
+	height: 3em;
+	width: 3em;
+	border: 1px solid;
+	border-radius: 50px;
+	display: grid;
+	place-items: center;
+	cursor: pointer;
+	transition: all 250ms ease-in-out;
+	box-shadow: 0 2px 4px rgba(160, 158, 158, 0.5);
+	&:hover {
+		box-shadow: 0 3px 4px rgba(254, 254, 254, 0.551);
+	}
+	img {
+		max-width: 100%;
+		object-fit: cover;
+	}
+}
+.popup-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: 100%;
+}
+
 .header-container {
 	@include breakpoint(tablet) {
 	}

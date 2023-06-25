@@ -1,6 +1,6 @@
 <script>
 import { required } from "vuelidate/lib/validators";
-import { mapActions, mapMutations } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
 	data() {
@@ -11,15 +11,16 @@ export default {
 	},
 	validations: {
 		user: {
-			commercialname: { required },
+			name: { required },
 			manager: { required },
-			phonenumber: { required },
+			tel: { required },
 			address: { required },
 			city: { required },
 			state: { required },
 			zipcode: { required },
 		},
 	},
+	
 
 	methods: {
 		...mapActions("profile", ["update", "fetchByAuthId"]),
@@ -52,6 +53,7 @@ export default {
 			}
 		},
 	},
+
 };
 </script>
 
@@ -61,19 +63,19 @@ export default {
 			<form class="form" @submit.prevent="tryActivateAccount">
 				<h4 class="sub-title">Details of your business</h4>
 				<div class="form-field-container">
-					<label for="commercialname" class="form-label">Commercial Name</label>
+					<label for="name" class="form-label">Company Name</label>
 					<input
-						id="commercialname"
-						v-model="user.commercialname"
+						id="name"
+						v-model="user.name"
 						type="text"
 						placeholder="Enter commercial name"
 						:class="[
 							'form-input',
-							{ 'is-invalid ': submitted && !$v.user.commercialname.required },
+							{ 'is-invalid ': submitted && !$v.user.name.required },
 						]"
 					/>
 					<div
-						v-if="submitted && !$v.user.commercialname.required"
+						v-if="submitted && !$v.user.name.required"
 						class="invalid-feedback"
 					>
 						Commercial name is required.
@@ -100,22 +102,22 @@ export default {
 						</div>
 					</div>
 					<div class="form-field-container form-field-size">
-						<label for="phonenumber" class="form-label">Phone Number</label>
+						<label for="tel" class="form-label">Phone Number</label>
 						<input
-							id="phonenumber"
-							v-model="user.phonenumber"
+							id="tel"
+							v-model="user.tel"
 							type="text"
 							placeholder="Enter phone number"
 							:class="[
 								'form-input',
-								{ 'is-invalid ': submitted && !$v.user.phonenumber.required },
+								{ 'is-invalid ': submitted && !$v.user.tel.required },
 							]"
 						/>
 						<div
-							v-if="submitted && !$v.user.phonenumber.required"
+							v-if="submitted && !$v.user.tel.required"
 							class="invalid-feedback"
 						>
-							phonenumber is required.
+							Phone is required.
 						</div>
 					</div>
 				</div>
