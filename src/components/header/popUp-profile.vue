@@ -30,7 +30,7 @@ export default {
 };
 </script>
 <template>
-	<!-- <p>{{ user ? user.username : null }}</p> -->
+
 	<div class="popUp-container">
 		<div class="popup-header">
 			<div v-if="isLoggedIn" class="user-logo">

@@ -18,8 +18,9 @@ export default {
 
 	methods: {
 		...mapActions("auth", ["changePassword"]),
-		...mapMutations("auth", ["SET_ALERT_MSG"]),
+		...mapMutations("auth", ["SET_ALERT_MSG", "TOGGLE_IS_LOADING"]),
 		async tryChangePassword() {
+			this.TOGGLE_IS_LOADING();
 			this.submitted = true;
 			if (this.$v.$invalid) {
 				return;
@@ -31,13 +32,15 @@ export default {
 						type: "success",
 						msg: "Password updated successfully",
 					});
-					this.password = {}
+					this.password = {};
 				} catch (error) {
 					this.SET_ALERT_MSG({
 						title: "ERROR",
 						type: "error",
 						msg: error,
 					});
+				} finally {
+					this.TOGGLE_IS_LOADING();
 				}
 			}
 		},
@@ -50,49 +53,61 @@ export default {
 
 <template>
 	<div class="profile-wrapper">
-		<div class="profile-container">
+		<div v-if="!user.isActive" class="inactive-account">
+			<p>Please update profile to activate account</p>
+			<div class="button">
+				<router-link :to="{ name: 'profile' }">Go to profile</router-link>
+			</div>
+		</div>
+		<div v-else class="profile-container">
 			<!-- <p class="form-subtitle">Change your password.</p> -->
 
 			<form class="form" @submit.prevent="tryChangePassword">
 				<div class="form-field-container">
 					<label for="name" class="form-label">Current Password</label>
-					<input
-						id="name"
-						v-model="password.currentPassword"
-						type="text"
-						placeholder="Enter commercial name"
-						:class="[
-							'form-input',
-							{
-								'is-invalid ':
-									submitted && !$v.password.currentPassword.required,
-							},
-						]"
-					/>
-					<div
-						v-if="submitted && !$v.password.currentPassword.required"
-						class="invalid-feedback"
-					>
-						Current password is required.
+					<div>
+						<input
+							id="name"
+							v-model="password.currentPassword"
+							type="text"
+							placeholder="Enter commercial name"
+							:class="[
+								'form-input',
+								{
+									'is-invalid ':
+										submitted && !$v.password.currentPassword.required,
+								},
+							]"
+						/>
+						<div
+							v-if="submitted && !$v.password.currentPassword.required"
+							class="invalid-feedback"
+						>
+							Current password is required.
+						</div>
 					</div>
 				</div>
 				<div class="form-field-container">
 					<label for="name" class="form-label">New Password</label>
-					<input
-						id="name"
-						v-model="password.newPassword"
-						type="text"
-						placeholder="Enter new password"
-						:class="[
-							'form-input',
-							{ 'is-invalid ': submitted && !$v.password.newPassword.required },
-						]"
-					/>
-					<div
-						v-if="submitted && !$v.password.newPassword.required"
-						class="invalid-feedback"
-					>
-						A new password is required.
+					<div class="input-container">
+						<input
+							id="name"
+							v-model="password.newPassword"
+							type="text"
+							placeholder="Enter new password"
+							:class="[
+								'form-input',
+								{
+									'is-invalid ': submitted && !$v.password.newPassword.required,
+								},
+							]"
+						/>
+						<div
+							v-if="submitted && !$v.password.newPassword.required"
+							class="invalid-feedback"
+						>
+							A new password is required.
+						</div>
 					</div>
 				</div>
 
@@ -105,6 +120,35 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.inactive-account {
+	width: 100%;
+	display: grid;
+	place-items: center;
+	margin-block: 3em;
+	font: $font-mobile-m-bold;
+	color: $dark;
+
+	&-text {
+		text-align: center;
+	}
+}
+.button {
+	cursor: pointer;
+	background: $primary;
+	font: $font-text-bold;
+	text-align: center;
+	transition: all 250ms ease-in-out;
+	border: 1px solid $light;
+	margin: 0.5em;
+	&:hover {
+		transform: scale(1.01);
+	}
+	a {
+		color: $light;
+		padding: 0.8em;
+		display: block;
+	}
+}
 .invalid-feedback {
 	color: red;
 }
@@ -136,7 +180,8 @@ export default {
 }
 .form-input {
 	height: 3em;
-	// border-radius: 5px;
+	width: 100%;
+	margin-bottom: 0.5em;
 	padding-inline: 0.5em;
 	border: 1px solid $lightestDark;
 	outline: none;
@@ -152,6 +197,7 @@ export default {
 }
 
 .profile-wrapper {
+	padding: 0 2em;
 	@include breakpoint(tablet) {
 		display: flex;
 		.profile-container {
@@ -176,12 +222,12 @@ export default {
 			flex-direction: row;
 			justify-content: space-between;
 			align-content: center;
-			padding-right: 18em;
+			padding-right: 14em;
 
 			label {
 				flex: 1;
 			}
-			input {
+			div {
 				flex: 1;
 			}
 		}
@@ -189,6 +235,9 @@ export default {
 	@include breakpoint(desktop) {
 		.card-dealer {
 			width: 60%;
+		}
+		.form-field-container {
+			padding-right: 20em;
 		}
 	}
 }

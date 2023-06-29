@@ -11,7 +11,7 @@ export default {
 			if (
 				(link == "Dashboard" && !this.isLoggedIn) ||
 				(link == "Join Us" && this.isLoggedIn) ||
-				(link == "Log out" && !this.isLoggedIn)
+				(link == "Log Out" && !this.isLoggedIn)
 			) {
 				showNav = false;
 			}

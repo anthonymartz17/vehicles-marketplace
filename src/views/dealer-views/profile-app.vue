@@ -21,24 +21,39 @@ export default {
 		},
 	},
 	created() {
-		console.log(this.user);
 		this.fetchProfileById(this.user.dealerId).then((data) => {
-			this.userProfile = data;
+			if (data) this.userProfile = data;
 		});
 	},
 	methods: {
 		...mapActions("profile", ["update", "fetchProfileById"]),
-		...mapMutations("auth", ["SET_ALERT_MSG"]),
+		...mapMutations("auth", ["SET_ALERT_MSG", "ACTIVATE_ACCOUNT"]),
 		async tryActivateAccount() {
 			this.submitted = true;
 			if (this.$v.$invalid) {
 				return;
 			} else {
 				try {
-					await this.update({
+					//to activate account after registration if not active
+					if (this.user.isActive === false) {
+						this.userProfile.active = true;
+					}
+					const userUpdated = await this.update({
 						dealerId: this.userProfile.id,
 						profileData: this.userProfile,
 					});
+					console.log(userUpdated, "EL ACTUALIZADO");
+					//updates currentUserDealer.isActive if account hadnt been activated to immediatelly show active account views when autologin fires.
+					if (userUpdated.active) {
+						const currentUserDealer = JSON.parse(
+							localStorage.getItem("currentUserDealer")
+						);
+						currentUserDealer.isActive = true;
+						localStorage.setItem(
+							"currentUserDealer",
+							JSON.stringify(currentUserDealer)
+						);
+					}
 					this.SET_ALERT_MSG({
 						title: "Success",
 						type: "success",
@@ -226,6 +241,7 @@ export default {
 
 <style lang="scss" scoped>
 .profile-wrapper {
+	padding: 0 1em;
 }
 
 .invalid-feedback {
@@ -252,6 +268,7 @@ export default {
 .form-subtitle {
 	font: $font-text-bold;
 	color: red;
+	margin-block: 1em;
 }
 .form-label {
 	font: $font-text-bold;

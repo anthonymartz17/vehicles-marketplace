@@ -1,5 +1,5 @@
 import { auth } from "../../firebaseConfig";
-console.log(auth);
+
 import {
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
@@ -17,11 +17,13 @@ export default {
 	state: {
 		user: null,
 		alert: {},
+		isLoading: false,
 	},
 	mutations: {
 		SET_USER(state, payload) {
 			state.user = payload;
 		},
+
 		SET_ALERT_MSG(state, payload) {
 			state.alert = payload;
 			console.log({ ...state.alert });
@@ -37,21 +39,34 @@ export default {
 			}
 			return showNav;
 		},
+		TOGGLE_IS_LOADING(state) {
+			state.isLoading = !state.isLoading;
+		},
 	},
 	actions: {
 		async signUp({ commit }, { email, password }) {
+		
 			try {
 				let response = await createUserWithEmailAndPassword(
 					auth,
 					email,
 					password
 				);
+				const currentUser = response._tokenResponse.email;
+				const token = response._tokenResponse.idToken;
+				const expiresIn = response._tokenResponse.expiresIn;
+				// const userProfile = await apiProfile.getByAuthId(response.user.uid);
+				// const username = userProfile[0].name;
+				// const dealerId = userProfile[0].id;
+				// const isActive = userProfile[0].active;
+				console.log(currentUser, token, expiresIn, "ESTA LOGEADO");
 				return response.user;
 			} catch (error) {
 				throw error;
-			}
+			} 
 		},
 		async signIn({ commit, dispatch }, { email, password }) {
+			
 			try {
 				let response = await signInWithEmailAndPassword(auth, email, password);
 
@@ -96,6 +111,7 @@ export default {
 				}
 		},
 		async signOutUser({ commit }) {
+			
 			try {
 				await signOut(auth);
 				localStorage.removeItem("currentUserDealer");
@@ -106,6 +122,7 @@ export default {
 			}
 		},
 		async changePassword(_, { currentPassword, newPassword }) {
+	
 			try {
 				const user = auth.currentUser;
 
@@ -122,11 +139,12 @@ export default {
 				await updatePassword(user, newPassword);
 			} catch (error) {
 				throw error;
-			}
+			} 
 		},
 	},
 	getters: {
-		isLoggedIn: (state) => !!(state.user && state.user.isActive),
+		isLoggedIn: (state) => !!state.user,
 		showAlert: (state) => !!Object.keys(state.alert).length,
+	
 	},
 };

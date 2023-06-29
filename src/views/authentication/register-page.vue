@@ -17,10 +17,11 @@ export default {
 	},
 	methods: {
 		...mapActions("auth", ["signUp", "signIn"]),
-		...mapMutations("auth", ["SET_ALERT_MSG"]),
+		...mapMutations("auth", ["SET_ALERT_MSG","TOGGLE_IS_LOADING"]),
 		...mapActions("profile", ["createProfile"]),
 
 		async tryToRegisterIn() {
+			this.TOGGLE_IS_LOADING()
 			this.submitted = true;
 			if (this.$v.$invalid) {
 				return;
@@ -36,9 +37,13 @@ export default {
 						email: this.user.email,
 						auth_id: newUser.uid,
 					});
+					await this.signIn({
+						email: this.user.email,
+						password: this.user.password,
+					});
 
 					this.$router.push({
-						name: "activationForm",
+						name: "dashboard",
 						query: { authId: newUser.uid },
 					});
 
@@ -46,6 +51,8 @@ export default {
 				} catch (error) {
 					this.SET_ALERT_MSG({ type: "error", title: "Error", msg: error });
 					console.log(error);
+				} finally {
+					this.TOGGLE_IS_LOADING()
 				}
 			}
 		},

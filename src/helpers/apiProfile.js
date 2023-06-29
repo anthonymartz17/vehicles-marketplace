@@ -80,10 +80,12 @@ export default {
 	},
 	async updateProfile({ dealerId, profileData }) {
 		try {
-			console.log(dealerId, profileData);
 			const colRef = doc(db, "dealers", dealerId);
 			await updateDoc(colRef, profileData);
-			console.log("Item updated successfully!");
+			//updateDoc returns undefined after successfully updating, it s intended behaviour. so i retrieve it to return it for further use.
+			const updatedDocSnapshot = await getDoc(colRef);
+			const updatedData = updatedDocSnapshot.data();
+			return updatedData;
 		} catch (error) {
 			throw error;
 		}

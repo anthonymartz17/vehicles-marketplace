@@ -8,11 +8,11 @@ export default {
 		return {};
 	},
 	methods: {
-		...mapMutations("vehicles", []),
+		// ...mapMutations("vehicles", []),
 	},
 
 	computed: {
-		...mapGetters("vehicles", []),
+		// ...mapGetters("vehicles", []),
 		title() {
 			let title;
 			switch (this.$route.name) {
@@ -25,6 +25,9 @@ export default {
 				case "password":
 					title = "Password";
 					break;
+				case "create ad":
+					title = "Create Post";
+					break;
 			}
 			return title;
 		},
@@ -36,14 +39,16 @@ export default {
 		<div class="dashboard-container">
 			<div class="dashboard-sidebar">
 				<div class="sidebar-container">
-					<div class="button">+ Create New</div>
+					<div class="button">
+						<router-link :to="{ name: 'create ad' }"> + Create New</router-link>
+					</div>
 					<div class="link-list">
 						<LoggedInUserLinks />
 					</div>
 				</div>
 			</div>
 			<div class="dashboard-routerview">
-				<h3 class="main-title">{{ title }}</h3>
+				<h3 class="title">{{ title }}</h3>
 				<router-view />
 			</div>
 		</div>
@@ -51,7 +56,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-
 .clear-btn {
 	padding: 0.2em;
 	border: 1px solid $primary;
@@ -64,8 +68,6 @@ export default {
 	cursor: pointer;
 	background: $primary;
 	font: $font-text-bold;
-	color: $light;
-	padding: 0.8em;
 	text-align: center;
 	transition: all 250ms ease-in-out;
 	border: 1px solid $light;
@@ -73,23 +75,37 @@ export default {
 	&:hover {
 		transform: scale(1.01);
 	}
+	a {
+		color: $light;
+		padding: 0.8em;
+		display: block;
+	}
 }
-.link-list{
-			display: none;
-		}
+.title {
+	margin-inline: 1em;
+	color: $lightDark;
+	font: $font-mobile-l;
+}
+.link-list {
+	// display: none;
+}
 .dashboard-routerview {
-	// padding: 1em;
+	margin-block: 2em;
+}
+.dashboard-sidebar {
+	background: $dark;
+	min-height: 70vh;
+	flex: 1;
+	display: none;
 }
 .dashboard-wrapper {
 	@include breakpoint(tablet) {
-		
 	}
 	@include breakpoint(desktop) {
 		.dashboard-wrapper {
 			position: absolute;
 			width: 100vw;
 			height: 100vh;
-			background: blue;
 		}
 		.dashboard-container {
 			display: grid;
@@ -97,15 +113,9 @@ export default {
 		}
 		.dashboard-routerview {
 			flex: 3;
-	
-		}
-		.dashboard-sidebar {
-			background: $dark;
-			min-height: 70vh;
-			flex: 1;
 		}
 
-		.link-list {
+		.dashboard-sidebar {
 			display: block;
 		}
 	}

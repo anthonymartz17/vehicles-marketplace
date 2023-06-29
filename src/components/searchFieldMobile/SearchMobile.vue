@@ -1,3 +1,18 @@
+			<script>
+			import { mapMutations } from "vuex";
+			import SearchBtn from "./SearchBtn.vue";
+			import HomeSearchForm from "../homeSearchForm.vue";
+			
+			export default {
+				components: {
+					SearchBtn,
+					HomeSearchForm,
+				},
+				methods: {
+					...mapMutations("vehicles", ["clearFilters"]),
+				},
+			};
+			</script>
 <template>
 	<div class="search-fields-container">
 		<p class="search-fields-container-title">Search for Your Vehicle!</p>
@@ -11,21 +26,6 @@
 	</div>
 </template>
 
-<script>
-import { mapMutations } from "vuex";
-import SearchBtn from "./SearchBtn.vue";
-import HomeSearchForm from "../homeSearchForm.vue";
-
-export default {
-	components: {
-		SearchBtn,
-		HomeSearchForm,
-	},
-	methods: {
-		...mapMutations("vehicles",["clearFilters"]),
-	},
-};
-</script>
 
 <style lang="scss" scoped>
 .search-fields-container {

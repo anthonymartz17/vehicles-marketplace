@@ -17,6 +17,7 @@ export default {
 			"UPDATE_FILTERS",
 			"FILTER_VEHICLES",
 		]),
+		...mapMutations("auth", ["TOGGLE_IS_LOADING"]),
 		...mapActions("auth", ["signOutUser"]),
 		togglePopup() {
 			this.showPopup = !this.showPopup;
@@ -31,7 +32,7 @@ export default {
 			if (
 				(link == "Dashboard" && !this.isLoggedIn) ||
 				(link == "Join Us" && this.isLoggedIn) ||
-				(link == "Log out" && !this.isLoggedIn)
+				(link == "Log Out" && !this.isLoggedIn)
 			) {
 				showNav = false;
 			}
@@ -50,11 +51,14 @@ export default {
 		},
 		async signOut(link) {
 			if (link == "Log Out" && this.$route.name !== "joinUs") {
+				this.TOGGLE_IS_LOADING()
 				try {
 					await this.signOutUser();
 					this.$router.replace({ name: "joinUs" });
 				} catch (error) {
 					throw error;
+				} finally {
+					this.TOGGLE_IS_LOADING()
 				}
 			}
 		},

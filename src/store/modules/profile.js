@@ -96,10 +96,9 @@ export default {
 			try {
 				let updatedProfile = await apiProfile.updateProfile(profileData);
 				commit("UPDATE_PROFILE", updatedProfile);
+				return updatedProfile
 				// let imagesUrl = await apiCarsImages.getImagesById(vehicle.pics);
 				// vehicle.carPicsUrls = imagesUrl;
-
-				return updatedProfile;
 			} catch (error) {
 				throw error;
 			} finally {

@@ -19,7 +19,7 @@ export default {
 	methods: {
 		...mapActions("auth", ["signIn"]),
 		...mapActions("profile", ["fetchByAuthId"]),
-		...mapMutations("auth", ["SET_ALERT_MSG"]),
+		...mapMutations("auth", ["SET_ALERT_MSG","TOGGLE_IS_LOADING"]),
 
 		adjustErrorMsg(error) {
 			let errorMsg;
@@ -41,6 +41,7 @@ export default {
 		},
 
 		async tryToLogIn() {
+			this.TOGGLE_IS_LOADING()
 			this.submitted = true;
 			// stop here if form is invalid
 			this.$v.$touch();
@@ -65,6 +66,8 @@ export default {
 				} catch (error) {
 					// const errorMsg = this.adjustErrorMsg(error);
 					this.SET_ALERT_MSG({ type: "error", title: "Error", msg: error });
+				} finally {
+					this.TOGGLE_IS_LOADING()
 				}
 			}
 		},

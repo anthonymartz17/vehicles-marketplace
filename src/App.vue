@@ -8,8 +8,7 @@ import AppFooter from "./components/Footer.vue";
 import MobileMenu from "./components/MobileMenu.vue";
 import initializeFirebase from "./firebaseConfig";
 import AlertMsg from "./components/utilities/alert-msg.vue";
-// import Loading from "vue-loading-overlay";
-// import "vue-loading-overlay/dist/css/index.css";
+import Loading from "./components/utilities/loading.vue";
 import { mapActions, mapState, mapMutations, mapGetters } from "vuex";
 
 export default {
@@ -21,10 +20,11 @@ export default {
 		MobileMenu,
 		AppModal,
 		AlertMsg,
+		Loading,
 	},
 	data() {
 		return {
-			isLoading: false,
+			fullPage: true,
 			navItems: [
 				{
 					link: "Home",
@@ -36,7 +36,7 @@ export default {
 					routename: "searchResults",
 					icon: "fas fa-car",
 				},
-			
+
 				{
 					link: "Contact",
 					routename: "contact",
@@ -72,21 +72,20 @@ export default {
 	},
 	computed: {
 		...mapState("vehicles", ["showSearchMenu"]),
+		...mapState("auth", ["isLoading"]),
 		...mapGetters("auth", ["showAlert"]),
 	},
 };
 </script>
 <template>
 	<div class="page-container">
-		<AlertMsg v-show="showAlert"/>
-		<!-- <Loading v-model="isLoading" /> -->
-		<!-- toggleable menues -->
-		<MobileMenu :navItems="navItems" />
-		<!-- <div class="searchmenue">
+		<div class="loading" v-if="isLoading">
+			<Loading />
+		</div>
+		<AlertMsg v-show="showAlert" />
 
-			<SearchMenue v-if="showSearchMenu" />
-	
-		</div> -->
+		<MobileMenu :navItems="navItems" />
+
 		<header>
 			<AppHeader :navItems="navItems" />
 		</header>
@@ -102,6 +101,17 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+
+.loading{
+	position: absolute;
+	background:rgba(0, 0, 0, 0.705);
+	width: 100%;
+	height: 100vh;
+	display: grid;
+	place-items: center;
+	z-index: 100;
+
+}
 .page-container {
 	// min-height: 100%;
 	// min-width: 25em;

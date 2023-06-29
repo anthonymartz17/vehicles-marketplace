@@ -24,6 +24,7 @@
 <style lang="scss" scoped>
 
 .home-container{
+	
 	@include breakpoint(lg-device){
 		padding-inline: 5em;
 	}

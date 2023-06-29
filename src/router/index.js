@@ -47,7 +47,7 @@ const routes = [
 	{
 		path: "/activationform",
 		name: "activationForm",
-		meta: { requiresAuth: true, isActive: false },
+		meta: { requiresAuth: true },
 		component: () => import("../views/authentication/activationform.vue"),
 	},
 	{
@@ -59,6 +59,11 @@ const routes = [
 				path: "",
 				name: "dashboard",
 				component: () => import("../views/dealer-views/created-ads-display"),
+			},
+			{
+				path: "/create-ad",
+				name: "create ad",
+				component: () => import("../views/dealer-views/create-ad"),
 			},
 			{
 				path: "/profile",
@@ -85,24 +90,19 @@ router.beforeEach((to, from, next) => {
 	// Check the authentication status or any other condition
 	store.dispatch("auth/autoLogIn");
 	const isLoggedIn = store.getters["auth/isLoggedIn"];
+	console.log(isLoggedIn)
 	// const isUserActive = store.state["auth"].user.isActive;
 
 	if (to.matched.some((record) => record.meta.requiresAuth)) {
 		// Route requires authentication
 		if (!isLoggedIn) {
+			console.log("not loggedin");
 			// User is not authenticated, redirect to login or appropriate route
 			next("/joinUs");
 		} else {
-			// if (to.matched.some((record) => record.meta.isActive)) {
-			// 	if (isUserActive ) {
-			// 		next(from);
-			// 	} else {
-			// 		next();
-			// 	}
-			// }
-			next();
-
 			// User is authenticated, proceed to the route
+
+			next();
 		}
 	} else {
 		// Route does not require authentication
