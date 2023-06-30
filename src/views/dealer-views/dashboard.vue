@@ -82,7 +82,7 @@ export default {
 	}
 }
 .title {
-	margin-inline: 1em;
+	margin: 1em;
 	color: $lightDark;
 	font: $font-mobile-l;
 }
@@ -102,6 +102,9 @@ export default {
 	@include breakpoint(tablet) {
 	}
 	@include breakpoint(desktop) {
+		.title{
+			margin: 0 1em;
+		}
 		.dashboard-wrapper {
 			position: absolute;
 			width: 100vw;

@@ -62,8 +62,35 @@ const routes = [
 			},
 			{
 				path: "/create-ad",
-				name: "create ad",
-				component: () => import("../views/dealer-views/create-ad"),
+
+				component: () =>
+					import("../views/dealer-views/create-ad-post/create-ad"),
+				children: [
+					{
+						path: "",
+						name: "create ad",
+						component: () =>
+							import("../views/dealer-views/create-ad-post/form/step-1"),
+					},
+					{
+						path: "/step-2",
+						name: "step-2",
+						component: () =>
+							import("../views/dealer-views/create-ad-post/form/step-2"),
+					},
+					{
+						path: "/step-3",
+						name: "step-3",
+						component: () =>
+							import("../views/dealer-views/create-ad-post/form/step-3"),
+					},
+					{
+						path: "/step-4",
+						name: "step-4",
+						component: () =>
+							import("../views/dealer-views/create-ad-post/form/step-4"),
+					},
+				],
 			},
 			{
 				path: "/profile",
@@ -76,6 +103,10 @@ const routes = [
 				component: () => import("../views/dealer-views/password-app"),
 			},
 		],
+	},
+	{
+		path: "/:notFound(.*)",
+		component: () => import("../views/Not-found.vue"),
 	},
 ];
 
@@ -90,7 +121,7 @@ router.beforeEach((to, from, next) => {
 	// Check the authentication status or any other condition
 	store.dispatch("auth/autoLogIn");
 	const isLoggedIn = store.getters["auth/isLoggedIn"];
-	console.log(isLoggedIn)
+	console.log(isLoggedIn);
 	// const isUserActive = store.state["auth"].user.isActive;
 
 	if (to.matched.some((record) => record.meta.requiresAuth)) {
