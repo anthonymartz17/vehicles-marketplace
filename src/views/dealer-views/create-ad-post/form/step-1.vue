@@ -24,13 +24,11 @@ export default {
 	},
 	validations: {
 		vehicle: {
-			name: { required },
-			manager: { required },
-			tel: { required },
-			address: { required },
-			city: { required },
-			state: { required },
-			zipcode: { required },
+			make: { required },
+			model: { required },
+			trim: { required },
+			year: { required },
+			price: { required },
 		},
 	},
 	created() {
@@ -39,31 +37,12 @@ export default {
 	methods: {
 		...mapActions("profile", ["update", "fetchProfileById"]),
 		...mapMutations("auth", ["SET_ALERT_MSG", "TOGGLE_IS_LOADING"]),
-		async tryCreatePost() {
-			this.TOGGLE_IS_LOADING();
+		tryNextStep() {
 			this.submitted = true;
 			if (this.$v.$invalid) {
 				return;
 			} else {
-				try {
-					await this.update({
-						dealerId: this.vehicle.id,
-						profileData: this.vehicle,
-					});
-					this.SET_ALERT_MSG({
-						title: "Success",
-						type: "success",
-						msg: "Information updated successfully",
-					});
-				} catch (error) {
-					this.SET_ALERT_MSG({
-						title: "ERROR",
-						type: "error",
-						msg: error,
-					});
-				} finally {
-					this.TOGGLE_IS_LOADING();
-				}
+				this.$router.push({ name: "step-2" });
 			}
 		},
 	},
@@ -266,8 +245,8 @@ export default {
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 1em;
-	border-bottom: 1px solid $lightestDark;
-	padding-block: 2em;
+	// border-bottom: 1px solid $lightestDark;
+	padding-block: 1em;
 }
 
 .profile-wrapper {

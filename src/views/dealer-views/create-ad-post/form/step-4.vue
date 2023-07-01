@@ -12,13 +12,10 @@ export default {
 	},
 	validations: {
 		vehicle: {
-			name: { required },
-			manager: { required },
-			tel: { required },
-			address: { required },
-			city: { required },
-			state: { required },
-			zipcode: { required },
+			colorEx: { required },
+			colorIn: { required },
+			drivetrain: { required },
+			accessories: { required },
 		},
 	},
 	created() {
@@ -28,21 +25,12 @@ export default {
 		...mapActions("profile", ["update", "fetchProfileById"]),
 		...mapMutations("auth", ["SET_ALERT_MSG", "TOGGLE_IS_LOADING"]),
 		async tryCreatePost() {
-			this.TOGGLE_IS_LOADING();
 			this.submitted = true;
 			if (this.$v.$invalid) {
 				return;
 			} else {
 				try {
-					await this.update({
-						dealerId: this.vehicle.id,
-						profileData: this.vehicle,
-					});
-					this.SET_ALERT_MSG({
-						title: "Success",
-						type: "success",
-						msg: "Information updated successfully",
-					});
+					// this.TOGGLE_IS_LOADING();
 				} catch (error) {
 					this.SET_ALERT_MSG({
 						title: "ERROR",
@@ -50,7 +38,7 @@ export default {
 						msg: error,
 					});
 				} finally {
-					this.TOGGLE_IS_LOADING();
+					// this.TOGGLE_IS_LOADING();
 				}
 			}
 		},
@@ -70,7 +58,7 @@ export default {
 						<label for="drivetrain" class="form-label">Drivetrain</label>
 						<input
 							id="drivetrain"
-							v-model="vehicle.colorEx"
+							v-model="vehicle.drivetrain"
 							type="text"
 							placeholder="AWD | FWD | etc..."
 							:class="[
@@ -83,25 +71,6 @@ export default {
 							class="invalid-feedback"
 						>
 							Drivetrain is required.
-						</div>
-					</div>
-					<div class="form-field-container form-field-size">
-						<label for="colorIn" class="form-label">Color Interior</label>
-						<input
-							id="colorIn"
-							v-model="vehicle.colorIn"
-							type="text"
-							placeholder="Enter color of interior"
-							:class="[
-								'form-input',
-								{ 'is-invalid ': submitted && !$v.vehicle.colorIn.required },
-							]"
-						/>
-						<div
-							v-if="submitted && !$v.vehicle.colorIn.required"
-							class="invalid-feedback"
-						>
-							Color Interior is required.
 						</div>
 					</div>
 				</div>
@@ -134,7 +103,7 @@ export default {
 							placeholder="Enter color of interior"
 							:class="[
 								'form-input',
-								{ 'is-invalid ': submitted && !$v.vehicle.colorIn.required },
+								{ 'is-invalid': submitted && !$v.vehicle.colorIn.required },
 							]"
 						/>
 						<div
@@ -148,20 +117,20 @@ export default {
 				<div class="form-field-container form-field-size">
 					<label for="accessories" class="form-label">Accessories</label>
 					<textarea
-						v-model="vehicle.vin"
+						v-model="vehicle.accessories"
 						placeholder="Divide by comma Ex: Bluetooth, Gps, Dashcam..."
 						name="accessories"
 						id="accessories"
 						cols="30"
 						rows="10"
-						:class="[{ 'is-invalid ': submitted && !$v.vehicle.vin.required }]"
+						:class="[{ 'is-invalid ': submitted && !$v.vehicle.accessories.required }]"
 					></textarea>
 
 					<div
-						v-if="submitted && !$v.vehicle.vin.required"
+						v-if="submitted && !$v.vehicle.accessories.required"
 						class="invalid-feedback"
 					>
-						Vin number is required.
+					Accessories is required.
 					</div>
 				</div>
 			</form>
@@ -248,8 +217,8 @@ export default {
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 1em;
-	border-bottom: 1px solid $lightestDark;
-	padding-block: 2em;
+	// border-bottom: 1px solid $lightestDark;
+	padding-block: 1em;
 }
 
 .profile-wrapper {

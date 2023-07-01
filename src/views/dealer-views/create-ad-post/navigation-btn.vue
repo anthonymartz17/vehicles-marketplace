@@ -3,6 +3,7 @@
 		<div class="btn-container">
 			<div class="button back-btn" @click="goBack()">Back</div>
 			<div class="button next-btn" @click="goNext()">Next</div>
+		
 		</div>
 	</div>
 </template>
@@ -11,47 +12,29 @@
 export default {
 	data() {
 		return {
-			step: 1,
+			stepsRoutes: ["create ad", "step-2", "step-3", "step-4"],
+
 		};
 	},
+
 	methods: {
-		goBack() {
-			if (this.step > 1) {
-				this.step--;
-				let route;
-				switch (this.step) {
-					case 1:
-						route = "create ad";
-						break;
-					case 2:
-						route = "step-2";
-						break;
-					case 3:
-						route = "step-3";
-						break;
-				}
-				this.$router.push({ name: route });
-				console.log(this.step);
+		goNext() {
+			if (this.$route.name !== "step-4") {
+				this.$router.push({ name: this.nextRoute });
 			}
 		},
-		goNext() {
-			if (this.step < 4) {
-				this.step++;
-				let route;
-				switch (this.step) {
-					case 2:
-						route = "step-2";
-						break;
-					case 3:
-						route = "step-3";
-						break;
-					case 4:
-						route = "step-4";
-						break;
-				}
-				this.$router.push({ name: route });
-				console.log(this.step);
+		goBack() {
+			if (this.$route.name !== "create ad") {
+				this.$router.push({ name: this.backRoute });
 			}
+		},
+	},
+	computed: {
+		backRoute() {
+			return this.stepsRoutes[this.stepsRoutes.indexOf(this.$route.name) - 1];
+		},
+		nextRoute() {
+			return this.stepsRoutes[this.stepsRoutes.indexOf(this.$route.name) + 1];
 		},
 	},
 };
