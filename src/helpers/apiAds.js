@@ -8,12 +8,16 @@ import {
 	query,
 	where,
 } from "firebase/firestore";
+import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
+import { v4 as uuidv4 } from "uuid";
+// Create a reference to the storage service
+const storage = getStorage();
 
 //initialize service
 const db = getFirestore();
 
 export default {
-	async getAds(dealerId = "jRYOADMZlECdVyuGuSbg") {
+	async getAds(dealerId) {
 		try {
 			const colRef = collection(db, "cars");
 			const q = query(colRef, where("dealerId", "==", dealerId));
@@ -42,6 +46,48 @@ export default {
 			} else {
 				throw new Error("Vehicle not found.");
 			}
+		} catch (error) {
+			throw error;
+		}
+	},
+	async createAd(data) {
+		try {
+			const colRef = collection(db, "cars");
+			const response = await addDoc(colRef, data);
+
+			return response;
+
+			// return profile
+		} catch (error) {
+			throw error;
+		}
+	},
+
+	async uploadImages({ imgFiles, dealerId }) {
+		try {
+			// const urlsUploaded = await Promise.all(
+			//uploads each image to firebase storage and returns array with url from each one
+			const uploadPromises = imgFiles.map(async (file) => {
+				//creates unique name id for image
+				const imageName = uuidv4();
+
+				//creates refference unique for image
+				const storageRef = ref(
+					storage,
+					`images/cars/${imageName}_${dealerId}_${file.name}`
+				);
+				console.log(storageRef, "el ref storage");
+				//uploads image to firebase
+				const snapshot = await uploadBytes(storageRef, file);
+				console.log(snapshot, "el snap");
+
+				const downloadURL = await getDownloadURL(snapshot.ref);
+				console.log(downloadURL);
+				return downloadURL;
+			});
+			const urlsUploaded = await Promise.all(uploadPromises);
+			console.log(urlsUploaded, "api urls");
+			return urlsUploaded;
 		} catch (error) {
 			throw error;
 		}

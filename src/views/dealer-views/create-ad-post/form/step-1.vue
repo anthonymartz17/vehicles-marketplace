@@ -11,11 +11,14 @@ export default {
 	data() {
 		return {
 			vehicle: {},
+			list: [],
 			submitted: false,
 			dropzoneOptions: {
 				url: "https://httpbin.org/post",
 				thumbnailWidth: 150,
-				maxFilesize: 0.5,
+				thumbnailHeight: 150,
+				// maxFilesize: 0.5,
+				acceptedFiles: ".jpg, .jpeg, .png",
 				headers: { "My-Awesome-Header": "header value" },
 				dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>UPLOAD IMAGE",
 				addRemoveLinks: true,
@@ -32,22 +35,39 @@ export default {
 		},
 	},
 	created() {
-		console.log(this.user, "from created");
+		this.vehicle = this.vehiclePost;
 	},
 	methods: {
 		...mapActions("profile", ["update", "fetchProfileById"]),
 		...mapMutations("auth", ["SET_ALERT_MSG", "TOGGLE_IS_LOADING"]),
-		tryNextStep() {
+		...mapMutations("adsCrud", ["UPDATE_VEHICLE"]),
+		...mapActions("adsCrud", ["uploadImages"]),
+
+		afterComplete(file) {
+			this.vehicle.pics.push(file);
+		},
+		async tryNextStep() {
 			this.submitted = true;
 			if (this.$v.$invalid) {
 				return;
 			} else {
-				this.$router.push({ name: "step-2" });
+				this.UPDATE_VEHICLE(this.vehicle);
+				try {
+					const response = await this.uploadImages({
+						imgFiles: this.vehicle.pics,
+						dealerId: this.user.dealerId,
+					});
+					console.log(response, "step1");
+				} catch (error) {
+					console.log(error);
+				}
+				// this.$router.push({ name: "step-2" });
 			}
 		},
 	},
 	computed: {
 		...mapState("auth", ["user"]),
+		...mapState("adsCrud", ["vehiclePost"]),
 	},
 };
 </script>
@@ -57,6 +77,7 @@ export default {
 		<div class="profile-container">
 			<form class="form" @submit.prevent="tryActivateAccount">
 				<vue2Dropzone
+					@vdropzone-complete="afterComplete"
 					ref="myVueDropzone"
 					id="dropzone"
 					:options="dropzoneOptions"
@@ -204,6 +225,8 @@ export default {
 
 .invalid-feedback {
 	color: red;
+	position: absolute;
+	bottom: -5px;
 }
 .update-btn {
 	cursor: pointer;
@@ -220,7 +243,7 @@ export default {
 	}
 }
 .is-invalid {
-	border: 1px solid red;
+	border: 1px solid red !important;
 }
 
 .form-subtitle {
@@ -242,6 +265,7 @@ export default {
 	font: $font-text;
 }
 .form-field-container {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 1em;

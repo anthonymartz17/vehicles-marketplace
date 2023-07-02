@@ -1,13 +1,20 @@
 import apiAds from "../../helpers/apiAds";
 import apiCarsImages from "../../helpers/apiCarsImages";
+import vehicles from "./vehicles";
 
 export default {
 	namespaced: true,
 
 	state: {
 		ads: [],
+		vehiclePost: {
+			pics:[]
+		}
 	},
 	mutations: {
+		UPDATE_VEHICLE(state, payload) {
+			Object.assign(state.vehiclePost,payload)
+		},
 		SET(state, payload) {
 			state.ads = payload;
 		},
@@ -67,6 +74,23 @@ export default {
 				// turns loading to false
 				// commit("SWITCH_LOADING");
 			}
+		},
+
+		async createAd(_, data) {
+			try {
+				const response = await apiAds.createAd(data);
+				console.log(response, 'ad created')
+			} catch (error) {
+				throw error;
+			} 
+		},
+		async uploadImages(_,data) {
+			try {
+				const response = await apiAds.uploadImages(data);
+				console.log(response, 'images uplaoded, state')
+			} catch (error) {
+				throw error;
+			} 
 		},
 		async fetchDealers({ commit }) {
 			// shows loading animation while getting the data

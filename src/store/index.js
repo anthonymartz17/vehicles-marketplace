@@ -3,7 +3,7 @@ import Vuex from "vuex";
 import vehicles from "./modules/vehicles";
 import filterOptions from "./modules/filterOptions";
 import auth from "./modules/auth";
-import adsCrud from "./modules/ad-posts";
+import adsCrud from "./modules/adsCrud";
 import profile from "./modules/profile";
 
 Vue.use(Vuex);

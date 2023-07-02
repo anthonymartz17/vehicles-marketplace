@@ -19,18 +19,22 @@ export default {
 		},
 	},
 	created() {
-		console.log(this.user, "from created");
+		this.vehicle = this.vehiclePost
 	},
 	methods: {
-		...mapActions("profile", ["update", "fetchProfileById"]),
 		...mapMutations("auth", ["SET_ALERT_MSG", "TOGGLE_IS_LOADING"]),
+		...mapActions("profile", ["update", "fetchProfileById"]),
+		...mapMutations("adsCrud", ["UPDATE_VEHICLE"]),
+		...mapActions("adsCrud", ["createAd"]),
 		async tryCreatePost() {
 			this.submitted = true;
 			if (this.$v.$invalid) {
 				return;
 			} else {
 				try {
-					// this.TOGGLE_IS_LOADING();
+					this.vehicle.dealerId = this.user.dealerId
+					this.UPDATE_VEHICLE(this.vehicle)
+					await this.createAd(this.vehiclePost)
 				} catch (error) {
 					this.SET_ALERT_MSG({
 						title: "ERROR",
@@ -45,6 +49,7 @@ export default {
 	},
 	computed: {
 		...mapState("auth", ["user"]),
+		...mapState("adsCrud", ["vehiclePost"]),
 	},
 };
 </script>
@@ -176,6 +181,8 @@ export default {
 
 .invalid-feedback {
 	color: red;
+	position: absolute;
+	bottom: -5px;
 }
 .update-btn {
 	cursor: pointer;
@@ -192,7 +199,7 @@ export default {
 	}
 }
 .is-invalid {
-	border: 1px solid red;
+	border: 1px solid red !important;
 }
 
 .form-subtitle {
@@ -214,6 +221,7 @@ export default {
 	font: $font-text;
 }
 .form-field-container {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 1em;

@@ -21,22 +21,25 @@ export default {
 		},
 	},
 	created() {
-		console.log(this.user, "from created");
+		this.vehicle = this.vehiclePost
 	},
 	methods: {
 		...mapActions("profile", ["update", "fetchProfileById"]),
 		...mapMutations("auth", ["SET_ALERT_MSG", "TOGGLE_IS_LOADING"]),
+		...mapMutations("adsCrudd", ["UPDATE_VEHICLE"]),
 		tryNextStep() {
 			this.submitted = true;
 			if (this.$v.$invalid) {
 				return;
 			} else {
+				this.UPDATE_VEHICLE(this.vehicle)
 				this.$router.push({ name: "step-3" });
 			}
 		},
 	},
 	computed: {
 		...mapState("auth", ["user"]),
+		...mapState("adsCrud", ["vehiclePost"]),
 	},
 };
 </script>
@@ -215,6 +218,8 @@ export default {
 
 .invalid-feedback {
 	color: red;
+	position: absolute;
+	bottom: -5px;
 }
 .update-btn {
 	cursor: pointer;
@@ -231,7 +236,7 @@ export default {
 	}
 }
 .is-invalid {
-	border: 1px solid red;
+	border: 1px solid red !important;
 }
 
 .form-subtitle {
@@ -254,6 +259,7 @@ export default {
 }
 .form-field-container {
 	display: flex;
+	position: relative;
 	flex-direction: column;
 	margin-bottom: 1em;
 	padding-block: 1em;

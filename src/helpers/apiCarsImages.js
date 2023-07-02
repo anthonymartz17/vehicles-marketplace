@@ -25,6 +25,7 @@ export default {
 			console.error("Error fetching images:", error);
 			throw error;
 		}
+		
 		// try {
 		// 	let carsUrl = await Promise.all(
 
