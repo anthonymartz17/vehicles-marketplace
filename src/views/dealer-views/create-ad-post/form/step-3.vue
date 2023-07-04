@@ -45,7 +45,7 @@ export default {
 	<div class="profile-wrapper">
 		<div class="profile-container">
 			<form class="form" @submit.prevent="tryActivateAccount">
-				<div class="field-flex">
+		
 					<div class="form-field-container form-field-size">
 						<label for="vin" class="form-label">Vin Number</label>
 						<input
@@ -87,7 +87,7 @@ export default {
 							Title Check is required.
 						</div>
 					</div>
-				</div>
+			
 				<div class="field-flex">
 					<div class="form-field-container form-field-size">
 						<label for="accidents" class="form-label">Accidents</label>
@@ -220,7 +220,7 @@ export default {
 .invalid-feedback {
 	color: red;
 	position: absolute;
-	bottom: -5px;
+	bottom: -10px;
 }
 .update-btn {
 	cursor: pointer;
@@ -263,8 +263,7 @@ export default {
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 1em;
-	// border-bottom: 1px solid $lightestDark;
-	padding-block: 1em;
+	padding-block: .5em;
 }
 
 .profile-wrapper {

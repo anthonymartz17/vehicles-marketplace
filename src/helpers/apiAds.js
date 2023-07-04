@@ -50,12 +50,12 @@ export default {
 			throw error;
 		}
 	},
-	async createAd(data) {
+	async createAd(vehicleData) {
 		try {
-			console.log(data, "api");
+			console.log(vehicleData, "api");
 			const colRef = collection(db, "cars");
 
-			const response = await addDoc(colRef, data);
+			const response = await addDoc(colRef, vehicleData);
 
 			return response;
 
@@ -65,35 +65,36 @@ export default {
 		}
 	},
 
-	async uploadImages({ imgFiles, carId }) {
+	async uploadImages({ vehicleImages, vehicleId }) {
 		try {
 			// const urlsUploaded = await Promise.all(
 			//uploads each image to firebase storage and returns array with url from each one
-			const uploadedImgRefPromised = imgFiles.map(async (file) => {
+			const imgPathsPromised = vehicleImages.map(async (img) => {
 				//creates unique name id for image
 				const uniqueId = uuidv4();
-				const imageName = `images/cars/${carId}_${uniqueId}_${file.name}`;
+				const imageName = `images/cars/${vehicleId}_${uniqueId}_${img.name}`;
 
 				//creates refference unique for image
 				const storageRef = ref(storage, imageName);
 				//uploads image to firebase
-				await uploadBytes(storageRef, file);
+				await uploadBytes(storageRef, img);
 
 				return imageName;
 			});
-			const imgUploadedRefs = await Promise.all(uploadedImgRefPromised);
-			return imgUploadedRefs;
+			const imgPaths = await Promise.all(imgPathsPromised);
+			console.log(imgPaths,'from api')
+			return imgPaths;
 		} catch (error) {
 			throw error;
 		}
 	},
-	async updateAd({ data, vehicleId }) {
+	async updateAd({ vehicleData, vehicleId }) {
 		try {
 			const vehicleDocRef = doc(db, "cars", vehicleId);
 			const vehicleDocSnapshot = await getDoc(vehicleDocRef);
 			console.log(vehicleDocSnapshot);
 			if (vehicleDocSnapshot.exists()) {
-				await updateDoc(vehicleDocRef, data);
+				await updateDoc(vehicleDocRef, vehicleData);
 				return { id: vehicleDocSnapshot.id, ...vehicleDocSnapshot.data() };
 			} else {
 				throw new Error("Car not found.");

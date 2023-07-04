@@ -45,7 +45,7 @@ export default {
 	<div class="profile-wrapper">
 		<div class="profile-container">
 			<form class="form" @submit.prevent="tryActivateAccount">
-				<div class="field-flex">
+		
 					<div class="form-field-container form-field-size">
 						<label for="fuel" class="form-label">Fuel</label>
 						<input
@@ -86,7 +86,7 @@ export default {
 							Type is required.
 						</div>
 					</div>
-				</div>
+		
 				<div class="field-flex">
 					<div class="form-field-container form-field-size">
 						<label for="carCondition" class="form-label">Car Condition</label>
@@ -219,7 +219,7 @@ export default {
 .invalid-feedback {
 	color: red;
 	position: absolute;
-	bottom: -5px;
+	bottom: -10px;
 }
 .update-btn {
 	cursor: pointer;
@@ -262,7 +262,7 @@ export default {
 	position: relative;
 	flex-direction: column;
 	margin-bottom: 1em;
-	padding-block: 1em;
+	padding-block: .5em;
 }
 
 .profile-wrapper {

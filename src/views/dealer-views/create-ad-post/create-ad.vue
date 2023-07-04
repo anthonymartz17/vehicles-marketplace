@@ -51,13 +51,12 @@ export default {
 		<div v-else class="form-wrapper">
 			<FormProgress />
 			<router-view ref="currentView" />
-			<div class="btn-wrapper">
-				<div class="btn-container">
-					<button class="button back-btn" @click="goBack()">Back</button>
-					<button class="button next-btn" @click="goNext()">
-						{{ $route.name != "step-4" ? "Next" : "Create Ad" }}
-					</button>
-				</div>
+
+			<div class="btn-container">
+				<button class="button back-btn" @click="goBack()">Back</button>
+				<button class="button next-btn" @click="goNext()">
+					{{ $route.name != "step-4" ? "Next" : "Create Ad" }}
+				</button>
 			</div>
 		</div>
 	</div>
@@ -99,12 +98,8 @@ export default {
 	gap: 1em;
 }
 
-.btn-wrapper {
-	display: flex;
-}
 .btn-container {
 	display: flex;
-	flex: 1;
 }
 .button {
 	flex: 1;
@@ -132,11 +127,8 @@ export default {
 	@include breakpoint(tablet) {
 	}
 	@include breakpoint(desktop) {
-		justify-content: center;
-
 		.btn-container {
-			flex: none;
-			width: 70%;
+			padding-inline: 8em;
 		}
 	}
 }

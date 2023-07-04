@@ -1,7 +1,10 @@
 <script>
 import { mapGetters, mapActions, mapState } from "vuex";
-
+import ListingActions from "./listingOptions.vue";
 export default {
+	components: {
+		ListingActions,
+	},
 	data() {
 		return {
 			pageTitle: "",
@@ -10,7 +13,6 @@ export default {
 	},
 
 	created() {
-
 		this.fetchAds(this.user.dealerId);
 	},
 
@@ -21,37 +23,38 @@ export default {
 	computed: {
 		...mapGetters("adsCrud", ["adsList"]),
 		...mapState("auth", ["user"]),
-	
 	},
 };
 </script>
 <template>
 	<div class="vehicles-container">
 		<div class="vehicles">
-		
-
 			<div v-if="adsList && adsList.length > 0" class="vehicles-display">
 				<div
 					class="vehicles-display-car"
 					v-for="(car, key) in adsList"
 					:key="key"
 				>
-					<router-link :to="{ name: 'carToView', query: { id: car.id } }">
+					<!-- <router-link :to="{ name: 'carToView', query: { id: car.id } }"> -->
+					<div class="vehicle-display-header">
+						<div class="actions">
+							<ListingActions />
+						</div>
 						<div v-if="car && car.carPicsUrls" class="vehicles-display-img">
 							<img :src="car.carPicsUrls[0]" :alt="`picture of ${car.model}`" />
 						</div>
-						<div class="vehicles-display-description">
-							<h3 class="vehicles-display-title">
-								{{ car.year }} {{ car.make }} {{ car.model }}
-							</h3>
-							<p class="vehicles-display-specs">
-								{{ car.fuel }} - {{ car.carCondition }} - {{ car.miles }} miles
-							</p>
-							<p class="vehicles-display-price">
-								{{ car.price | currency }}
-							</p>
-						</div>
-					</router-link>
+					</div>
+					<div class="vehicles-display-description">
+						<h3 class="vehicles-display-title">
+							{{ car.year }} {{ car.make }} {{ car.model }}
+						</h3>
+						<p class="vehicles-display-specs">
+							{{ car.fuel }} - {{ car.carCondition }} - {{ car.miles }} miles
+						</p>
+						<p class="vehicles-display-price">
+							{{ car.price | currency }}
+						</p>
+					</div>
 				</div>
 			</div>
 			<div v-else class="noResultMsg">
@@ -65,19 +68,13 @@ export default {
 .space-even {
 	justify-content: space-evenly;
 }
+
 .msg {
 	font: $font-logo-S;
 	padding: 0.2em;
 	margin-bottom: 0.5em;
 }
-// .title-container {
-// 	border-bottom: 2px solid $lightestDark;
-// 	padding-inline: 0.5em;
-// 	margin-top: 1em;
-// 	display: flex;
-// 	justify-content: space-between;
-// 	align-items: baseline;
-// }
+
 .vehicles-container {
 	padding: 0.5em;
 	flex: 1;
@@ -102,23 +99,38 @@ export default {
 		margin-bottom: 0.5em;
 	}
 }
+
 // controls overflow of div when in search results view
 .vehicles-display-height-flow {
 	height: 100vh;
 	overflow: auto;
 }
-
+.actions {
+	display: none;
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.626);
+}
+.vehicle-display-header {
+	border: 2px solid $lightestDark;
+	position: relative;
+	transition: all 2s ease-in-out;
+	&:hover .actions {
+		display: block;
+	}
+}
 .vehicles-display {
 	&-car {
-		display: flex;
-		// justify-content: space-around;
+		position: relative;
 		gap: 0.5em;
 		padding-block: 0.3em;
 	}
 
 	&-img {
 		flex: 1;
-		border: 2px solid $lightestDark;
 
 		img {
 			max-width: 100%;

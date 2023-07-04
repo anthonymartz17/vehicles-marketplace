@@ -1,13 +1,50 @@
 <script>
 import { required } from "vuelidate/lib/validators";
 import { mapActions, mapMutations } from "vuex";
+import vue2Dropzone from "vue2-dropzone";
+import "vue2-dropzone/dist/vue2Dropzone.min.css";
 
 export default {
+	components: {
+		vue2Dropzone,
+	},
 	data() {
 		return {
 			submitted: false,
+			vehicleImages: [],
+			dropzoneOptions: {
+				url: "https://httpbin.org/post",
+				thumbnailWidth: 150,
+				thumbnailHeight: 150,
+				// maxFilesize: 0.5,
+				acceptedFiles: ".jpg, .jpeg, .png",
+				headers: { "My-Awesome-Header": "header value" },
+				dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>UPLOAD IMAGE",
+				addRemoveLinks: true,
+			},
 		};
 	},
+// 	beforeRouteLeave(to, from, next) {
+//   // Check if the form is incomplete 
+//   const formIsIncomplete = !Object.values(this.vehiclePost).length;
+
+//   if (formIsIncomplete) {
+//     // Show a warning message or confirm dialog to inform the user about the incomplete form
+//     const confirmed = window.confirm("You have an incomplete form. Are you sure you want to leave?");
+
+//     if (confirmed) {
+//       // If the user confirms, allow navigation to the next route
+//       next();
+//     } else {
+//       // If the user cancels, prevent navigation and stay on the current route
+//       next(false);
+//     }
+//   } else {
+//     // If the form is complete, allow navigation to the next route
+//     next();
+//   }
+// },
+
 	validations: {
 		vehiclePost: {
 			colorEx: { required },
@@ -15,31 +52,37 @@ export default {
 			drivetrain: { required },
 			accessories: { required },
 		},
+		vehicleImages: { required },
 	},
 
 	methods: {
-		...mapMutations("auth", ["SET_ALERT_MSG","TOGGLE_IS_LOADING"]),
-		...mapActions("adsCrud", ["createAd","clearVehiclePost"]),
+		...mapMutations("auth", ["SET_ALERT_MSG", "TOGGLE_IS_LOADING"]),
+		...mapActions("adsCrud", ["createAd", "clearVehiclePost"]),
+		afterComplete(file) {
+			this.vehicleImages.push(file);
+		},
 		async tryCreatePost() {
 			this.submitted = true;
 			if (this.$v.$invalid) {
 				return;
 			} else {
 				try {
-					this.TOGGLE_IS_LOADING()
+					this.TOGGLE_IS_LOADING();
+					console.log(this.vehiclePost);
 					await this.createAd({
-						data: this.vehiclePost,
-						listImg: this.listImg,
+						vehicleData: this.vehiclePost,
+						vehicleImages: this.vehicleImages,
 					});
-					this.$router.push({name:'dashboard'})
+					this.clearVehiclePost({});
+					this.$router.push({ name: "dashboard" });
 				} catch (error) {
-					this.SET_ALERT_MSG({
-						title: "ERROR",
-						type: "error",
-						msg: error,
-					});
+					throw error;
+					// this.SET_ALERT_MSG({
+					// 	title: "ERROR",
+					// 	type: "error",
+					// 	msg: error,
+					// });
 				} finally {
-					this.clearVehiclePost({})
 					this.TOGGLE_IS_LOADING();
 				}
 			}
@@ -62,6 +105,19 @@ export default {
 	<div class="profile-wrapper">
 		<div class="profile-container">
 			<form class="form" @submit.prevent="tryActivateAccount">
+				<div class="form-field-container">
+					<vue2Dropzone
+						:destroyDropzone="false"
+						@vdropzone-complete="afterComplete"
+						ref="myVueDropzone"
+						id="dropzone"
+						:options="dropzoneOptions"
+						:class="{ 'is-invalid ': submitted && !$v.pics.required }"
+					></vue2Dropzone>
+					<div v-if="submitted && !$v.pics.required" class="invalid-feedback">
+						Photos are required.
+					</div>
+				</div>
 				<div class="field-flex">
 					<div class="form-field-container form-field-size">
 						<label for="drivetrain" class="form-label">Drivetrain</label>
@@ -85,8 +141,7 @@ export default {
 							Drivetrain is required.
 						</div>
 					</div>
-				</div>
-				<div class="field-flex">
+
 					<div class="form-field-container form-field-size">
 						<label for="colorEx" class="form-label">Color Exterior</label>
 						<input
@@ -158,6 +213,9 @@ export default {
 </template>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style lang="scss" scoped>
+.vueDropZone-container {
+	position: relative;
+}
 .inactive-account {
 	width: 100%;
 	display: grid;
@@ -194,7 +252,7 @@ export default {
 .invalid-feedback {
 	color: red;
 	position: absolute;
-	bottom: -5px;
+	bottom: -10px;
 }
 .update-btn {
 	cursor: pointer;
@@ -237,8 +295,7 @@ export default {
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 1em;
-	// border-bottom: 1px solid $lightestDark;
-	padding-block: 1em;
+	padding-block: 0.5em;
 }
 
 .profile-wrapper {

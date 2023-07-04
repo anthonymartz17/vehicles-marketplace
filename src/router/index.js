@@ -58,7 +58,8 @@ const routes = [
 			{
 				path: "",
 				name: "dashboard",
-				component: () => import("../views/dealer-views/created-ads-display"),
+				component: () =>
+					import("../views/dealer-views/userListings/listingsDisplay"),
 			},
 			{
 				path: "/create-ad",

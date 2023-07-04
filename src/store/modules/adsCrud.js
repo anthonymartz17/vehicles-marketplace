@@ -70,22 +70,23 @@ export default {
 			}
 		},
 
-		async createAd(_, { data, listImg }) {
+		async createAd(_, { vehicleData, vehicleImages }) {
 			try {
-				data.dealerId = auth.state.user.dealerId;
-				data.accessories = data.accessories.split(",");
-				console.log(data.accessories);
-				const createdPost = await apiAds.createAd(data);
+				vehicleData.dealerId = auth.state.user.dealerId;
+				vehicleData.accessories = vehicleData.accessories.split(",");
 
-				const uploadedImages = await apiAds.uploadImages({
-					imgFiles: listImg,
-					carId: createdPost.id,
+				const createdPost = await apiAds.createAd(vehicleData);
+				const uploadedImgPaths = await apiAds.uploadImages({
+					vehicleImages,
+					vehicleId: createdPost.id,
 				});
-				//pics array is not being added to data.......................................
+
 				//creates array pics and spread list of img references
-				data.pics = [...uploadedImages];
+
+				vehicleData.pics = [...uploadedImgPaths];
+				console.log(vehicleData.pics, "antes de actualizar");
 				const updateAd = await apiAds.updateAd({
-					data,
+					vehicleData,
 					vehicleId: createdPost.id,
 				});
 			} catch (error) {

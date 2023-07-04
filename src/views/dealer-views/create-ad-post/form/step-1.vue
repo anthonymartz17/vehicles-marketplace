@@ -1,27 +1,11 @@
 <script>
 import { required } from "vuelidate/lib/validators";
-import { mapActions } from "vuex";
-import vue2Dropzone from "vue2-dropzone";
-import "vue2-dropzone/dist/vue2Dropzone.min.css";
 
 export default {
-	components: {
-		vue2Dropzone,
-	},
 	data() {
 		return {
-			listImg: [],
+			pics: [],
 			submitted: false,
-			dropzoneOptions: {
-				url: "https://httpbin.org/post",
-				thumbnailWidth: 150,
-				thumbnailHeight: 150,
-				// maxFilesize: 0.5,
-				acceptedFiles: ".jpg, .jpeg, .png",
-				headers: { "My-Awesome-Header": "header value" },
-				dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>UPLOAD IMAGE",
-				addRemoveLinks: true,
-			},
 		};
 	},
 	validations: {
@@ -32,13 +16,9 @@ export default {
 			year: { required },
 			price: { required },
 		},
-		listImg: { required },
 	},
 
 	methods: {
-		afterComplete(file) {
-			this.listImg.push(file);
-		},
 		async tryNextStep() {
 			this.submitted = true;
 			if (this.$v.$invalid) {
@@ -65,22 +45,7 @@ export default {
 	<div class="profile-wrapper">
 		<div class="profile-container">
 			<form class="form" @submit.prevent="tryActivateAccount">
-				<div class="form-field-container">
-					<vue2Dropzone
-						@vdropzone-complete="afterComplete"
-						ref="myVueDropzone"
-						id="dropzone"
-						:options="dropzoneOptions"
-						:class="{ 'is-invalid ': submitted && !$v.listImg.required }"
-					></vue2Dropzone>
-					<div
-						v-if="submitted && !$v.listImg.required"
-						class="invalid-feedback"
-					>
-						Photos are required.
-					</div>
-				</div>
-				<div class="field-flex">
+			
 					<div class="form-field-container">
 						<label for="make" class="form-label">Make</label>
 						<input
@@ -119,8 +84,6 @@ export default {
 							Model is required.
 						</div>
 					</div>
-				</div>
-				<div class="field-flex">
 					<div class="form-field-container form-field-size">
 						<label for="trim" class="form-label">Trim</label>
 						<input
@@ -140,6 +103,8 @@ export default {
 							Trim is required.
 						</div>
 					</div>
+				<div class="field-flex">
+				
 					<div class="form-field-container form-field-size">
 						<label for="year" class="form-label">Year</label>
 						<input
@@ -222,7 +187,7 @@ export default {
 .invalid-feedback {
 	color: red;
 	position: absolute;
-	bottom: -5px;
+	bottom: -10px;
 }
 .update-btn {
 	cursor: pointer;
@@ -265,8 +230,7 @@ export default {
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 1em;
-	// border-bottom: 1px solid $lightestDark;
-	padding-block: 1em;
+	padding-block: .5em;
 }
 
 .profile-wrapper {
