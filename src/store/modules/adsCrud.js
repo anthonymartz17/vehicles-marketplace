@@ -1,19 +1,19 @@
 import apiAds from "../../helpers/apiAds";
 import apiCarsImages from "../../helpers/apiCarsImages";
-import vehicles from "./vehicles";
-
+import auth from "./auth";
 export default {
 	namespaced: true,
 
 	state: {
 		ads: [],
-		vehiclePost: {
-			pics:[]
-		}
+		vehiclePost: {},
 	},
 	mutations: {
-		UPDATE_VEHICLE(state, payload) {
-			Object.assign(state.vehiclePost,payload)
+		UPDATE_VEHICLEPOST(state, newValue) {
+			state.vehiclePost = { ...state.vehiclePost, ...newValue };
+		},
+		CLEAR_VEHICLEPOST(state, payload) {
+			state.vehiclePost = payload;
 		},
 		SET(state, payload) {
 			state.ads = payload;
@@ -42,13 +42,13 @@ export default {
 	},
 
 	actions: {
-		async fetchAds({ commit },dealerId) {
-			// shows loading animation while getting the data
-			// commit("SWITCH_LOADING");
+		async fetchAds({ commit }, dealerId) {
 			try {
 				let data = await apiAds.getAds(dealerId);
 				// fetch images url in firestore storage & adds each corresponding list of urls to the proper car in cars list.
 				let dataUrl = await apiCarsImages.getCarsImages(data);
+				console.log(dataUrl);
+
 				data.forEach((one) => {
 					let imagesUrl = dataUrl.find((x) => x.id == one.id).imagesUrl;
 					one.carPicsUrls = imagesUrl;
@@ -57,9 +57,6 @@ export default {
 				return data;
 			} catch (error) {
 				throw error;
-			} finally {
-				// turns loading to false
-				// commit("SWITCH_LOADING");
 			}
 		},
 		async fetchVehicleById(_, vehicleId) {
@@ -70,40 +67,54 @@ export default {
 				return vehicle;
 			} catch (error) {
 				throw error;
-			} finally {
-				// turns loading to false
-				// commit("SWITCH_LOADING");
 			}
 		},
 
-		async createAd(_, data) {
+		async createAd(_, { data, listImg }) {
 			try {
-				const response = await apiAds.createAd(data);
-				console.log(response, 'ad created')
+				data.dealerId = auth.state.user.dealerId;
+				data.accessories = data.accessories.split(",");
+				console.log(data.accessories);
+				const createdPost = await apiAds.createAd(data);
+
+				const uploadedImages = await apiAds.uploadImages({
+					imgFiles: listImg,
+					carId: createdPost.id,
+				});
+				//pics array is not being added to data.......................................
+				//creates array pics and spread list of img references
+				data.pics = [...uploadedImages];
+				const updateAd = await apiAds.updateAd({
+					data,
+					vehicleId: createdPost.id,
+				});
 			} catch (error) {
 				throw error;
-			} 
+			}
 		},
-		async uploadImages(_,data) {
+		async uploadImages(_, data) {
 			try {
 				const response = await apiAds.uploadImages(data);
-				console.log(response, 'images uplaoded, state')
+				console.log(response, "images uploaded, state");
 			} catch (error) {
 				throw error;
-			} 
+			}
+		},
+		async updateAd(_, data) {
+			try {
+				const response = await apiAds.updateAd(data);
+				console.log(response, "images uploaded, state");
+			} catch (error) {
+				throw error;
+			}
 		},
 		async fetchDealers({ commit }) {
-			// shows loading animation while getting the data
-			// commit("SWITCH_LOADING");
 			try {
 				let data = await apiVehicles.getDealers();
 				commit("SET_DEALERS", data);
 				return data;
 			} catch (error) {
 				throw error;
-			} finally {
-				// turns loading to false
-				// commit("SWITCH_LOADING");
 			}
 		},
 		async fetchDealerById(_, dealerId) {
@@ -112,10 +123,14 @@ export default {
 				return dealer;
 			} catch (error) {
 				throw error;
-			} finally {
-				// turns loading to false
-				// commit("SWITCH_LOADING");
 			}
+		},
+
+		updateVehiclePost({ commit }, newValue) {
+			commit("UPDATE_VEHICLEPOST", newValue);
+		},
+		clearVehiclePost({ commit }, payload) {
+			commit("CLEAR_VEHICLEPOST", payload);
 		},
 	},
 };

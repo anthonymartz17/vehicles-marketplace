@@ -1,17 +1,14 @@
 <script>
 import { required } from "vuelidate/lib/validators";
-import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
 
 export default {
-	components: {},
 	data() {
 		return {
-			vehicle: {},
 			submitted: false,
 		};
 	},
 	validations: {
-		vehicle: {
+		vehiclePost: {
 			fuel: { required },
 			carType: { required },
 			carCondition: { required },
@@ -20,26 +17,26 @@ export default {
 			engine: { required },
 		},
 	},
-	created() {
-		this.vehicle = this.vehiclePost
-	},
+
 	methods: {
-		...mapActions("profile", ["update", "fetchProfileById"]),
-		...mapMutations("auth", ["SET_ALERT_MSG", "TOGGLE_IS_LOADING"]),
-		...mapMutations("adsCrudd", ["UPDATE_VEHICLE"]),
 		tryNextStep() {
 			this.submitted = true;
 			if (this.$v.$invalid) {
 				return;
 			} else {
-				this.UPDATE_VEHICLE(this.vehicle)
 				this.$router.push({ name: "step-3" });
 			}
 		},
 	},
 	computed: {
-		...mapState("auth", ["user"]),
-		...mapState("adsCrud", ["vehiclePost"]),
+		vehiclePost: {
+			get() {
+				return this.$store.state.adsCrud.vehiclePost;
+			},
+			set(newValue) {
+				this.$store.dispatch("adsCrud/updateVehiclePost", newValue);
+			},
+		},
 	},
 };
 </script>
@@ -53,16 +50,16 @@ export default {
 						<label for="fuel" class="form-label">Fuel</label>
 						<input
 							id="fuel"
-							v-model="vehicle.fuel"
+							v-model="vehiclePost.fuel"
 							type="text"
 							placeholder="Enter fuel"
 							:class="[
 								'form-input',
-								{ 'is-invalid ': submitted && !$v.vehicle.fuel.required },
+								{ 'is-invalid ': submitted && !$v.vehiclePost.fuel.required },
 							]"
 						/>
 						<div
-							v-if="submitted && !$v.vehicle.fuel.required"
+							v-if="submitted && !$v.vehiclePost.fuel.required"
 							class="invalid-feedback"
 						>
 							Fuel is required.
@@ -72,16 +69,18 @@ export default {
 						<label for="carType" class="form-label">Car Type</label>
 						<input
 							id="carType"
-							v-model="vehicle.carType"
+							v-model="vehiclePost.carType"
 							type="text"
 							placeholder="Enter Type"
 							:class="[
 								'form-input',
-								{ 'is-invalid ': submitted && !$v.vehicle.carType.required },
+								{
+									'is-invalid ': submitted && !$v.vehiclePost.carType.required,
+								},
 							]"
 						/>
 						<div
-							v-if="submitted && !$v.vehicle.carType.required"
+							v-if="submitted && !$v.vehiclePost.carType.required"
 							class="invalid-feedback"
 						>
 							Type is required.
@@ -93,18 +92,19 @@ export default {
 						<label for="carCondition" class="form-label">Car Condition</label>
 						<input
 							id="carCondition"
-							v-model="vehicle.carCondition"
+							v-model="vehiclePost.carCondition"
 							type="text"
 							placeholder="Enter New or Used"
 							:class="[
 								'form-input',
 								{
-									'is-invalid ': submitted && !$v.vehicle.carCondition.required,
+									'is-invalid ':
+										submitted && !$v.vehiclePost.carCondition.required,
 								},
 							]"
 						/>
 						<div
-							v-if="submitted && !$v.vehicle.carCondition.required"
+							v-if="submitted && !$v.vehiclePost.carCondition.required"
 							class="invalid-feedback"
 						>
 							Car Condition is required.
@@ -115,16 +115,18 @@ export default {
 						<label for="mileage" class="form-label">Miles per Gallon</label>
 						<input
 							id="mileage"
-							v-model="vehicle.mileage"
+							v-model="vehiclePost.mileage"
 							type="text"
 							placeholder="Enter miles per gallon"
 							:class="[
 								'form-input',
-								{ 'is-invalid ': submitted && !$v.vehicle.mileage.required },
+								{
+									'is-invalid ': submitted && !$v.vehiclePost.mileage.required,
+								},
 							]"
 						/>
 						<div
-							v-if="submitted && !$v.vehicle.mileage.required"
+							v-if="submitted && !$v.vehiclePost.mileage.required"
 							class="invalid-feedback"
 						>
 							Miles per Gallon is required.
@@ -136,18 +138,19 @@ export default {
 						<label for="transmission" class="form-label">Transmission</label>
 						<input
 							id="fuel"
-							v-model="vehicle.transmission"
+							v-model="vehiclePost.transmission"
 							type="text"
 							placeholder="Enter Automatic | Mechanical ..."
 							:class="[
 								'form-input',
 								{
-									'is-invalid ': submitted && !$v.vehicle.transmission.required,
+									'is-invalid ':
+										submitted && !$v.vehiclePost.transmission.required,
 								},
 							]"
 						/>
 						<div
-							v-if="submitted && !$v.vehicle.transmission.required"
+							v-if="submitted && !$v.vehiclePost.transmission.required"
 							class="invalid-feedback"
 						>
 							Transmission is required.
@@ -157,16 +160,16 @@ export default {
 						<label for="engine" class="form-label">Engine</label>
 						<input
 							id="engine"
-							v-model="vehicle.engine"
+							v-model="vehiclePost.engine"
 							type="text"
 							placeholder="Enter engine"
 							:class="[
 								'form-input',
-								{ 'is-invalid ': submitted && !$v.vehicle.engine.required },
+								{ 'is-invalid ': submitted && !$v.vehiclePost.engine.required },
 							]"
 						/>
 						<div
-							v-if="submitted && !$v.vehicle.engine.required"
+							v-if="submitted && !$v.vehiclePost.engine.required"
 							class="invalid-feedback"
 						>
 							Engine is required.
@@ -175,9 +178,6 @@ export default {
 				</div>
 			</form>
 		</div>
-
-		<!-- </div> -->
-		
 	</div>
 </template>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

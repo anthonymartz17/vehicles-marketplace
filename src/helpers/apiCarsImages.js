@@ -9,7 +9,7 @@ export default {
 	async getCarsImages(imagesData) {
 		try {
 			const carsUrl = await Promise.all(
-				imagesData.map((one) => {
+				imagesData.map(async (one) => {
 					const promisedUrls = one.pics.map((pic) => {
 						const imageRef = ref(storage, pic);
 						return getDownloadURL(imageRef);

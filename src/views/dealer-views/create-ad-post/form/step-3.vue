@@ -1,17 +1,14 @@
 <script>
 import { required } from "vuelidate/lib/validators";
-import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
 
 export default {
-	components: {},
 	data() {
 		return {
-			vehicle: {},
 			submitted: false,
 		};
 	},
 	validations: {
-		vehicle: {
+		vehiclePost: {
 			vin: { required },
 			titleCheck: { required },
 			accidents: { required },
@@ -20,26 +17,26 @@ export default {
 			location: { required },
 		},
 	},
-	created() {
-		this.vehicle = this.vehiclePost
-	},
+
 	methods: {
-		...mapActions("profile", ["update", "fetchProfileById"]),
-		...mapMutations("auth", ["SET_ALERT_MSG", "TOGGLE_IS_LOADING"]),
-		...mapMutations("adsCrudd", ["UPDATE_VEHICLE"]),
 		tryNextStep() {
 			this.submitted = true;
 			if (this.$v.$invalid) {
 				return;
 			} else {
-				this.UPDATE_VEHICLE(this.vehicle)
 				this.$router.push({ name: "step-4" });
 			}
 		},
 	},
 	computed: {
-		...mapState("auth", ["user"]),
-		...mapState("adsCrud", ["vehiclePost"]),
+		vehiclePost: {
+			get() {
+				return this.$store.state.adsCrud.vehiclePost;
+			},
+			set(newValue) {
+				this.$store.dispatch("adsCrud/updateVehiclePost", newValue);
+			},
+		},
 	},
 };
 </script>
@@ -53,16 +50,16 @@ export default {
 						<label for="vin" class="form-label">Vin Number</label>
 						<input
 							id="vin"
-							v-model="vehicle.vin"
+							v-model="vehiclePost.vin"
 							type="text"
 							placeholder="Enter vin number"
 							:class="[
 								'form-input',
-								{ 'is-invalid ': submitted && !$v.vehicle.vin.required },
+								{ 'is-invalid ': submitted && !$v.vehiclePost.vin.required },
 							]"
 						/>
 						<div
-							v-if="submitted && !$v.vehicle.vin.required"
+							v-if="submitted && !$v.vehiclePost.vin.required"
 							class="invalid-feedback"
 						>
 							Vin number is required.
@@ -72,18 +69,19 @@ export default {
 						<label for="titleCheck" class="form-label">Title Check</label>
 						<input
 							id="titleCheck"
-							v-model="vehicle.titleCheck"
+							v-model="vehiclePost.titleCheck"
 							type="text"
 							placeholder="Enter AWD | FWD ..."
 							:class="[
 								'form-input',
 								{
-									'is-invalid ': submitted && !$v.vehicle.titleCheck.required,
+									'is-invalid ':
+										submitted && !$v.vehiclePost.titleCheck.required,
 								},
 							]"
 						/>
 						<div
-							v-if="submitted && !$v.vehicle.titleCheck.required"
+							v-if="submitted && !$v.vehiclePost.titleCheck.required"
 							class="invalid-feedback"
 						>
 							Title Check is required.
@@ -96,16 +94,19 @@ export default {
 						<input
 							id="accidents"
 							maxlength="2"
-							v-model.number="vehicle.accidents"
+							v-model.number="vehiclePost.accidents"
 							type="text"
 							placeholder="Enter accidents"
 							:class="[
 								'form-input',
-								{ 'is-invalid ': submitted && !$v.vehicle.accidents.required },
+								{
+									'is-invalid ':
+										submitted && !$v.vehiclePost.accidents.required,
+								},
 							]"
 						/>
 						<div
-							v-if="submitted && !$v.vehicle.accidents.required"
+							v-if="submitted && !$v.vehiclePost.accidents.required"
 							class="invalid-feedback"
 						>
 							Accidents is required.
@@ -118,16 +119,16 @@ export default {
 						<input
 							id="owners"
 							maxlength="2"
-							v-model.number="vehicle.owner"
+							v-model.number="vehiclePost.owner"
 							type="text"
 							placeholder="Enter owners"
 							:class="[
 								'form-input',
-								{ 'is-invalid ': submitted && !$v.vehicle.owner.required },
+								{ 'is-invalid ': submitted && !$v.vehiclePost.owner.required },
 							]"
 						/>
 						<div
-							v-if="submitted && !$v.vehicle.owner.required"
+							v-if="submitted && !$v.vehiclePost.owner.required"
 							class="invalid-feedback"
 						>
 							Number of previous owners is required.
@@ -139,35 +140,37 @@ export default {
 						<label for="miles" class="form-label">Miles on car</label>
 						<input
 							id="carType"
-							v-model="vehicle.miles"
+							v-model="vehiclePost.miles"
 							type="text"
 							placeholder="Enter miles on car"
 							:class="[
 								'form-input',
-								{ 'is-invalid ': submitted && !$v.vehicle.miles.required },
+								{ 'is-invalid ': submitted && !$v.vehiclePost.miles.required },
 							]"
 						/>
 						<div
-							v-if="submitted && !$v.vehicle.miles.required"
+							v-if="submitted && !$v.vehiclePost.miles.required"
 							class="invalid-feedback"
 						>
-						Miles on car is required.
+							Miles on car is required.
 						</div>
 					</div>
 					<div class="form-field-container form-field-size">
 						<label for="location" class="form-label">Location of vehicle</label>
 						<input
 							id="location"
-							v-model="vehicle.location"
+							v-model="vehiclePost.location"
 							type="text"
 							placeholder="Enter location of vehicle"
 							:class="[
 								'form-input',
-								{ 'is-invalid ': submitted && !$v.vehicle.location.required },
+								{
+									'is-invalid ': submitted && !$v.vehiclePost.location.required,
+								},
 							]"
 						/>
 						<div
-							v-if="submitted && !$v.vehicle.location.required"
+							v-if="submitted && !$v.vehiclePost.location.required"
 							class="invalid-feedback"
 						>
 							Location of vehicle is required.
@@ -176,8 +179,6 @@ export default {
 				</div>
 			</form>
 		</div>
-
-		<!-- </div> -->
 	</div>
 </template>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

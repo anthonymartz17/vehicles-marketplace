@@ -1,40 +1,37 @@
 <script>
 import { required } from "vuelidate/lib/validators";
-import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 
 export default {
-	components: {},
 	data() {
 		return {
-			vehicle: {},
 			submitted: false,
 		};
 	},
 	validations: {
-		vehicle: {
+		vehiclePost: {
 			colorEx: { required },
 			colorIn: { required },
 			drivetrain: { required },
 			accessories: { required },
 		},
 	},
-	created() {
-		this.vehicle = this.vehiclePost
-	},
+
 	methods: {
-		...mapMutations("auth", ["SET_ALERT_MSG", "TOGGLE_IS_LOADING"]),
-		...mapActions("profile", ["update", "fetchProfileById"]),
-		...mapMutations("adsCrud", ["UPDATE_VEHICLE"]),
-		...mapActions("adsCrud", ["createAd"]),
+		...mapMutations("auth", ["SET_ALERT_MSG","TOGGLE_IS_LOADING"]),
+		...mapActions("adsCrud", ["createAd","clearVehiclePost"]),
 		async tryCreatePost() {
 			this.submitted = true;
 			if (this.$v.$invalid) {
 				return;
 			} else {
 				try {
-					this.vehicle.dealerId = this.user.dealerId
-					this.UPDATE_VEHICLE(this.vehicle)
-					await this.createAd(this.vehiclePost)
+					this.TOGGLE_IS_LOADING()
+					await this.createAd({
+						data: this.vehiclePost,
+						listImg: this.listImg,
+					});
+					this.$router.push({name:'dashboard'})
 				} catch (error) {
 					this.SET_ALERT_MSG({
 						title: "ERROR",
@@ -42,14 +39,21 @@ export default {
 						msg: error,
 					});
 				} finally {
-					// this.TOGGLE_IS_LOADING();
+					this.clearVehiclePost({})
+					this.TOGGLE_IS_LOADING();
 				}
 			}
 		},
 	},
 	computed: {
-		...mapState("auth", ["user"]),
-		...mapState("adsCrud", ["vehiclePost"]),
+		vehiclePost: {
+			get() {
+				return this.$store.state.adsCrud.vehiclePost;
+			},
+			set(newValue) {
+				this.$store.dispatch("adsCrud/updateVehiclePost", newValue);
+			},
+		},
 	},
 };
 </script>
@@ -63,16 +67,19 @@ export default {
 						<label for="drivetrain" class="form-label">Drivetrain</label>
 						<input
 							id="drivetrain"
-							v-model="vehicle.drivetrain"
+							v-model="vehiclePost.drivetrain"
 							type="text"
 							placeholder="AWD | FWD | etc..."
 							:class="[
 								'form-input',
-								{ 'is-invalid ': submitted && !$v.vehicle.drivetrain.required },
+								{
+									'is-invalid ':
+										submitted && !$v.vehiclePost.drivetrain.required,
+								},
 							]"
 						/>
 						<div
-							v-if="submitted && !$v.vehicle.drivetrain.required"
+							v-if="submitted && !$v.vehiclePost.drivetrain.required"
 							class="invalid-feedback"
 						>
 							Drivetrain is required.
@@ -84,16 +91,18 @@ export default {
 						<label for="colorEx" class="form-label">Color Exterior</label>
 						<input
 							id="colorEx"
-							v-model="vehicle.colorEx"
+							v-model="vehiclePost.colorEx"
 							type="text"
 							placeholder="Enter color of exterior"
 							:class="[
 								'form-input',
-								{ 'is-invalid ': submitted && !$v.vehicle.colorEx.required },
+								{
+									'is-invalid ': submitted && !$v.vehiclePost.colorEx.required,
+								},
 							]"
 						/>
 						<div
-							v-if="submitted && !$v.vehicle.colorEx.required"
+							v-if="submitted && !$v.vehiclePost.colorEx.required"
 							class="invalid-feedback"
 						>
 							Color Exterior is required.
@@ -103,16 +112,16 @@ export default {
 						<label for="colorIn" class="form-label">Color Interior</label>
 						<input
 							id="colorIn"
-							v-model="vehicle.colorIn"
+							v-model="vehiclePost.colorIn"
 							type="text"
 							placeholder="Enter color of interior"
 							:class="[
 								'form-input',
-								{ 'is-invalid': submitted && !$v.vehicle.colorIn.required },
+								{ 'is-invalid': submitted && !$v.vehiclePost.colorIn.required },
 							]"
 						/>
 						<div
-							v-if="submitted && !$v.vehicle.colorIn.required"
+							v-if="submitted && !$v.vehiclePost.colorIn.required"
 							class="invalid-feedback"
 						>
 							Color Interior is required.
@@ -122,26 +131,29 @@ export default {
 				<div class="form-field-container form-field-size">
 					<label for="accessories" class="form-label">Accessories</label>
 					<textarea
-						v-model="vehicle.accessories"
+						v-model="vehiclePost.accessories"
 						placeholder="Divide by comma Ex: Bluetooth, Gps, Dashcam..."
 						name="accessories"
 						id="accessories"
 						cols="30"
 						rows="10"
-						:class="[{ 'is-invalid ': submitted && !$v.vehicle.accessories.required }]"
+						:class="[
+							{
+								'is-invalid ':
+									submitted && !$v.vehiclePost.accessories.required,
+							},
+						]"
 					></textarea>
 
 					<div
-						v-if="submitted && !$v.vehicle.accessories.required"
+						v-if="submitted && !$v.vehiclePost.accessories.required"
 						class="invalid-feedback"
 					>
-					Accessories is required.
+						Accessories is required.
 					</div>
 				</div>
 			</form>
 		</div>
-
-		<!-- </div> -->
 	</div>
 </template>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

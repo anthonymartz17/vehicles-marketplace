@@ -5,6 +5,7 @@ import {
 	getDoc,
 	getDocs,
 	addDoc,
+	updateDoc,
 	query,
 	where,
 } from "firebase/firestore";
@@ -32,7 +33,6 @@ export default {
 		}
 	},
 	async getVehicleById(vehicleId) {
-		console.log(vehicleId, "el id");
 		try {
 			const carDocRef = doc(db, "cars", vehicleId);
 
@@ -52,7 +52,9 @@ export default {
 	},
 	async createAd(data) {
 		try {
+			console.log(data, "api");
 			const colRef = collection(db, "cars");
+
 			const response = await addDoc(colRef, data);
 
 			return response;
@@ -63,31 +65,39 @@ export default {
 		}
 	},
 
-	async uploadImages({ imgFiles, dealerId }) {
+	async uploadImages({ imgFiles, carId }) {
 		try {
 			// const urlsUploaded = await Promise.all(
 			//uploads each image to firebase storage and returns array with url from each one
-			const uploadPromises = imgFiles.map(async (file) => {
+			const uploadedImgRefPromised = imgFiles.map(async (file) => {
 				//creates unique name id for image
-				const imageName = uuidv4();
+				const uniqueId = uuidv4();
+				const imageName = `images/cars/${carId}_${uniqueId}_${file.name}`;
 
 				//creates refference unique for image
-				const storageRef = ref(
-					storage,
-					`images/cars/${imageName}_${dealerId}_${file.name}`
-				);
-				console.log(storageRef, "el ref storage");
+				const storageRef = ref(storage, imageName);
 				//uploads image to firebase
-				const snapshot = await uploadBytes(storageRef, file);
-				console.log(snapshot, "el snap");
+				await uploadBytes(storageRef, file);
 
-				const downloadURL = await getDownloadURL(snapshot.ref);
-				console.log(downloadURL);
-				return downloadURL;
+				return imageName;
 			});
-			const urlsUploaded = await Promise.all(uploadPromises);
-			console.log(urlsUploaded, "api urls");
-			return urlsUploaded;
+			const imgUploadedRefs = await Promise.all(uploadedImgRefPromised);
+			return imgUploadedRefs;
+		} catch (error) {
+			throw error;
+		}
+	},
+	async updateAd({ data, vehicleId }) {
+		try {
+			const vehicleDocRef = doc(db, "cars", vehicleId);
+			const vehicleDocSnapshot = await getDoc(vehicleDocRef);
+			console.log(vehicleDocSnapshot);
+			if (vehicleDocSnapshot.exists()) {
+				await updateDoc(vehicleDocRef, data);
+				return { id: vehicleDocSnapshot.id, ...vehicleDocSnapshot.data() };
+			} else {
+				throw new Error("Car not found.");
+			}
 		} catch (error) {
 			throw error;
 		}

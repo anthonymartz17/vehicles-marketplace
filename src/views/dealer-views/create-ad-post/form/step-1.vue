@@ -1,6 +1,6 @@
 <script>
 import { required } from "vuelidate/lib/validators";
-import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
+import { mapActions } from "vuex";
 import vue2Dropzone from "vue2-dropzone";
 import "vue2-dropzone/dist/vue2Dropzone.min.css";
 
@@ -10,8 +10,7 @@ export default {
 	},
 	data() {
 		return {
-			vehicle: {},
-			list: [],
+			listImg: [],
 			submitted: false,
 			dropzoneOptions: {
 				url: "https://httpbin.org/post",
@@ -26,48 +25,38 @@ export default {
 		};
 	},
 	validations: {
-		vehicle: {
+		vehiclePost: {
 			make: { required },
 			model: { required },
 			trim: { required },
 			year: { required },
 			price: { required },
 		},
+		listImg: { required },
 	},
-	created() {
-		this.vehicle = this.vehiclePost;
-	},
-	methods: {
-		...mapActions("profile", ["update", "fetchProfileById"]),
-		...mapMutations("auth", ["SET_ALERT_MSG", "TOGGLE_IS_LOADING"]),
-		...mapMutations("adsCrud", ["UPDATE_VEHICLE"]),
-		...mapActions("adsCrud", ["uploadImages"]),
 
+	methods: {
 		afterComplete(file) {
-			this.vehicle.pics.push(file);
+			this.listImg.push(file);
 		},
 		async tryNextStep() {
 			this.submitted = true;
 			if (this.$v.$invalid) {
 				return;
 			} else {
-				this.UPDATE_VEHICLE(this.vehicle);
-				try {
-					const response = await this.uploadImages({
-						imgFiles: this.vehicle.pics,
-						dealerId: this.user.dealerId,
-					});
-					console.log(response, "step1");
-				} catch (error) {
-					console.log(error);
-				}
-				// this.$router.push({ name: "step-2" });
+				this.$router.push({ name: "step-2" });
 			}
 		},
 	},
 	computed: {
-		...mapState("auth", ["user"]),
-		...mapState("adsCrud", ["vehiclePost"]),
+		vehiclePost: {
+			get() {
+				return this.$store.state.adsCrud.vehiclePost;
+			},
+			set(newValue) {
+				this.$store.dispatch("adsCrud/updateVehiclePost", newValue);
+			},
+		},
 	},
 };
 </script>
@@ -76,27 +65,36 @@ export default {
 	<div class="profile-wrapper">
 		<div class="profile-container">
 			<form class="form" @submit.prevent="tryActivateAccount">
-				<vue2Dropzone
-					@vdropzone-complete="afterComplete"
-					ref="myVueDropzone"
-					id="dropzone"
-					:options="dropzoneOptions"
-				></vue2Dropzone>
+				<div class="form-field-container">
+					<vue2Dropzone
+						@vdropzone-complete="afterComplete"
+						ref="myVueDropzone"
+						id="dropzone"
+						:options="dropzoneOptions"
+						:class="{ 'is-invalid ': submitted && !$v.listImg.required }"
+					></vue2Dropzone>
+					<div
+						v-if="submitted && !$v.listImg.required"
+						class="invalid-feedback"
+					>
+						Photos are required.
+					</div>
+				</div>
 				<div class="field-flex">
 					<div class="form-field-container">
 						<label for="make" class="form-label">Make</label>
 						<input
 							id="make"
-							v-model="vehicle.make"
+							v-model="vehiclePost.make"
 							type="text"
 							placeholder="Enter commercial name"
 							:class="[
 								'form-input',
-								{ 'is-invalid ': submitted && !$v.vehicle.make.required },
+								{ 'is-invalid ': submitted && !$v.vehiclePost.make.required },
 							]"
 						/>
 						<div
-							v-if="submitted && !$v.vehicle.make.required"
+							v-if="submitted && !$v.vehiclePost.make.required"
 							class="invalid-feedback"
 						>
 							Make is required.
@@ -106,16 +104,16 @@ export default {
 						<label for="model" class="form-label">Model</label>
 						<input
 							id="model"
-							v-model="vehicle.model"
+							v-model="vehiclePost.model"
 							type="text"
 							placeholder="Enter model"
 							:class="[
 								'form-input',
-								{ 'is-invalid ': submitted && !$v.vehicle.model.required },
+								{ 'is-invalid ': submitted && !$v.vehiclePost.model.required },
 							]"
 						/>
 						<div
-							v-if="submitted && !$v.vehicle.model.required"
+							v-if="submitted && !$v.vehiclePost.model.required"
 							class="invalid-feedback"
 						>
 							Model is required.
@@ -127,16 +125,16 @@ export default {
 						<label for="trim" class="form-label">Trim</label>
 						<input
 							id="trim"
-							v-model="vehicle.trim"
+							v-model="vehiclePost.trim"
 							type="text"
 							placeholder="Enter trim"
 							:class="[
 								'form-input',
-								{ 'is-invalid ': submitted && !$v.vehicle.trim.required },
+								{ 'is-invalid ': submitted && !$v.vehiclePost.trim.required },
 							]"
 						/>
 						<div
-							v-if="submitted && !$v.vehicle.trim.required"
+							v-if="submitted && !$v.vehiclePost.trim.required"
 							class="invalid-feedback"
 						>
 							Trim is required.
@@ -147,16 +145,16 @@ export default {
 						<input
 							id="year"
 							maxlength="4"
-							v-model.number="vehicle.year"
+							v-model.number="vehiclePost.year"
 							type="text"
 							placeholder="Enter year"
 							:class="[
 								'form-input',
-								{ 'is-invalid ': submitted && !$v.vehicle.year.required },
+								{ 'is-invalid ': submitted && !$v.vehiclePost.year.required },
 							]"
 						/>
 						<div
-							v-if="submitted && !$v.vehicle.year.required"
+							v-if="submitted && !$v.vehiclePost.year.required"
 							class="invalid-feedback"
 						>
 							Year is required.
@@ -166,16 +164,16 @@ export default {
 						<label for="price" class="form-label">Price</label>
 						<input
 							id="price"
-							v-model.number="vehicle.price"
+							v-model.number="vehiclePost.price"
 							type="text"
 							placeholder="Enter price"
 							:class="[
 								'form-input',
-								{ 'is-invalid ': submitted && !$v.vehicle.price.required },
+								{ 'is-invalid ': submitted && !$v.vehiclePost.price.required },
 							]"
 						/>
 						<div
-							v-if="submitted && !$v.vehicle.price.required"
+							v-if="submitted && !$v.vehiclePost.price.required"
 							class="invalid-feedback"
 						>
 							Price is required.
@@ -184,8 +182,6 @@ export default {
 				</div>
 			</form>
 		</div>
-
-		<!-- </div> -->
 	</div>
 </template>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
