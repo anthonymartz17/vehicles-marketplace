@@ -1,5 +1,5 @@
 <script>
-import { mapGetters, mapMutations, mapState } from "vuex";
+// import { mapGetters, mapMutations, mapState } from "vuex";
 import LoggedInUserLinks from "../../components/dashboard/Loggedin-user-links.vue";
 
 export default {
@@ -8,7 +8,13 @@ export default {
 		return {};
 	},
 	methods: {
-		// ...mapMutations("vehicles", []),
+		goCreateNew() {
+			//clear vehiclePost in state in case coming from edit listing
+			localStorage.removeItem("vehicle_id")
+			this.$store.dispatch("adsCrud/updateVehiclePost", {});
+			// if (this.$route.name != "create ad")
+				this.$router.push({ name: "create ad" });
+		},
 	},
 
 	computed: {
@@ -39,9 +45,7 @@ export default {
 		<div class="dashboard-container">
 			<div class="dashboard-sidebar">
 				<div class="sidebar-container">
-					<div class="button">
-						<router-link :to="{ name: 'create ad' }"> + Create New</router-link>
-					</div>
+					<div @click="goCreateNew()" class="button">+ Create New</div>
 					<div class="link-list">
 						<LoggedInUserLinks />
 					</div>
@@ -72,6 +76,8 @@ export default {
 	transition: all 250ms ease-in-out;
 	border: 1px solid $light;
 	margin: 0.5em;
+	color: $light;
+	padding: 1em;
 	&:hover {
 		transform: scale(1.01);
 	}
@@ -102,7 +108,7 @@ export default {
 	@include breakpoint(tablet) {
 	}
 	@include breakpoint(desktop) {
-		.title{
+		.title {
 			margin: 0 1em;
 		}
 		.dashboard-wrapper {

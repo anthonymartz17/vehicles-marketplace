@@ -26,7 +26,6 @@ export default {
     
   },
   async getVehicleById(vehicleId) {
-    console.log(vehicleId,'el id')
     try {
       const carDocRef = doc(db, "cars", vehicleId);
 

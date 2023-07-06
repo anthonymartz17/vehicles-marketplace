@@ -1,6 +1,6 @@
 <script>
 import { required } from "vuelidate/lib/validators";
-import { mapActions, mapMutations } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 import vue2Dropzone from "vue2-dropzone";
 import "vue2-dropzone/dist/vue2Dropzone.min.css";
 
@@ -11,7 +11,7 @@ export default {
 	data() {
 		return {
 			submitted: false,
-			vehicleImages: [],
+			localVehicleImages: [],
 			dropzoneOptions: {
 				url: "https://httpbin.org/post",
 				thumbnailWidth: 150,
@@ -24,26 +24,26 @@ export default {
 			},
 		};
 	},
-// 	beforeRouteLeave(to, from, next) {
-//   // Check if the form is incomplete 
-//   const formIsIncomplete = !Object.values(this.vehiclePost).length;
+	// 	beforeRouteLeave(to, from, next) {
+	//   // Check if the form is incomplete
+	//   const formIsIncomplete = !Object.values(this.vehiclePost).length;
 
-//   if (formIsIncomplete) {
-//     // Show a warning message or confirm dialog to inform the user about the incomplete form
-//     const confirmed = window.confirm("You have an incomplete form. Are you sure you want to leave?");
+	//   if (formIsIncomplete) {
+	//     // Show a warning message or confirm dialog to inform the user about the incomplete form
+	//     const confirmed = window.confirm("You have an incomplete form. Are you sure you want to leave?");
 
-//     if (confirmed) {
-//       // If the user confirms, allow navigation to the next route
-//       next();
-//     } else {
-//       // If the user cancels, prevent navigation and stay on the current route
-//       next(false);
-//     }
-//   } else {
-//     // If the form is complete, allow navigation to the next route
-//     next();
-//   }
-// },
+	//     if (confirmed) {
+	//       // If the user confirms, allow navigation to the next route
+	//       next();
+	//     } else {
+	//       // If the user cancels, prevent navigation and stay on the current route
+	//       next(false);
+	//     }
+	//   } else {
+	//     // If the form is complete, allow navigation to the next route
+	//     next();
+	//   }
+	// },
 
 	validations: {
 		vehiclePost: {
@@ -57,9 +57,28 @@ export default {
 
 	methods: {
 		...mapMutations("auth", ["SET_ALERT_MSG", "TOGGLE_IS_LOADING"]),
-		...mapActions("adsCrud", ["createAd", "clearVehiclePost"]),
+		...mapActions("adsCrud", [
+			"createAd",
+			"clearVehiclePost",
+			"fetchImageUrlListById",
+		]),
 		afterComplete(file) {
-			this.vehicleImages.push(file);
+			this.localVehicleImages.push(file);
+		},
+		uploadImgManually() {
+			if (this.vehiclePostImages.length) {
+				//add images to vuedropzone
+				this.vehiclePostImages.forEach((image) => {
+					const detail = {
+						name: image.name,
+						size: image.size,
+						type: image.type, // or the appropriate image type
+						dataURL: image.url, // The URL of the image from Firebase Storage
+					};
+
+					this.$refs.myVueDropzone.manuallyAddFile(detail, image.url);
+				});
+			}
 		},
 		async tryCreatePost() {
 			this.submitted = true;
@@ -68,10 +87,10 @@ export default {
 			} else {
 				try {
 					this.TOGGLE_IS_LOADING();
-					console.log(this.vehiclePost);
+
 					await this.createAd({
 						vehicleData: this.vehiclePost,
-						vehicleImages: this.vehicleImages,
+						vehicleImages: this.localVehicleImages,
 					});
 					this.clearVehiclePost({});
 					this.$router.push({ name: "dashboard" });
@@ -89,6 +108,7 @@ export default {
 		},
 	},
 	computed: {
+		...mapGetters("adsCrud", ["vehiclePostImages"]),
 		vehiclePost: {
 			get() {
 				return this.$store.state.adsCrud.vehiclePost;
@@ -98,13 +118,18 @@ export default {
 			},
 		},
 	},
+	watch: {
+		vehiclePostImages() {
+			this.uploadImgManually();
+		},
+	},
 };
 </script>
 
 <template>
 	<div class="profile-wrapper">
 		<div class="profile-container">
-			<form class="form" @submit.prevent="tryActivateAccount">
+			<form class="form" @submit.prevent="tryCreatePost">
 				<div class="form-field-container">
 					<vue2Dropzone
 						:destroyDropzone="false"
@@ -112,9 +137,12 @@ export default {
 						ref="myVueDropzone"
 						id="dropzone"
 						:options="dropzoneOptions"
-						:class="{ 'is-invalid ': submitted && !$v.pics.required }"
+						:class="{ 'is-invalid ': submitted && !$v.vehicleImages.required }"
 					></vue2Dropzone>
-					<div v-if="submitted && !$v.pics.required" class="invalid-feedback">
+					<div
+						v-if="submitted && !$v.vehicleImages.required"
+						class="invalid-feedback"
+					>
 						Photos are required.
 					</div>
 				</div>

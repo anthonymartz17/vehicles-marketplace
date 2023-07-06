@@ -8,7 +8,6 @@ export default {
 	data() {
 		return {
 			pageTitle: "",
-			showSearchMenue: false,
 		};
 	},
 
@@ -18,7 +17,6 @@ export default {
 
 	methods: {
 		...mapActions("adsCrud", ["fetchAds"]),
-		// ...mapActions("profile", ["fetchAds"]),
 	},
 	computed: {
 		...mapGetters("adsCrud", ["adsList"]),
@@ -35,11 +33,7 @@ export default {
 					v-for="(car, key) in adsList"
 					:key="key"
 				>
-					<!-- <router-link :to="{ name: 'carToView', query: { id: car.id } }"> -->
 					<div class="vehicle-display-header">
-						<div class="actions">
-							<ListingActions />
-						</div>
 						<div v-if="car && car.carPicsUrls" class="vehicles-display-img">
 							<img :src="car.carPicsUrls[0]" :alt="`picture of ${car.model}`" />
 						</div>
@@ -54,6 +48,7 @@ export default {
 						<p class="vehicles-display-price">
 							{{ car.price | currency }}
 						</p>
+						<ListingActions :carId="car.id" />
 					</div>
 				</div>
 			</div>
@@ -105,22 +100,12 @@ export default {
 	height: 100vh;
 	overflow: auto;
 }
-.actions {
-	display: none;
-	position: absolute;
-	top: 0;
-	right: 0;
-	width: 100%;
-	height: 100%;
-	background: rgba(0, 0, 0, 0.626);
-}
+
 .vehicle-display-header {
 	border: 2px solid $lightestDark;
-	position: relative;
-	transition: all 2s ease-in-out;
-	&:hover .actions {
-		display: block;
-	}
+}
+.actions {
+	flex: 1;
 }
 .vehicles-display {
 	&-car {

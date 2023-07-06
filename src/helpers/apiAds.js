@@ -9,7 +9,13 @@ import {
 	query,
 	where,
 } from "firebase/firestore";
-import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
+import {
+	getStorage,
+	ref,
+	getDownloadURL,
+	getMetadata,
+	uploadBytes,
+} from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 // Create a reference to the storage service
 const storage = getStorage();
@@ -82,8 +88,37 @@ export default {
 				return imageName;
 			});
 			const imgPaths = await Promise.all(imgPathsPromised);
-			console.log(imgPaths,'from api')
+			console.log(imgPaths, "from api");
 			return imgPaths;
+		} catch (error) {
+			throw error;
+		}
+	},
+	async getImagesById(imagePaths) {
+		try {
+			const imageDetails = [];
+
+			for (const imagePath of imagePaths) {
+				const imageRef = ref(storage, imagePath);
+				const imageUrl = await getDownloadURL(imageRef);
+				// Get the metadata of the image
+				const metadata = await getMetadata(imageRef);
+
+				// Extract the name, type, and size from the metadata
+				const name = metadata.name;
+				const type = metadata.contentType;
+				const size = metadata.size;
+
+				// Push the image details to the array
+				imageDetails.push({
+					url: imageUrl,
+					name: name,
+					type: type,
+					size: size,
+				});
+			}
+
+			return imageDetails;
 		} catch (error) {
 			throw error;
 		}

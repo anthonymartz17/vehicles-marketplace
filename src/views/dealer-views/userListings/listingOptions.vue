@@ -1,6 +1,9 @@
 <script>
 import { mapGetters, mapState } from "vuex";
 export default {
+	props: {
+		carId: [String],
+	},
 	data() {
 		return {
 			actions: [
@@ -19,9 +22,11 @@ export default {
 		};
 	},
 	methods: {
-		reRoute(route) {
-			this.$emit("closeModal");
-			if (this.$route.name !== route) this.$router.push({ name: route });
+		takeAction(action) {
+			if (action.name === "Delete") {
+			} else {
+				this.$router.push({ name: action.route, query: { id: this.carId } });
+			}
 		},
 	},
 	computed: {
@@ -33,7 +38,12 @@ export default {
 <template>
 	<div class="actions-container">
 		<ul class="list">
-			<li class="list-item" v-for="action in actions" :key="action.name">
+			<li
+				@click="takeAction(action)"
+				class="list-item"
+				v-for="action in actions"
+				:key="action.name"
+			>
 				{{ action.name }}
 			</li>
 		</ul>
@@ -44,13 +54,13 @@ export default {
 .actions-container {
 	width: 100%;
 	height: 100%;
+	background: $dark;
 	display: flex;
 }
 .list {
 	flex: 1;
 	list-style: none;
 	display: flex;
-	flex-direction: column;
 }
 
 .list-item {

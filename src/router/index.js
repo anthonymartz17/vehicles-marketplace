@@ -9,11 +9,7 @@ const routes = [
 		name: "home",
 		component: () => import("../views/Home.vue"),
 	},
-	// {
-	// 	path: "/electric",
-	// 	name: "Electric",
-	// 	component: () => import("../views/Electric.vue"),
-	// },
+
 	{
 		path: "/contact",
 		name: "contact",
@@ -62,8 +58,9 @@ const routes = [
 					import("../views/dealer-views/userListings/listingsDisplay"),
 			},
 			{
-				path: "/create-ad",
-
+				path: "create-ad",
+				// props: (route) => ({ id: route.query.id ? route.query.id : null }),
+				// preserveQueryParams: true,
 				component: () =>
 					import("../views/dealer-views/create-ad-post/create-ad"),
 				children: [
@@ -74,19 +71,19 @@ const routes = [
 							import("../views/dealer-views/create-ad-post/form/step-1"),
 					},
 					{
-						path: "/step-2",
+						path: "step-2",
 						name: "step-2",
 						component: () =>
 							import("../views/dealer-views/create-ad-post/form/step-2"),
 					},
 					{
-						path: "/step-3",
+						path: "step-3",
 						name: "step-3",
 						component: () =>
 							import("../views/dealer-views/create-ad-post/form/step-3"),
 					},
 					{
-						path: "/step-4",
+						path: "step-4",
 						name: "step-4",
 						component: () =>
 							import("../views/dealer-views/create-ad-post/form/step-4"),
@@ -94,12 +91,12 @@ const routes = [
 				],
 			},
 			{
-				path: "/profile",
+				path: "profile",
 				name: "profile",
 				component: () => import("../views/dealer-views/profile-app"),
 			},
 			{
-				path: "/password-app",
+				path: "password-app",
 				name: "password",
 				component: () => import("../views/dealer-views/password-app"),
 			},

@@ -1,5 +1,5 @@
 <script>
-import { mapActions, mapMutations, mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 import FormProgress from "./from-progress.vue";
 import NavigationBtn from "./navigation-btn.vue";
 export default {
@@ -10,9 +10,35 @@ export default {
 	data() {
 		return {
 			stepsRoutes: ["create ad", "step-2", "step-3", "step-4"],
+			vehicleIdFromLocal: null,
 		};
 	},
+	mounted() {
+		this.setVehicle();
+	},
 	methods: {
+		...mapActions("adsCrud", [
+			"fetchVehicleById",
+			"updateVehiclePost",
+			"updateVehiclePostImages",
+			"fetchImageUrlListById",
+		]),
+		async setVehicle() {
+			const vehicleId = this.$route.query.id;
+			if (vehicleId != undefined) {
+				localStorage.setItem("vehicle_id", JSON.stringify(vehicleId));
+			}
+			this.vehicleIdFromLocal = JSON.parse(localStorage.getItem("vehicle_id"));
+			if (this.vehicleIdFromLocal) {
+				//fetch and persist data, in case page is reloaded from step2,3 or 4, be able to have access to data, since query.id would be lost from those routes
+				const vehicle = await this.fetchVehicleById(this.vehicleIdFromLocal);
+				const vehicleImages = await this.fetchImageUrlListById(vehicle.pics);
+
+				this.updateVehiclePost(vehicle);
+
+				this.updateVehiclePostImages(vehicleImages);
+			}
+		},
 		goNext() {
 			if (this.$route.name !== "step-4") {
 				// this.$router.push({ name: this.nextRoute });
@@ -36,6 +62,15 @@ export default {
 			console.log(this.$refs.currentView.vehicle);
 			return this.stepsRoutes[this.stepsRoutes.indexOf(this.$route.name) + 1];
 		},
+		submitButton() {
+			let text;
+			if (this.$route.name != "step-4") {
+				text = "Next";
+			} else {
+				text = this.vehicleIdFromLocal ? "Update Ad" : "Create Ad"
+			}
+			return text;
+		},
 	},
 };
 </script>
@@ -55,7 +90,7 @@ export default {
 			<div class="btn-container">
 				<button class="button back-btn" @click="goBack()">Back</button>
 				<button class="button next-btn" @click="goNext()">
-					{{ $route.name != "step-4" ? "Next" : "Create Ad" }}
+					{{ submitButton }}
 				</button>
 			</div>
 		</div>

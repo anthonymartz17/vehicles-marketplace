@@ -7,10 +7,14 @@ export default {
 	state: {
 		ads: [],
 		vehiclePost: {},
+		vehiclePostImages: [],
 	},
 	mutations: {
 		UPDATE_VEHICLEPOST(state, newValue) {
 			state.vehiclePost = { ...state.vehiclePost, ...newValue };
+		},
+		UPDATE_VEHICLEPOST_IMAGES(state, newValue) {
+			state.vehiclePostImages = newValue;
 		},
 		CLEAR_VEHICLEPOST(state, payload) {
 			state.vehiclePost = payload;
@@ -30,14 +34,6 @@ export default {
 		},
 		DELETE(state, id) {
 			state.ads = state.ads.filter((x) => x.id !== id);
-		},
-	},
-
-	getters: {
-		adsList(state) {
-			if (state.ads) {
-				return state.ads;
-			}
 		},
 	},
 
@@ -61,7 +57,7 @@ export default {
 		},
 		async fetchVehicleById(_, vehicleId) {
 			try {
-				let vehicle = await apiVehicles.getVehicleById(vehicleId);
+				let vehicle = await apiAds.getVehicleById(vehicleId);
 				let imagesUrl = await apiCarsImages.getImagesById(vehicle.pics);
 				vehicle.carPicsUrls = imagesUrl;
 				return vehicle;
@@ -101,6 +97,14 @@ export default {
 				throw error;
 			}
 		},
+		async fetchImageUrlListById(_, imagePaths) {
+			try {
+				const imgUrlList = await apiAds.getImagesById(imagePaths);
+				return imgUrlList;
+			} catch (error) {
+				throw error;
+			}
+		},
 		async updateAd(_, data) {
 			try {
 				const response = await apiAds.updateAd(data);
@@ -130,8 +134,20 @@ export default {
 		updateVehiclePost({ commit }, newValue) {
 			commit("UPDATE_VEHICLEPOST", newValue);
 		},
+		updateVehiclePostImages({ commit }, newValue) {
+			commit("UPDATE_VEHICLEPOST_IMAGES", newValue);
+		},
 		clearVehiclePost({ commit }, payload) {
 			commit("CLEAR_VEHICLEPOST", payload);
+		},
+	},
+	getters: {
+		vehiclePostImages: (state) => state.vehiclePostImages,
+
+		adsList(state) {
+			if (state.ads) {
+				return state.ads;
+			}
 		},
 	},
 };

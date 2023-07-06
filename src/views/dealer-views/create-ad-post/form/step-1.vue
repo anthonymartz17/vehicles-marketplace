@@ -8,6 +8,7 @@ export default {
 			submitted: false,
 		};
 	},
+	
 	validations: {
 		vehiclePost: {
 			make: { required },
@@ -45,66 +46,64 @@ export default {
 	<div class="profile-wrapper">
 		<div class="profile-container">
 			<form class="form" @submit.prevent="tryActivateAccount">
-			
-					<div class="form-field-container">
-						<label for="make" class="form-label">Make</label>
-						<input
-							id="make"
-							v-model="vehiclePost.make"
-							type="text"
-							placeholder="Enter commercial name"
-							:class="[
-								'form-input',
-								{ 'is-invalid ': submitted && !$v.vehiclePost.make.required },
-							]"
-						/>
-						<div
-							v-if="submitted && !$v.vehiclePost.make.required"
-							class="invalid-feedback"
-						>
-							Make is required.
-						</div>
+				<div class="form-field-container">
+					<label for="make" class="form-label">Make</label>
+					<input
+						id="make"
+						v-model="vehiclePost.make"
+						type="text"
+						placeholder="Enter commercial name"
+						:class="[
+							'form-input',
+							{ 'is-invalid ': submitted && !$v.vehiclePost.make.required },
+						]"
+					/>
+					<div
+						v-if="submitted && !$v.vehiclePost.make.required"
+						class="invalid-feedback"
+					>
+						Make is required.
 					</div>
-					<div class="form-field-container form-field-size">
-						<label for="model" class="form-label">Model</label>
-						<input
-							id="model"
-							v-model="vehiclePost.model"
-							type="text"
-							placeholder="Enter model"
-							:class="[
-								'form-input',
-								{ 'is-invalid ': submitted && !$v.vehiclePost.model.required },
-							]"
-						/>
-						<div
-							v-if="submitted && !$v.vehiclePost.model.required"
-							class="invalid-feedback"
-						>
-							Model is required.
-						</div>
+				</div>
+				<div class="form-field-container form-field-size">
+					<label for="model" class="form-label">Model</label>
+					<input
+						id="model"
+						v-model="vehiclePost.model"
+						type="text"
+						placeholder="Enter model"
+						:class="[
+							'form-input',
+							{ 'is-invalid ': submitted && !$v.vehiclePost.model.required },
+						]"
+					/>
+					<div
+						v-if="submitted && !$v.vehiclePost.model.required"
+						class="invalid-feedback"
+					>
+						Model is required.
 					</div>
-					<div class="form-field-container form-field-size">
-						<label for="trim" class="form-label">Trim</label>
-						<input
-							id="trim"
-							v-model="vehiclePost.trim"
-							type="text"
-							placeholder="Enter trim"
-							:class="[
-								'form-input',
-								{ 'is-invalid ': submitted && !$v.vehiclePost.trim.required },
-							]"
-						/>
-						<div
-							v-if="submitted && !$v.vehiclePost.trim.required"
-							class="invalid-feedback"
-						>
-							Trim is required.
-						</div>
+				</div>
+				<div class="form-field-container form-field-size">
+					<label for="trim" class="form-label">Trim</label>
+					<input
+						id="trim"
+						v-model="vehiclePost.trim"
+						type="text"
+						placeholder="Enter trim"
+						:class="[
+							'form-input',
+							{ 'is-invalid ': submitted && !$v.vehiclePost.trim.required },
+						]"
+					/>
+					<div
+						v-if="submitted && !$v.vehiclePost.trim.required"
+						class="invalid-feedback"
+					>
+						Trim is required.
 					</div>
+				</div>
 				<div class="field-flex">
-				
 					<div class="form-field-container form-field-size">
 						<label for="year" class="form-label">Year</label>
 						<input
@@ -230,7 +229,7 @@ export default {
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 1em;
-	padding-block: .5em;
+	padding-block: 0.5em;
 }
 
 .profile-wrapper {
