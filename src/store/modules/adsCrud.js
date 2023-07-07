@@ -7,14 +7,14 @@ export default {
 	state: {
 		ads: [],
 		vehiclePost: {},
-		vehiclePostImages: [],
+		vehicleImagesDetails: [],
 	},
 	mutations: {
 		UPDATE_VEHICLEPOST(state, newValue) {
 			state.vehiclePost = { ...state.vehiclePost, ...newValue };
 		},
 		UPDATE_VEHICLEPOST_IMAGES(state, newValue) {
-			state.vehiclePostImages = newValue;
+			state.vehicleImagesDetails = newValue;
 		},
 		CLEAR_VEHICLEPOST(state, payload) {
 			state.vehiclePost = payload;
@@ -69,7 +69,7 @@ export default {
 		async createAd(_, { vehicleData, vehicleImages }) {
 			try {
 				vehicleData.dealerId = auth.state.user.dealerId;
-				vehicleData.accessories = vehicleData.accessories.split(",");
+				vehicleData.accesories = vehicleData.accesories.split(",");
 
 				const createdPost = await apiAds.createAd(vehicleData);
 
@@ -79,26 +79,24 @@ export default {
 				});
 
 				//creates array pics and spread list of img references
-
 				vehicleData.pics = [...uploadedImgPaths];
-				console.log(vehicleData.pics, "antes de actualizar");
-				console.log(createdPost.id, "id para update");
-				const updateAd = await apiAds.updateAd({
+				const updatedAd = await apiAds.updateAd({
 					vehicleData,
 					vehicleId: createdPost.id,
 				});
+				console.log(updatedAd,'ready')
 			} catch (error) {
 				throw error;
 			}
 		},
-		async uploadImages(_, data) {
-			try {
-				const response = await apiAds.uploadImages(data);
-				console.log(response, "images uploaded, state");
-			} catch (error) {
-				throw error;
-			}
-		},
+		// async uploadImages(_, data) {
+		// 	try {
+		// 		const response = await apiAds.uploadImages(data);
+		// 		console.log(response, "images uploaded, state");
+		// 	} catch (error) {
+		// 		throw error;
+		// 	}
+		// },
 		async fetchImageUrlListById(_, imagePaths) {
 			try {
 				const imgUrlList = await apiAds.getImagesById(imagePaths);
@@ -107,21 +105,32 @@ export default {
 				throw error;
 			}
 		},
-		async updateAd(_, data) {
-			//make accessories an array
-			data.vehicleData.accessories = data.vehicleData.accessories.split(",");
-
+		async updateAd(_, { vehicleData, vehicleImages, vehicleId }) {
 			try {
-				const response = await apiAds.updateAd(data);
+				await apiAds.deleteImages(data.vehicleData.pics);
+				const uploadedImgPaths = await apiAds.uploadImages({
+					vehicleImages,
+					vehicleId,
+				});
+				//creates array pics and spread list of img paths
+				vehicleData.pics = [...uploadedImgPaths];
+				//make accessories an array
+				vehicleData.accesories = vehicleData.accesories.split(",");
+				const response = await apiAds.updateAd({ vehicleData, vehicleId });
 				console.log(response, "images uploaded, state");
 			} catch (error) {
 				throw error;
 			}
 		},
-		async deleteAd({commit}, vehicleId) {
+		async deleteAd({ commit }, vehicleId) {
 			try {
+				//delete images firebase storage
+				let vehicle = await apiAds.getVehicleById(vehicleId);
+				await apiAds.deleteImages(vehicle.pics);
+				//End delete images firebase storage
+				//delete data firebase database
 				const response = await apiAds.deleteAd(vehicleId);
-				commit("DELETE",vehicleId)
+				commit("DELETE", vehicleId);
 				console.log(response, "images uploaded, state");
 			} catch (error) {
 				throw error;

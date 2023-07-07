@@ -13,6 +13,7 @@ export default {
 			vehicleIdFromLocal: null,
 		};
 	},
+
 	mounted() {
 		this.setVehicle();
 	},
@@ -33,10 +34,17 @@ export default {
 				//fetch and persist data, in case page is reloaded from step2,3 or 4, be able to have access to data, since query.id would be lost from those routes
 				const vehicle = await this.fetchVehicleById(this.vehicleIdFromLocal);
 				const vehicleImages = await this.fetchImageUrlListById(vehicle.pics);
-
+				const vehicleImagesDetails = vehicleImages.map((image) => {
+					return {
+						name: image.name,
+						size: image.size,
+						type: image.type, // or the appropriate image type
+						dataURL: image.url, // The URL of the image from Firebase Storage
+					};
+				});
 				this.updateVehiclePost(vehicle);
-
-				this.updateVehiclePostImages(vehicleImages);
+				localStorage.setItem("vehicle_images", JSON.stringify(vehicleImagesDetails));
+				// this.updateVehiclePostImages(vehicleImagesDetails);
 			}
 		},
 		goNext() {

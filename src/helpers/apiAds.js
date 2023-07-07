@@ -16,6 +16,7 @@ import {
 	getDownloadURL,
 	getMetadata,
 	uploadBytes,
+	deleteObject,
 } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 // Create a reference to the storage service
@@ -91,6 +92,21 @@ export default {
 			const imgPaths = await Promise.all(imgPathsPromised);
 			console.log(imgPaths, "from api");
 			return imgPaths;
+		} catch (error) {
+			throw error;
+		}
+	},
+
+	async deleteImages(imagePaths) {
+		try {
+			const deletePromises = imagePaths.map(async (imagePath) => {
+				const imageRef = ref(storage, imagePath);
+				await deleteObject(imageRef);
+			});
+
+			await Promise.all(deletePromises);
+
+			return { success: true, message: "Images deleted successfully." };
 		} catch (error) {
 			throw error;
 		}

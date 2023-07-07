@@ -1,6 +1,6 @@
 <script>
 import { required } from "vuelidate/lib/validators";
-import { mapActions, mapGetters, mapMutations } from "vuex";
+import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
 import vue2Dropzone from "vue2-dropzone";
 import "vue2-dropzone/dist/vue2Dropzone.min.css";
 
@@ -13,7 +13,7 @@ export default {
 	data() {
 		return {
 			submitted: false,
-			localVehicleImages: [],
+			vehiclePostImages: [],
 			dropzoneOptions: {
 				url: "https://httpbin.org/post",
 				thumbnailWidth: 150,
@@ -32,10 +32,16 @@ export default {
 			colorEx: { required },
 			colorIn: { required },
 			drivetrain: { required },
-			accessories: { required },
+			accesories: { required },
 		},
-		localVehicleImages: { required },
+		vehiclePostImages: { required },
 	},
+
+	// mounted() {
+	// 	// this.uploadImgManually()
+
+	// creating user refresca
+	// },
 
 	methods: {
 		...mapMutations("auth", ["SET_ALERT_MSG", "TOGGLE_IS_LOADING"]),
@@ -43,24 +49,18 @@ export default {
 			"createAd",
 			"updateAd",
 			"updateVehiclePost",
+			"updateVehiclePostImages",
 			"clearVehiclePost",
 			"fetchImageUrlListById",
 		]),
 		afterComplete(file) {
-			this.localVehicleImages.push(file);
+			this.vehiclePostImages.push(file);
 		},
-		uploadImgManually() {
-			if (this.vehiclePostImages.length) {
+		async uploadImgManually() {
+			if (this.vehicleImages.length > 0) {
 				//add images to vuedropzone
-				this.vehiclePostImages.forEach((image) => {
-					const detail = {
-						name: image.name,
-						size: image.size,
-						type: image.type, // or the appropriate image type
-						dataURL: image.url, // The URL of the image from Firebase Storage
-					};
-
-					this.$refs.myVueDropzone.manuallyAddFile(detail, image.url);
+				this.vehicleImages.forEach((detail) => {
+					this.$refs.myVueDropzone.manuallyAddFile(detail, detail.dataURL);
 				});
 			}
 		},
@@ -71,20 +71,19 @@ export default {
 			} else {
 				try {
 					// this.TOGGLE_IS_LOADING();
-					if (this.isUpdate) {
+					if (this.vehiceId) {
 						console.log("updatinging", this.vehiclePost);
-						// delete this.vehiclePost.carPicsUrls;
+						delete this.vehiclePost.carPicsUrls;
 
 						await this.updateAd({
 							vehicleData: this.vehiclePost,
-							vehicleImages: this.localVehicleImages,
-							vehicleId: this.isUpdate,
+							vehicleImages: this.vehiclePostImages,
+							vehicleId: this.vehiceId,
 						});
 					} else {
-						console.log("createing", this.vehiclePost);
 						await this.createAd({
 							vehicleData: this.vehiclePost,
-							vehicleImages: this.localVehicleImages,
+							vehicleImages: this.vehiclePostImages,
 						});
 					}
 					this.clearVehiclePost({});
@@ -103,7 +102,6 @@ export default {
 		},
 	},
 	computed: {
-		...mapGetters("adsCrud", ["vehiclePostImages"]),
 		vehiclePost: {
 			get() {
 				return this.$store.state.adsCrud.vehiclePost;
@@ -112,13 +110,14 @@ export default {
 				this.updateVehiclePost(newValue);
 			},
 		},
-		isUpdate() {
-			return JSON.parse(localStorage.getItem("vehicle_id"));
+
+		vehiceId() {
+			const id = JSON.parse(localStorage.getItem("vehicle_id"));
+			return id ? id : null;
 		},
-	},
-	watch: {
-		vehiclePostImages() {
-			this.uploadImgManually();
+		vehicleImages() {
+			const images = JSON.parse(localStorage.getItem("vehicle_images"));
+			return images ? images : [];
 		},
 	},
 };
@@ -130,17 +129,18 @@ export default {
 			<form class="form" @submit.prevent="tryCreatePost">
 				<div class="form-field-container">
 					<vue2Dropzone
-						:destroyDropzone="false"
+						@vdropzone-mounted="uploadImgManually"
 						@vdropzone-complete="afterComplete"
+						:destroyDropzone="false"
 						ref="myVueDropzone"
 						id="dropzone"
 						:options="dropzoneOptions"
 						:class="{
-							'is-invalid ': submitted && !$v.localVehicleImages.required,
+							'is-invalid ': submitted && !$v.vehiclePostImages.required,
 						}"
 					></vue2Dropzone>
 					<div
-						v-if="submitted && !$v.localVehicleImages.required"
+						v-if="submitted && !$v.vehiclePostImages.required"
 						class="invalid-feedback"
 					>
 						Photos are required.
@@ -211,6 +211,7 @@ export default {
 						</div>
 					</div>
 				</div>
+				{{ vehiclePost.accesories }}
 				<div class="form-field-container form-field-size">
 					<label for="accessories" class="form-label">Accessories</label>
 					<textarea
@@ -223,13 +224,13 @@ export default {
 						:class="[
 							{
 								'is-invalid ':
-									submitted && !$v.vehiclePost.accessories.required,
+									submitted && !$v.vehiclePost.accesories.required,
 							},
 						]"
 					></textarea>
 
 					<div
-						v-if="submitted && !$v.vehiclePost.accessories.required"
+						v-if="submitted && !$v.vehiclePost.accesories.required"
 						class="invalid-feedback"
 					>
 						Accessories is required.
