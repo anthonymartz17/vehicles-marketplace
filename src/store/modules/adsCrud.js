@@ -72,6 +72,7 @@ export default {
 				vehicleData.accessories = vehicleData.accessories.split(",");
 
 				const createdPost = await apiAds.createAd(vehicleData);
+
 				const uploadedImgPaths = await apiAds.uploadImages({
 					vehicleImages,
 					vehicleId: createdPost.id,
@@ -81,6 +82,7 @@ export default {
 
 				vehicleData.pics = [...uploadedImgPaths];
 				console.log(vehicleData.pics, "antes de actualizar");
+				console.log(createdPost.id, "id para update");
 				const updateAd = await apiAds.updateAd({
 					vehicleData,
 					vehicleId: createdPost.id,
@@ -106,8 +108,20 @@ export default {
 			}
 		},
 		async updateAd(_, data) {
+			//make accessories an array
+			data.vehicleData.accessories = data.vehicleData.accessories.split(",");
+
 			try {
 				const response = await apiAds.updateAd(data);
+				console.log(response, "images uploaded, state");
+			} catch (error) {
+				throw error;
+			}
+		},
+		async deleteAd({commit}, vehicleId) {
+			try {
+				const response = await apiAds.deleteAd(vehicleId);
+				commit("DELETE",vehicleId)
 				console.log(response, "images uploaded, state");
 			} catch (error) {
 				throw error;

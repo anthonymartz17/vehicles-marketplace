@@ -67,7 +67,7 @@ export default {
 			if (this.$route.name != "step-4") {
 				text = "Next";
 			} else {
-				text = this.vehicleIdFromLocal ? "Update Ad" : "Create Ad"
+				text = this.vehicleIdFromLocal ? "Update Ad" : "Create Ad";
 			}
 			return text;
 		},

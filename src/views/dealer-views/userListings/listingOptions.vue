@@ -1,5 +1,5 @@
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapGetters, mapState ,mapActions} from "vuex";
 export default {
 	props: {
 		carId: [String],
@@ -22,8 +22,10 @@ export default {
 		};
 	},
 	methods: {
-		takeAction(action) {
+		...mapActions("adsCrud",["deleteAd"]),
+		async takeAction(action) {
 			if (action.name === "Delete") {
+				const response = await this.deleteAd(this.carId);
 			} else {
 				this.$router.push({ name: action.route, query: { id: this.carId } });
 			}

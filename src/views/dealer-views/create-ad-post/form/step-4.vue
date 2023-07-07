@@ -8,6 +8,8 @@ export default {
 	components: {
 		vue2Dropzone,
 	},
+	props: ["vehicleIdFromLocal"],
+
 	data() {
 		return {
 			submitted: false,
@@ -24,26 +26,6 @@ export default {
 			},
 		};
 	},
-	// 	beforeRouteLeave(to, from, next) {
-	//   // Check if the form is incomplete
-	//   const formIsIncomplete = !Object.values(this.vehiclePost).length;
-
-	//   if (formIsIncomplete) {
-	//     // Show a warning message or confirm dialog to inform the user about the incomplete form
-	//     const confirmed = window.confirm("You have an incomplete form. Are you sure you want to leave?");
-
-	//     if (confirmed) {
-	//       // If the user confirms, allow navigation to the next route
-	//       next();
-	//     } else {
-	//       // If the user cancels, prevent navigation and stay on the current route
-	//       next(false);
-	//     }
-	//   } else {
-	//     // If the form is complete, allow navigation to the next route
-	//     next();
-	//   }
-	// },
 
 	validations: {
 		vehiclePost: {
@@ -52,13 +34,15 @@ export default {
 			drivetrain: { required },
 			accessories: { required },
 		},
-		vehicleImages: { required },
+		localVehicleImages: { required },
 	},
 
 	methods: {
 		...mapMutations("auth", ["SET_ALERT_MSG", "TOGGLE_IS_LOADING"]),
 		...mapActions("adsCrud", [
 			"createAd",
+			"updateAd",
+			"updateVehiclePost",
 			"clearVehiclePost",
 			"fetchImageUrlListById",
 		]),
@@ -86,12 +70,23 @@ export default {
 				return;
 			} else {
 				try {
-					this.TOGGLE_IS_LOADING();
+					// this.TOGGLE_IS_LOADING();
+					if (this.isUpdate) {
+						console.log("updatinging", this.vehiclePost);
+						// delete this.vehiclePost.carPicsUrls;
 
-					await this.createAd({
-						vehicleData: this.vehiclePost,
-						vehicleImages: this.localVehicleImages,
-					});
+						await this.updateAd({
+							vehicleData: this.vehiclePost,
+							vehicleImages: this.localVehicleImages,
+							vehicleId: this.isUpdate,
+						});
+					} else {
+						console.log("createing", this.vehiclePost);
+						await this.createAd({
+							vehicleData: this.vehiclePost,
+							vehicleImages: this.localVehicleImages,
+						});
+					}
 					this.clearVehiclePost({});
 					this.$router.push({ name: "dashboard" });
 				} catch (error) {
@@ -102,7 +97,7 @@ export default {
 					// 	msg: error,
 					// });
 				} finally {
-					this.TOGGLE_IS_LOADING();
+					// this.TOGGLE_IS_LOADING();
 				}
 			}
 		},
@@ -114,8 +109,11 @@ export default {
 				return this.$store.state.adsCrud.vehiclePost;
 			},
 			set(newValue) {
-				this.$store.dispatch("adsCrud/updateVehiclePost", newValue);
+				this.updateVehiclePost(newValue);
 			},
+		},
+		isUpdate() {
+			return JSON.parse(localStorage.getItem("vehicle_id"));
 		},
 	},
 	watch: {
@@ -137,10 +135,12 @@ export default {
 						ref="myVueDropzone"
 						id="dropzone"
 						:options="dropzoneOptions"
-						:class="{ 'is-invalid ': submitted && !$v.vehicleImages.required }"
+						:class="{
+							'is-invalid ': submitted && !$v.localVehicleImages.required,
+						}"
 					></vue2Dropzone>
 					<div
-						v-if="submitted && !$v.vehicleImages.required"
+						v-if="submitted && !$v.localVehicleImages.required"
 						class="invalid-feedback"
 					>
 						Photos are required.
@@ -214,7 +214,7 @@ export default {
 				<div class="form-field-container form-field-size">
 					<label for="accessories" class="form-label">Accessories</label>
 					<textarea
-						v-model="vehiclePost.accessories"
+						v-model="vehiclePost.accesories"
 						placeholder="Divide by comma Ex: Bluetooth, Gps, Dashcam..."
 						name="accessories"
 						id="accessories"

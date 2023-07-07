@@ -6,6 +6,7 @@ import {
 	getDocs,
 	addDoc,
 	updateDoc,
+	deleteDoc,
 	query,
 	where,
 } from "firebase/firestore";
@@ -124,13 +125,31 @@ export default {
 		}
 	},
 	async updateAd({ vehicleData, vehicleId }) {
+		console.log(vehicleId, "elid");
 		try {
 			const vehicleDocRef = doc(db, "cars", vehicleId);
+
 			const vehicleDocSnapshot = await getDoc(vehicleDocRef);
-			console.log(vehicleDocSnapshot);
+
 			if (vehicleDocSnapshot.exists()) {
 				await updateDoc(vehicleDocRef, vehicleData);
 				return { id: vehicleDocSnapshot.id, ...vehicleDocSnapshot.data() };
+			} else {
+				throw new Error("Car not found.");
+			}
+		} catch (error) {
+			throw error;
+		}
+	},
+	async deleteAd(vehicleId) {
+		try {
+			const vehicleDocRef = doc(db, "cars", vehicleId);
+
+			const vehicleDocSnapshot = await getDoc(vehicleDocRef);
+
+			if (vehicleDocSnapshot.exists()) {
+				await deleteDoc(vehicleDocRef);
+				return { success: true, message: "Car deleted successfully." };
 			} else {
 				throw new Error("Car not found.");
 			}
