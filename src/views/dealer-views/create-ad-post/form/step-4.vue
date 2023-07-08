@@ -56,6 +56,12 @@ export default {
 		afterComplete(file) {
 			this.vehiclePostImages.push(file);
 		},
+		removeImg(file) {
+			this.vehiclePostImages = this.vehiclePostImages.filter(
+				(img) => img.dataURL != file.dataURL
+			);
+			console.log(this.vehiclePostImages);
+		},
 		async uploadImgManually() {
 			if (this.vehicleImages.length > 0) {
 				//add images to vuedropzone
@@ -74,7 +80,7 @@ export default {
 					if (this.vehiceId) {
 						console.log("updatinging", this.vehiclePost);
 						delete this.vehiclePost.carPicsUrls;
-
+						console.log(this.vehiclePostImages, "images en el momemnto");
 						await this.updateAd({
 							vehicleData: this.vehiclePost,
 							vehicleImages: this.vehiclePostImages,
@@ -86,6 +92,7 @@ export default {
 							vehicleImages: this.vehiclePostImages,
 						});
 					}
+					localStorage.removeItem("vehicle_images");
 					this.clearVehiclePost({});
 					this.$router.push({ name: "dashboard" });
 				} catch (error) {
@@ -129,6 +136,7 @@ export default {
 			<form class="form" @submit.prevent="tryCreatePost">
 				<div class="form-field-container">
 					<vue2Dropzone
+						@vdropzone-removed-file="removeImg"
 						@vdropzone-mounted="uploadImgManually"
 						@vdropzone-complete="afterComplete"
 						:destroyDropzone="false"
@@ -211,7 +219,6 @@ export default {
 						</div>
 					</div>
 				</div>
-				{{ vehiclePost.accesories }}
 				<div class="form-field-container form-field-size">
 					<label for="accessories" class="form-label">Accessories</label>
 					<textarea
@@ -223,8 +230,7 @@ export default {
 						rows="10"
 						:class="[
 							{
-								'is-invalid ':
-									submitted && !$v.vehiclePost.accesories.required,
+								'is-invalid ': submitted && !$v.vehiclePost.accesories.required,
 							},
 						]"
 					></textarea>

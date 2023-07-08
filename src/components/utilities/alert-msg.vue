@@ -1,9 +1,13 @@
 <script>
-import {mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 export default {
 	methods: {
 		...mapMutations("auth", ["SET_ALERT_MSG"]),
-		emitLogin() {
+		...mapActions("adsCrud", ["deleteAd"]),
+		async emitLogin() {
+			if (this.alert.vehicleId) {
+				await this.deleteAd(this.alert.vehicleId);
+			}
 			this.$emit("CheckLoginOptionEvent", "login");
 			//reset alert
 			this.SET_ALERT_MSG({});
@@ -11,13 +15,20 @@ export default {
 	},
 
 	computed: {
-		...mapState("auth", ["alert","showAlert"]),
-		
-		headerBg() {
-			
-			return this.alert.type == "success"
-				? { "success-alert": true }
-				: { "error-alert": true };
+		...mapState("auth", ["alert", "showAlert"]),
+
+		btnText() {
+			let text;
+			if (
+				this.$route.name == "activationForm" &&
+				this.alert.type == "success"
+			) {
+				text = "Login Now!!";
+			}
+			if (this.alert.vehicleId) {
+				text = "Delete";
+			}
+			return text;
 		},
 	},
 };
@@ -25,14 +36,21 @@ export default {
 <template>
 	<div @click="SET_ALERT_MSG({})" class="successful">
 		<div class="card">
-			<div :class="['card-header', headerBg]">
+			<div :class="['card-header', alert.type]">
 				<h3 class="sub-title text-light">{{ alert.title }}</h3>
 				<h3 @click="SET_ALERT_MSG({})" class="sub-title text-light close">X</h3>
 			</div>
 			<div class="card-body">
-				<p >{{ alert.msg }}</p>
-				<button class="card-btn" v-show="$route.name == 'activationForm' && alert.type == 'success'" @click="emitLogin">
-					Login now!!
+				<p>{{ alert.msg }}</p>
+				<button
+					v-show="
+						($route.name == 'activationForm' && alert.type == 'success') ||
+						alert.vehicleId
+					"
+					class="card-btn"
+					@click="emitLogin"
+				>
+					{{ btnText }}
 				</button>
 			</div>
 		</div>
@@ -64,10 +82,13 @@ export default {
 	justify-content: space-between;
 	padding: 0.5em;
 }
-.success-alert {
+.success {
 	background: $success;
 }
-.error-alert {
+.warning {
+	background: $warning;
+}
+.error {
 	background: $primary;
 }
 .card-btn {

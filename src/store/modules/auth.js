@@ -26,7 +26,6 @@ export default {
 
 		SET_ALERT_MSG(state, payload) {
 			state.alert = payload;
-			console.log({ ...state.alert });
 		},
 		TOGGLE_LINK_VISIBILITY(state, { link, isLoggedIn }) {
 			let showNav = true;

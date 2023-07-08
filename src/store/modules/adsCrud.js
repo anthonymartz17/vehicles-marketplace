@@ -78,13 +78,12 @@ export default {
 					vehicleId: createdPost.id,
 				});
 
-				//creates array pics and spread list of img references
+				// creates array pics and spread list of img references
 				vehicleData.pics = [...uploadedImgPaths];
 				const updatedAd = await apiAds.updateAd({
 					vehicleData,
 					vehicleId: createdPost.id,
 				});
-				console.log(updatedAd,'ready')
 			} catch (error) {
 				throw error;
 			}
@@ -107,13 +106,34 @@ export default {
 		},
 		async updateAd(_, { vehicleData, vehicleImages, vehicleId }) {
 			try {
-				await apiAds.deleteImages(data.vehicleData.pics);
+				let keptImages = vehicleImages.filter((img) =>
+					img.dataURL.includes(vehicleId)
+				);
+				let newImages = vehicleImages.filter(
+					(img) => !img.dataURL.includes(vehicleId)
+				);
+				let imagesToDelete = [];
+				let immagesToKeep = [];
+
+				vehicleData.pics.forEach((path) => {
+					const startIndex = path.indexOf("/", path.indexOf("/") + 1) + 1;
+					const endIndex = path.lastIndexOf(".");
+					const extractedString = path.substring(startIndex, endIndex);
+
+					const found = keptImages.find((url) =>
+						url.dataURL.includes(extractedString)
+					);
+					found ? immagesToKeep.push(path) : imagesToDelete.push(path);
+				});
+
+				await apiAds.deleteImages(imagesToDelete);
 				const uploadedImgPaths = await apiAds.uploadImages({
-					vehicleImages,
-					vehicleId,
+					vehicleImages: newImages,
+					vehicleId
 				});
 				//creates array pics and spread list of img paths
-				vehicleData.pics = [...uploadedImgPaths];
+				vehicleData.pics = [...immagesToKeep, ...uploadedImgPaths];
+
 				//make accessories an array
 				vehicleData.accesories = vehicleData.accesories.split(",");
 				const response = await apiAds.updateAd({ vehicleData, vehicleId });

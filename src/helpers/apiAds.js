@@ -75,12 +75,13 @@ export default {
 
 	async uploadImages({ vehicleImages, vehicleId }) {
 		try {
+			console.log(vehicleImages,'images api ')
 			// const urlsUploaded = await Promise.all(
 			//uploads each image to firebase storage and returns array with url from each one
 			const imgPathsPromised = vehicleImages.map(async (img) => {
 				//creates unique name id for image
 				const uniqueId = uuidv4();
-				const imageName = `images/cars/${vehicleId}_${uniqueId}_${img.name}`;
+				const imageName = `images/cars/${vehicleId}_${uniqueId}.jpg`;
 
 				//creates refference unique for image
 				const storageRef = ref(storage, imageName);
@@ -89,6 +90,7 @@ export default {
 
 				return imageName;
 			});
+			console.log(imgPathsPromised,'promised')
 			const imgPaths = await Promise.all(imgPathsPromised);
 			console.log(imgPaths, "from api");
 			return imgPaths;

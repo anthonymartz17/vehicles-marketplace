@@ -17,6 +17,9 @@ export default {
 	mounted() {
 		this.setVehicle();
 	},
+	destroyed() {
+		localStorage.removeItem("vehicle_images");
+	},
 	methods: {
 		...mapActions("adsCrud", [
 			"fetchVehicleById",
@@ -33,6 +36,8 @@ export default {
 			if (this.vehicleIdFromLocal) {
 				//fetch and persist data, in case page is reloaded from step2,3 or 4, be able to have access to data, since query.id would be lost from those routes
 				const vehicle = await this.fetchVehicleById(this.vehicleIdFromLocal);
+				//convert accesories array into string for text area display
+				vehicle.accesories = vehicle.accesories.join(",");
 				const vehicleImages = await this.fetchImageUrlListById(vehicle.pics);
 				const vehicleImagesDetails = vehicleImages.map((image) => {
 					return {
@@ -43,7 +48,10 @@ export default {
 					};
 				});
 				this.updateVehiclePost(vehicle);
-				localStorage.setItem("vehicle_images", JSON.stringify(vehicleImagesDetails));
+				localStorage.setItem(
+					"vehicle_images",
+					JSON.stringify(vehicleImagesDetails)
+				);
 				// this.updateVehiclePostImages(vehicleImagesDetails);
 			}
 		},

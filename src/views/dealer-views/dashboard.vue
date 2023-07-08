@@ -11,6 +11,7 @@ export default {
 		goCreateNew() {
 			//clear vehiclePost in state in case coming from edit listing
 			localStorage.removeItem("vehicle_id")
+			localStorage.removeItem("vehicle_images")
 			this.$store.dispatch("adsCrud/updateVehiclePost", {});
 			// if (this.$route.name != "create ad")
 				this.$router.push({ name: "create ad" });

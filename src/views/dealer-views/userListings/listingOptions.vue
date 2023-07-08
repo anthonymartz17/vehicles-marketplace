@@ -1,5 +1,5 @@
 <script>
-import { mapGetters, mapState ,mapActions} from "vuex";
+import { mapGetters, mapState ,mapActions, mapMutations} from "vuex";
 export default {
 	props: {
 		carId: [String],
@@ -23,9 +23,16 @@ export default {
 	},
 	methods: {
 		...mapActions("adsCrud",["deleteAd"]),
+		...mapMutations("auth",["SET_ALERT_MSG"]),
 		async takeAction(action) {
 			if (action.name === "Delete") {
-				const response = await this.deleteAd(this.carId);
+					this.SET_ALERT_MSG({
+						title: "WARNING",
+						type: "warning",
+						msg: "Are you sure you want to delete this listing?",
+						vehicleId:this.carId
+					});
+				
 			} else {
 				this.$router.push({ name: action.route, query: { id: this.carId } });
 			}
