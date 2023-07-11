@@ -45,7 +45,7 @@ export default {
 		},
 	},
 	destroyed() {
-		this.fireClearFilters() 
+		this.fireClearFilters();
 	},
 	// 	created() {
 	// 		let list = JSON.parse(localStorage.getItem('searchResults'))
@@ -139,7 +139,6 @@ export default {
 	margin-bottom: 0.3em;
 }
 .resultsWrapper {
-
 	@include desktop {
 		display: grid;
 		grid-template-columns: 1fr 4fr;

@@ -5,17 +5,17 @@
 <script>
 export default {
 	created() {
-		document.html.classList.add("no-scroll");
+		document.body.classList.add("no-scroll");
   },
   destroyed() {
-    document.html.classList.remove("no-scroll");
+    document.body.classList.remove("no-scroll");
   }
 };
 </script>
 
 <style>
 .no-scroll {
-	position: fixed;
+	overflow: hidden;
 }
 .loader,
 .loader:after {

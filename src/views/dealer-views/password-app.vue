@@ -20,11 +20,11 @@ export default {
 		...mapActions("auth", ["changePassword"]),
 		...mapMutations("auth", ["SET_ALERT_MSG", "TOGGLE_IS_LOADING"]),
 		async tryChangePassword() {
-			this.TOGGLE_IS_LOADING();
 			this.submitted = true;
 			if (this.$v.$invalid) {
 				return;
 			} else {
+				this.TOGGLE_IS_LOADING();
 				try {
 					await this.changePassword(this.password);
 					this.SET_ALERT_MSG({

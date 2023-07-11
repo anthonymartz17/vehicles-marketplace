@@ -23,6 +23,42 @@ export default {
 				headers: { "My-Awesome-Header": "header value" },
 				dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>UPLOAD IMAGE",
 				addRemoveLinks: true,
+				// accept: function (file, done) {
+				// 	file.acceptDimensions = new Promise(function (resolve, reject) {
+				// 		var reader = new FileReader();
+				// 		reader.onload = function (e) {
+				// 			var img = new Image();
+				// 			img.onload = function () {
+				// 				var aspectRatio = img.width / img.height;
+				// 				var expectedAspectRatio = 1.91; // Aspect ratio of 1.91:1
+				// 				var maxDimensions = { width: 1200, height: 800 }; // Maximum dimensions of 1200px x 800px
+
+				// 				if (
+				// 					Math.abs(aspectRatio - expectedAspectRatio) < 0.01 &&
+				// 					img.width <= maxDimensions.width &&
+				// 					img.height <= maxDimensions.height
+				// 				) {
+				// 					resolve();
+				// 				} else {
+				// 					reject();
+				// 				}
+				// 			};
+				// 			img.src = e.target.result;
+				// 		};
+				// 		reader.readAsDataURL(file);
+				// 	});
+
+				// 	file.acceptDimensions.then(
+				// 		function () {
+				// 			done(); // Accept the file
+				// 		},
+				// 		function () {
+				// 			done(
+				// 				"Invalid image dimensions or aspect ratio. Please upload a 1.91:1 aspect ratio image with maximum dimensions of 1200px x 800px."
+				// 			);
+				// 		}
+				// 	);
+				// },
 			},
 		};
 	},
@@ -76,7 +112,7 @@ export default {
 				return;
 			} else {
 				try {
-					// this.TOGGLE_IS_LOADING();
+					this.TOGGLE_IS_LOADING();
 					if (this.vehiceId) {
 						console.log("updatinging", this.vehiclePost);
 						delete this.vehiclePost.carPicsUrls;
@@ -96,14 +132,14 @@ export default {
 					this.clearVehiclePost({});
 					this.$router.push({ name: "dashboard" });
 				} catch (error) {
-					throw error;
-					// this.SET_ALERT_MSG({
-					// 	title: "ERROR",
-					// 	type: "error",
-					// 	msg: error,
-					// });
+					// throw error;
+					this.SET_ALERT_MSG({
+						title: "ERROR",
+						type: "error",
+						msg: error,
+					});
 				} finally {
-					// this.TOGGLE_IS_LOADING();
+					this.TOGGLE_IS_LOADING();
 				}
 			}
 		},

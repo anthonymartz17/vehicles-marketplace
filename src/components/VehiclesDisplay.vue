@@ -122,7 +122,7 @@ export default {
 	</div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .space-even {
 	justify-content: space-evenly;
 }
@@ -132,16 +132,16 @@ export default {
 	margin-bottom: 0.5em;
 }
 .title-container {
-	border-bottom: 2px solid $lightestDark;
+	border-bottom: 1px solid $lightestDark;
 	padding-inline: 0.5em;
-	margin-top: 1em;
+	margin-block: 1em;
 	display: flex;
 	justify-content: space-between;
 	align-items: baseline;
 }
 .vehicles-container {
-	padding: 0.5em;
 	flex: 1;
+	padding-inline: .5em;
 }
 // this height only when in home screen
 .vehicles-container-height {
@@ -171,6 +171,7 @@ export default {
 
 .vehicles-display {
 	&-car {
+		// background: blue;
 		display: flex;
 		// justify-content: space-around;
 		gap: 0.5em;
@@ -178,10 +179,13 @@ export default {
 	}
 
 	&-img {
+		// width: 15em;
+		// height: 12em;
 		flex: 1;
 		border: 2px solid $lightestDark;
 
 		img {
+			object-fit: cover;
 			max-width: 100%;
 			height: 100%;
 		}
@@ -244,6 +248,10 @@ export default {
 		}
 	}
 	@include breakpoint(desktop) {
+
+.title-container{
+	margin-top: 0;
+}
 		.vehicles-display {
 			grid-template-columns: repeat(4, 1fr);
 		}

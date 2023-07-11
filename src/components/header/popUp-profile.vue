@@ -1,5 +1,5 @@
 <script>
-import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import LoggedInUserLinks from "../dashboard/Loggedin-user-links.vue";
 export default {
 	components: { LoggedInUserLinks },
@@ -30,7 +30,6 @@ export default {
 };
 </script>
 <template>
-
 	<div class="popUp-container">
 		<div class="popup-header">
 			<div v-if="isLoggedIn" class="user-logo">
@@ -42,7 +41,7 @@ export default {
 			</div>
 		</div>
 		<div class="linkList">
-			<LoggedInUserLinks v-on="$listeners"/>
+			<LoggedInUserLinks v-on="$listeners" />
 		</div>
 	</div>
 </template>
@@ -101,11 +100,9 @@ export default {
 .popup-email {
 	font: $font-text;
 }
-.linkList{
+.linkList {
 	margin-bottom: 1em;
 }
-
-
 
 .popUp-container {
 	@include breakpoint(tablet) {
@@ -114,8 +111,6 @@ export default {
 	@include breakpoint(desktop) {
 		top: 80px;
 		right: 100px;
-
-		
 	}
 }
 </style>

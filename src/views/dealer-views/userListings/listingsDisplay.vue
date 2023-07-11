@@ -48,7 +48,9 @@ export default {
 						<p class="vehicles-display-price">
 							{{ car.price | currency }}
 						</p>
-						<ListingActions :carId="car.id" />
+						<div>
+							<ListingActions :carId="car.id" />
+						</div>
 					</div>
 				</div>
 			</div>
@@ -115,9 +117,13 @@ export default {
 	}
 
 	&-img {
-		flex: 1;
+		width: 15em;
+		height: 12em;
+		// flex: 1;
+		// border: 2px solid $lightestDark;
 
 		img {
+			object-fit: cover;
 			max-width: 100%;
 			height: 100%;
 		}
