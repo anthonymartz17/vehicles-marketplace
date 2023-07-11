@@ -34,6 +34,7 @@ export default {
 			}
 		},
 		clearFilters() {
+			console.log('klk')
 			this.filtersSelected = {};
 			this.UPDATE_FILTERS(null);
 			this.FILTER_VEHICLES();
@@ -56,8 +57,7 @@ export default {
 				default:
 					this.filtersSelected[id] = "";
 			}
-
-			this.fireSearch();
+			if (this.$route.name !== "advance") this.fireSearch();
 		},
 	},
 	computed: {
@@ -139,15 +139,16 @@ export default {
 		<div class="advance-search">
 			<div>
 				<div v-if="$route.name !== 'searchResults'" class="btn-container">
-					<router-link class="cancel-btn" :to="{ name: 'searchResults' }"
+					<router-link class="flat-btn" :to="{ name: 'searchResults' }"
 						>Cancel</router-link
 					>
-					<h3 @click="clearFilters" class="cancel-btn">
-						Clear {{ appliedFilters.length }} filter<span
+					<div @click="clearFilters" class="flat-btn">
+						<span>Clear</span>
+						{{ appliedFilters.length }} filter<span
 							v-show="appliedFilters.length > 1"
 							>s</span
 						>
-					</h3>
+					</div>
 					<div class="btn-search" @click="fireSearch()">Apply</div>
 				</div>
 				<div>
@@ -438,7 +439,7 @@ export default {
 </template>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style lang="scss">
-.cancel-btn {
+.flat-btn {
 	flex: 1;
 	transition: all 0.3s ease-in-out;
 	word-break: break-all;
@@ -453,14 +454,14 @@ export default {
 		cursor: pointer;
 	}
 }
-.clear-btn {
-	padding: 0.2em;
-	border: 1px solid $primary;
-	cursor: pointer;
-	font: $font-text-bold;
-	color: $dark;
-	margin-bottom: 0.3em;
-}
+// .clear-btn {
+// 	padding: 0.2em;
+// 	border: 1px solid $primary;
+// 	cursor: pointer;
+// 	font: $font-text-bold;
+// 	color: $dark;
+// 	margin-bottom: 0.3em;
+// }
 .advance-search {
 	padding-bottom: 3em;
 	// background: $dark;
@@ -481,11 +482,7 @@ export default {
 }
 .btn-search {
 	flex: 1;
-
-	// background: $primary;
-
-	// height: 100%;
-	// border: none;
+	height: 100%;
 }
 .sub-title {
 	font: $font-mobile-l;

@@ -44,17 +44,11 @@ export default {
 			this.$refs.removeFilter.clearFilters();
 		},
 	},
-	destroyed() {
+	beforeDestroyed() {
 		this.fireClearFilters();
 	},
-	// 	created() {
-	// 		let list = JSON.parse(localStorage.getItem('searchResults'))
-	// 		if (!list) {
-	// 		this.FILTER_VEHICLES()
-	// 	}
-	// },
+
 	computed: {
-		// ...mapState("vehicles", ["filters"]),
 		...mapGetters("vehicles", ["appliedFilters"]),
 		// appliedFilters() {
 		// 	let list = Object.keys(this.filters).reduce((acc, key) => {
@@ -94,24 +88,12 @@ export default {
 					@input="SORT_VEHICLES(selectedSortId)"
 				></multiselect>
 			</div>
-			<!-- <h3 v-show="appliedFilters.length > 0" class="small-sub-title">
-				Filtering by:
-			</h3> -->
 			<div class="applied-filters">
-				<!-- <div
-					class="filter-applied"
-					v-for="filter in appliedFilters"
-					:key="filter"
-				>
-					<p>{{ filter }}</p>
-					<button @click="fireRemoveFilter(filter)">X</button>
-				</div> -->
 				<h3
 					@click="fireClearFilters"
 					v-show="appliedFilters.length > 0"
 					class="clear-btn"
-				>
-					Clear {{ appliedFilters.length }} filter<span
+				>	Clear	{{ appliedFilters.length }} filter<span
 						v-show="appliedFilters.length > 1"
 						>s</span
 					>
@@ -137,6 +119,7 @@ export default {
 	font: $font-text-bold;
 	color: $dark;
 	margin-bottom: 0.3em;
+	display: flex;
 }
 .resultsWrapper {
 	@include desktop {
@@ -153,7 +136,7 @@ export default {
 	@include desktop {
 		grid-area: head;
 		display: flex;
-		flex-direction: column;
+		gap: 1em;
 		align-items: baseline;
 		padding-inline: 0.5em;
 	}
@@ -194,6 +177,7 @@ export default {
 	}
 }
 .results {
+	// padding-inline: 1em;
 	height: 100%;
 	position: sticky;
 	top: 10px;

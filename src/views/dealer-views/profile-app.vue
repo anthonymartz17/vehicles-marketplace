@@ -247,6 +247,7 @@ export default {
 .invalid-feedback {
 	color: red;
 }
+
 .update-btn {
 	cursor: pointer;
 	background: $success;
@@ -256,7 +257,7 @@ export default {
 	text-align: center;
 	transition: all 250ms ease-in-out;
 	border: 1px solid $light;
-
+	width: 100%;
 	&:hover {
 		transform: scale(1.01);
 	}

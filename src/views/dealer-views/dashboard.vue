@@ -1,20 +1,26 @@
 <script>
 // import { mapGetters, mapMutations, mapState } from "vuex";
 import LoggedInUserLinks from "../../components/dashboard/Loggedin-user-links.vue";
+import MartzIcons from "../../components/martz-icons.vue";
 
 export default {
-	components: { LoggedInUserLinks },
+	components: { LoggedInUserLinks, MartzIcons },
 	data() {
-		return {};
+		return {
+			showSidebar: false,
+		};
 	},
 	methods: {
+		toggleSideBar() {
+			this.showSidebar = !this.showSidebar;
+		},
 		goCreateNew() {
 			//clear vehiclePost in state in case coming from edit listing
-			localStorage.removeItem("vehicle_id")
-			localStorage.removeItem("vehicle_images")
+			localStorage.removeItem("vehicle_id");
+			localStorage.removeItem("vehicle_images");
 			this.$store.dispatch("adsCrud/updateVehiclePost", {});
 			// if (this.$route.name != "create ad")
-				this.$router.push({ name: "create ad" });
+			this.$router.push({ name: "create ad" });
 		},
 	},
 
@@ -44,16 +50,21 @@ export default {
 <template>
 	<div class="dashboard-wrapper">
 		<div class="dashboard-container">
-			<div class="dashboard-sidebar">
-				<div class="sidebar-container">
-					<div @click="goCreateNew()" class="button">+ Create New</div>
-					<div class="link-list">
-						<LoggedInUserLinks />
-					</div>
+			<MartzIcons class="boxArrow" icon="boxArrow" :size="40" @click.native="toggleSideBar"/>
+			<div
+				:class="{
+					'dashboard-sidebar': true,
+					'show-dashboard-sidebar': showSidebar,
+				}"
+			>
+				<div @click="goCreateNew()" class="button">+ Create New</div>
+				<div class="link-list">
+					<LoggedInUserLinks />
 				</div>
 			</div>
 			<div class="dashboard-routerview">
 				<h3 class="title">{{ title }}</h3>
+
 				<router-view />
 			</div>
 		</div>
@@ -61,6 +72,14 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.dashboard-container {
+	
+}
+.boxArrow {
+	position: absolute;
+	right: 10px;
+	top: 80px;
+}
 .clear-btn {
 	padding: 0.2em;
 	border: 1px solid $primary;
@@ -76,7 +95,7 @@ export default {
 	text-align: center;
 	transition: all 250ms ease-in-out;
 	border: 1px solid $light;
-	margin: 0.5em;
+
 	color: $light;
 	padding: 1em;
 	&:hover {
@@ -101,14 +120,20 @@ export default {
 }
 .dashboard-sidebar {
 	background: $dark;
-	min-height: 70vh;
-	flex: 1;
 	display: none;
+	flex: 1;
+	z-index: 9999;
+}
+.show-dashboard-sidebar {
+	display: block;
 }
 .dashboard-wrapper {
 	@include breakpoint(tablet) {
 	}
 	@include breakpoint(desktop) {
+		.boxArrow{
+			display: none;
+		}
 		.title {
 			margin: 0 1em;
 		}
@@ -126,7 +151,11 @@ export default {
 		}
 
 		.dashboard-sidebar {
+			min-height: 70vh;
 			display: block;
+		}
+		.button {
+			margin: 0.5em;
 		}
 	}
 }

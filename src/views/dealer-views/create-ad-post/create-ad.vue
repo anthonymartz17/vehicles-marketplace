@@ -2,10 +2,12 @@
 import { mapActions, mapState } from "vuex";
 import FormProgress from "./from-progress.vue";
 import NavigationBtn from "./navigation-btn.vue";
+
 export default {
 	components: {
 		FormProgress,
 		NavigationBtn,
+	
 	},
 	data() {
 		return {

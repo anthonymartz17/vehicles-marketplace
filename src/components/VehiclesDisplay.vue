@@ -141,7 +141,7 @@ export default {
 }
 .vehicles-container {
 	flex: 1;
-	padding-inline: .5em;
+	// padding-inline: .5em;
 }
 // this height only when in home screen
 .vehicles-container-height {
@@ -236,12 +236,13 @@ export default {
 }
 
 .vehicles-container {
+	padding-inline: .5em;
 	@include breakpoint(tablet) {
 		.vehicles-display {
 			display: grid;
 			grid-template-columns: repeat(3, 1fr);
 			gap: 1em;
-			padding-inline: 0.5em;
+			// padding-inline: 0.5em;
 			&-car {
 				flex-direction: column;
 			}
