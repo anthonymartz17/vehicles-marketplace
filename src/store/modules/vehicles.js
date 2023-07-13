@@ -5,6 +5,7 @@ export default {
 	namespaced: true,
 
 	state: {
+		isDesktop: false,
 		vehicles: [],
 		dealers: [],
 		vehiclesToDisplay: [],
@@ -29,6 +30,9 @@ export default {
 		searchMenuToggler: false,
 	},
 	mutations: {
+		SET_ISDESKTOP(state, payload) {
+			state.isDesktop = payload;
+		},
 		SET_VEHICLES(state, payload) {
 			state.vehicles = payload;
 		},
@@ -217,6 +221,7 @@ export default {
 	},
 
 	getters: {
+		isDesktop: (state) => state.isDesktop,
 		vehiclesList(state) {
 			if (state.vehicles) {
 				return state.vehicles;
