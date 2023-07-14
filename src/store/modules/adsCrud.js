@@ -11,10 +11,21 @@ export default {
 	},
 	mutations: {
 		UPDATE_VEHICLEPOST(state, newValue) {
-			state.vehiclePost = { ...state.vehiclePost, ...newValue };
+			console.log(newValue, "update vacio");
+			if (newValue) {
+				state.vehiclePost = { ...state.vehiclePost, ...newValue };
+			} else {
+				//clears vehiclePost when newvalue is null
+				state.vehiclePost = {};
+			}
 		},
 		UPDATE_VEHICLEPOST_IMAGES(state, newValue) {
-			state.vehicleImagesDetails = newValue;
+			if (newValue) {
+				state.vehicleImagesDetails = newValue;
+			} else {
+				//clears vehicleImagesDetails when newvalue is null
+				state.vehicleImagesDetails = [];
+			}
 		},
 		CLEAR_VEHICLEPOST(state, payload) {
 			state.vehiclePost = payload;
@@ -129,7 +140,7 @@ export default {
 				await apiAds.deleteImages(imagesToDelete);
 				const uploadedImgPaths = await apiAds.uploadImages({
 					vehicleImages: newImages,
-					vehicleId
+					vehicleId,
 				});
 				//creates array pics and spread list of img paths
 				vehicleData.pics = [...immagesToKeep, ...uploadedImgPaths];

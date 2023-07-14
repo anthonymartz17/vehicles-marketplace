@@ -90,6 +90,7 @@ const routes = [
 					},
 				],
 			},
+		
 			{
 				path: "profile",
 				name: "profile",

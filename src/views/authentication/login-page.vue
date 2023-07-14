@@ -41,14 +41,14 @@ export default {
 		},
 
 		async tryToLogIn() {
-			this.TOGGLE_IS_LOADING()
 			this.submitted = true;
 			// stop here if form is invalid
 			this.$v.$touch();
-
+			
 			if (this.$v.$invalid) {
 				return;
 			} else {
+				this.TOGGLE_IS_LOADING()
 				try {
 					const response = await this.signIn({
 						email: this.user.email,

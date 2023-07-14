@@ -47,7 +47,7 @@ export default {
 						query: { authId: newUser.uid },
 					});
 
-					// this.SET_ALERT_MSG({type:'success',title:'Success',msg:'Successful registration. Login to activate account!!'});
+			
 				} catch (error) {
 					this.SET_ALERT_MSG({ type: "error", title: "Error", msg: error });
 					console.log(error);

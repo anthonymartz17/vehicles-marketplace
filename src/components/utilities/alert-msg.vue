@@ -4,11 +4,29 @@ export default {
 	methods: {
 		...mapMutations("auth", ["SET_ALERT_MSG"]),
 		...mapActions("adsCrud", ["deleteAd"]),
-		async emitLogin() {
+		async continueAction() {
+		
 			if (this.alert.vehicleId) {
 				await this.deleteAd(this.alert.vehicleId);
 			}
-			this.$emit("CheckLoginOptionEvent", "login");
+			if (this.alert.id == "exit-edit") {
+				console.log(this.alert,'dfsfs');
+				localStorage.removeItem("vehicle_id");
+				localStorage.removeItem("vehicle_images");
+				console.log(this.vehiclePost,'klk');
+				this.$store.dispatch("adsCrud/updateVehiclePost", null);
+				this.$store.dispatch("adsCrud/updateVehiclePostImages", null);
+			
+				// if (this.$route.name != "create ad")
+				this.$router.push({ name: "create ad" });
+			}
+
+			// else if (
+			// 	this.$route.name == "activationForm" &&
+			// 	this.alert.type == "success"
+			// ) {
+			// 	this.$emit("CheckLoginOptionEvent", "login");
+			// }
 			//reset alert
 			this.SET_ALERT_MSG({});
 		},
@@ -16,18 +34,14 @@ export default {
 
 	computed: {
 		...mapState("auth", ["alert", "showAlert"]),
+		...mapState("adsCrud", ["vehiclePost"]),
 
 		btnText() {
 			let text;
-			if (
-				this.$route.name == "activationForm" &&
-				this.alert.type == "success"
-			) {
-				text = "Login Now!!";
+			if (this.alert.type == "warning") {
+				text = "Confirm";
 			}
-			if (this.alert.vehicleId) {
-				text = "Delete";
-			}
+
 			return text;
 		},
 	},
@@ -43,12 +57,9 @@ export default {
 			<div class="card-body">
 				<p>{{ alert.msg }}</p>
 				<button
-					v-show="
-						($route.name == 'activationForm' && alert.type == 'success') ||
-						alert.vehicleId
-					"
+					v-show="alert.type == 'warning'"
 					class="card-btn"
-					@click="emitLogin"
+					@click="continueAction()"
 				>
 					{{ btnText }}
 				</button>

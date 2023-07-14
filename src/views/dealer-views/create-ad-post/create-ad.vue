@@ -12,7 +12,7 @@ export default {
 	data() {
 		return {
 			stepsRoutes: ["create ad", "step-2", "step-3", "step-4"],
-			vehicleIdFromLocal: null,
+			
 		};
 	},
 
@@ -34,10 +34,10 @@ export default {
 			if (vehicleId != undefined) {
 				localStorage.setItem("vehicle_id", JSON.stringify(vehicleId));
 			}
-			this.vehicleIdFromLocal = JSON.parse(localStorage.getItem("vehicle_id"));
-			if (this.vehicleIdFromLocal) {
+			const vehicleIdFromLocal = JSON.parse(localStorage.getItem("vehicle_id"));
+			if (vehicleIdFromLocal) {
 				//fetch and persist data, in case page is reloaded from step2,3 or 4, be able to have access to data, since query.id would be lost from those routes
-				const vehicle = await this.fetchVehicleById(this.vehicleIdFromLocal);
+				const vehicle = await this.fetchVehicleById(vehicleIdFromLocal);
 				//convert accesories array into string for text area display
 				vehicle.accesories = vehicle.accesories.join(",");
 				const vehicleImages = await this.fetchImageUrlListById(vehicle.pics);
@@ -73,6 +73,10 @@ export default {
 	},
 	computed: {
 		...mapState("auth", ["user"]),
+		vehiceId() {
+			const id = JSON.parse(localStorage.getItem("vehicle_id"));
+			return id ? id : null;
+		},
 		backRoute() {
 			return this.stepsRoutes[this.stepsRoutes.indexOf(this.$route.name) - 1];
 		},
@@ -85,7 +89,7 @@ export default {
 			if (this.$route.name != "step-4") {
 				text = "Next";
 			} else {
-				text = this.vehicleIdFromLocal ? "Update Ad" : "Create Ad";
+				text = this.vehiceId ? "Update Ad" : "Create Ad";
 			}
 			return text;
 		},

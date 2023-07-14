@@ -2,9 +2,10 @@
 // import { mapGetters, mapMutations, mapState } from "vuex";
 import LoggedInUserLinks from "../../components/dashboard/Loggedin-user-links.vue";
 import MartzIcons from "../../components/martz-icons.vue";
+import DashboadSidebar from "./dashboard-sidebar.vue";
 import "animate.css";
 export default {
-	components: { LoggedInUserLinks, MartzIcons },
+	components: { LoggedInUserLinks, MartzIcons, DashboadSidebar },
 	data() {
 		return {
 			showSidebar: false,
@@ -12,24 +13,15 @@ export default {
 		};
 	},
 	mounted() {
-		this.isDesktop = window.innerWidth >= 768;
+		this.isDesktop = window.innerWidth > 768;
 	},
 	methods: {
 		toggleSideBar() {
 			this.showSidebar = !this.showSidebar;
 		},
-		goCreateNew() {
-			//clear vehiclePost in state in case coming from edit listing
-			localStorage.removeItem("vehicle_id");
-			localStorage.removeItem("vehicle_images");
-			this.$store.dispatch("adsCrud/updateVehiclePost", {});
-			// if (this.$route.name != "create ad")
-			this.$router.push({ name: "create ad" });
-		},
 	},
 
 	computed: {
-		// ...mapGetters("vehicles", []),
 		title() {
 			let title;
 			switch (this.$route.name) {
@@ -54,48 +46,27 @@ export default {
 <template>
 	<div class="dashboard-wrapper">
 		<div class="dashboard-container">
-			<div class="menu-btn">
+			<div class="menu-btn" v-if="!isDesktop">
 				<MartzIcons icon="downArrow" :size="40" @click.native="toggleSideBar" />
 			</div>
-
-			<transition
-				v-if="!isDesktop"
-				enter-active-class="animate__animated animate__slideInDown"
-				leave-active-class="animate__animated animate__slideOutUp animate__faster"
-			>
-				<div
-					v-if="showSidebar || isDesktop"
-					:class="{
-						'dashboard-sidebar': true,
-						'show-dashboard-sidebar': showSidebar,
-					}"
+			<div v-if="!isDesktop">
+				<transition
+					enter-active-class="animate__animated animate__slideInDown animate__faster"
+					leave-active-class="animate__animated animate__slideOutUp animate__faster"
 				>
-					<div
-						@click="
-							goCreateNew();
-							toggleSideBar();
-						"
-						class="button"
-					>
-						+ Create New
-					</div>
-					<div class="link-list">
-						<LoggedInUserLinks @click.native="toggleSideBar" />
-					</div>
-					<div v-if="showSidebar" class="menu-btn">
-						<MartzIcons
-							class="downArrow"
-							icon="upArrow"
-							:size="40"
-							@click.native="toggleSideBar"
-						/>
-					</div>
-				</div>
-			</transition>
+					<DashboadSidebar
+						v-if="showSidebar"
+						class="mobile-dashboard-sidebar"
+						@fireToggleSidebar="toggleSideBar"
+					/>
+				</transition>
+			</div>
+			<div v-else class="dashboard-sidebar-desktop">
+				<DashboadSidebar />
+			</div>
 
 			<div class="dashboard-routerview">
 				<h3 class="title">{{ title }}</h3>
-
 				<router-view />
 			</div>
 		</div>
@@ -106,6 +77,15 @@ export default {
 .dashboard-container {
 	position: relative;
 }
+.mobile-dashboard-sidebar {
+	background: $dark;
+	width: 100%;
+	position: absolute;
+	padding-top: 1em;
+	top: -5px;
+	z-index: 9;
+}
+
 .menu-btn {
 	background: $dark;
 	width: 100%;
@@ -149,50 +129,37 @@ export default {
 .dashboard-routerview {
 	margin-block: 2em;
 }
-.dashboard-sidebar {
-	background: $dark;
-	flex: 1;
-}
-.show-dashboard-sidebar {
-	width: 100%;
-	position: absolute;
-	padding-top: 1em;
-	top: -10px;
-	z-index: 9;
-}
+
 .dashboard-wrapper {
-	position: relative;
+	// position: relative;
 	@include breakpoint(tablet) {
 	}
 	@include breakpoint(desktop) {
-		// .hidden-menu-container {
-		// 	display: none;
-		// }
+		// width: 100vw;
+		min-height: 70vh;
 		.title {
 			margin: 0 1em;
 		}
-		.dashboard-wrapper {
-			position: absolute;
-			width: 100vw;
-			height: 100vh;
-		}
+
 		.dashboard-container {
 			display: grid;
 			grid-template-columns: 1fr 4fr;
+			min-height: 70vh;
+		}
+		.dashboard-sidebar-desktop {
+			background: $dark;
+			height: 100%;
 		}
 		.dashboard-routerview {
 			flex: 3;
 		}
 
-		.dashboard-sidebar {
-			min-height: 70vh;
-			display: block;
-		}
+		// .dashboard-sidebar {
+		// 	min-height: 70vh;
+		// 	display: block;
+		// }
 		.button {
 			margin: 0.5em;
-		}
-		.menu-btn {
-			display: none;
 		}
 	}
 }
