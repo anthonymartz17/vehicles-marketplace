@@ -1,5 +1,5 @@
 <script>
-import { mapGetters, mapState, mapMutations, mapActions } from "vuex";
+import { mapGetters, mapState, mapActions } from "vuex";
 import SearchBtn from "./searchFieldMobile/SearchBtn.vue";
 import Multiselect from "vue-multiselect";
 import MartzIcons from "./martz-icons.vue";
@@ -11,47 +11,38 @@ export default {
 	},
 	data() {
 		return {
-			filtersSelected: {},
 			searchLabels: ["Condition", "Make", "Model", "Year", "Price"],
 		};
 	},
-	created() {
-		//keeps local filter object updated with the state main object filters
 
-		Object.assign(this.filtersSelected, this.filteredObject);
-	},
 	methods: {
-		...mapMutations("filterOptions", ["SET_MODEL_OPTIONS"]),
-
-		...mapMutations("vehicles", ["UPDATE_FILTERS", "FILTER_VEHICLES"]),
+		...mapActions("filterOptions", ["setModelOptions"]),
+		...mapActions("vehicles", ["updateFilters", "filterVehicles"]),
 
 		fireSearch() {
-			this.UPDATE_FILTERS(this.filtersSelected);
-			this.FILTER_VEHICLES();
+			this.filterVehicles();
 			this.$router.replace({ name: "searchResults" });
 		},
 		searchFromType(type) {
-			this.filtersSelected.carType = type;
+			this.filters.carType = type;
 		},
 	},
 
 	computed: {
 		...mapState("vehicles", ["filters"]),
 		...mapGetters("vehicles", ["vehiclesList"]),
+		filters: {
+			get() {
+				return this.$store.state.vehicles.filters;
+			},
+			set(newvalue) {
+				this.updateFilters(newvalue);
+			},
+		},
 		cartypes() {
 			return [
 				...new Set(this.vehiclesList.map((x) => x.carType.toLowerCase())),
 			];
-		},
-
-		filteredObject() {
-			return Object.keys(this.filters).reduce((acc, key) => {
-				const value = this.filters[key];
-				if (value !== "" && value !== 0 && value !== null) {
-					acc[key] = value;
-				}
-				return acc;
-			}, {});
 		},
 
 		...mapGetters("filterOptions", [
@@ -70,17 +61,15 @@ export default {
 		//updates years fields to keep years from less than years to and viceversa
 		yearOptionsDynamic() {
 			let list = {};
-			if (this.filtersSelected.yearTo) {
+			if (this.filters.yearTo) {
 				list.from = this.yearOptions.from.filter(
-					(x) => x <= this.filtersSelected.yearTo
+					(x) => x <= this.filters.yearTo
 				);
 			} else {
 				list.from = this.yearOptions.from;
 			}
-			if (this.filtersSelected.yearFrom) {
-				list.to = this.yearOptions.to.filter(
-					(x) => x >= this.filtersSelected.yearFrom
-				);
+			if (this.filters.yearFrom) {
+				list.to = this.yearOptions.to.filter((x) => x >= this.filters.yearFrom);
 			} else {
 				list.to = this.yearOptions.to;
 			}
@@ -90,16 +79,16 @@ export default {
 			// controls from price is not greater than to price and to price not less than from price.
 			let list = {};
 
-			if (this.filtersSelected.priceTo) {
+			if (this.filters.priceTo) {
 				list.from = this.priceOptions.from.filter(
-					(x) => x.fromNumType <= this.filtersSelected.priceTo
+					(x) => x.fromNumType <= this.filters.priceTo
 				);
 			} else {
 				list.from = this.priceOptions.from;
 			}
-			if (this.filtersSelected.priceFrom) {
+			if (this.filters.priceFrom) {
 				list.to = this.priceOptions.to.filter(
-					(x) => x.toNumType >= this.filtersSelected.priceFrom
+					(x) => x.toNumType >= this.filters.priceFrom
 				);
 			} else {
 				list.to = this.priceOptions.to;
@@ -117,7 +106,7 @@ export default {
 			<multiselect
 				@input="$route.name == 'searchResults' ? fireSearch() : null"
 				class="dropdown"
-				v-model="filtersSelected.carCondition"
+				v-model="filters.carCondition"
 				:options="carConditionOptions"
 				:searchable="false"
 				:show-labels="false"
@@ -129,16 +118,16 @@ export default {
 			<label class="field-label" for="condition">Make:</label>
 			<multiselect
 				class="dropdown"
-				v-model="filtersSelected.make"
+				v-model="filters.make"
 				:options="makeOptions"
 				:searchable="false"
 				:show-labels="false"
 				placeholder="All makes"
 				@input="
-					filtersSelected.model ? (filtersSelected.model = '') : null;
-					SET_MODEL_OPTIONS({
+					filters.model ? (filters.model = '') : null;
+					setModelOptions({
 						list: vehiclesList,
-						make: filtersSelected.make,
+						make: filters.make,
 					});
 					$route.name == 'searchResults' ? fireSearch() : null;
 				"
@@ -150,13 +139,13 @@ export default {
 			<multiselect
 				@input="$route.name == 'searchResults' ? fireSearch() : null"
 				class="dropdown"
-				v-model="filtersSelected.model"
+				v-model="filters.model"
 				:options="modelOptions"
 				:searchable="false"
 				:show-labels="false"
 				:placeholder="
-					filtersSelected.make && filtersSelected.make !== 'All Makes'
-						? `All ${filtersSelected.make}S`
+					filters.make && filters.make !== 'All Makes'
+						? `All ${filters.make}S`
 						: 'All Models'
 				"
 			></multiselect>
@@ -172,7 +161,7 @@ export default {
 				<multiselect
 					@input="$route.name == 'searchResults' ? fireSearch() : null"
 					class="dropdown"
-					v-model="filtersSelected.yearFrom"
+					v-model="filters.yearFrom"
 					:options="yearOptionsDynamic.from"
 					:searchable="false"
 					:show-labels="false"
@@ -181,7 +170,7 @@ export default {
 				<multiselect
 					@input="$route.name == 'searchResults' ? fireSearch() : null"
 					class="dropdown"
-					v-model="filtersSelected.yearTo"
+					v-model="filters.yearTo"
 					:options="yearOptionsDynamic.to"
 					:searchable="false"
 					:show-labels="false"
@@ -200,7 +189,7 @@ export default {
 				<multiselect
 					@input="$route.name == 'searchResults' ? fireSearch() : null"
 					class="dropdown"
-					v-model="filtersSelected.priceFrom"
+					v-model="filters.priceFrom"
 					:options="priceOptionsDynamic.from.map((x) => x.fromNumType)"
 					:custom-label="
 						(opt) => {
@@ -215,7 +204,7 @@ export default {
 				<multiselect
 					@input="$route.name == 'searchResults' ? fireSearch() : null"
 					class="dropdown"
-					v-model="filtersSelected.priceTo"
+					v-model="filters.priceTo"
 					:options="priceOptionsDynamic.to.map((x) => x.toNumType)"
 					:custom-label="
 						(opt) => {
@@ -379,7 +368,7 @@ export default {
 		.field {
 			display: flex;
 
-			label{
+			label {
 				color: $dark;
 			}
 		}

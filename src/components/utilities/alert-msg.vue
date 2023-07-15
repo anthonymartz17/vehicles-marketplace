@@ -5,20 +5,17 @@ export default {
 		...mapMutations("auth", ["SET_ALERT_MSG"]),
 		...mapActions("adsCrud", ["deleteAd"]),
 		async continueAction() {
-		
 			if (this.alert.vehicleId) {
 				await this.deleteAd(this.alert.vehicleId);
 			}
 			if (this.alert.id == "exit-edit") {
-				console.log(this.alert,'dfsfs');
+				console.log(this.alert, "dfsfs");
 				localStorage.removeItem("vehicle_id");
 				localStorage.removeItem("vehicle_images");
-				console.log(this.vehiclePost,'klk');
 				this.$store.dispatch("adsCrud/updateVehiclePost", null);
 				this.$store.dispatch("adsCrud/updateVehiclePostImages", null);
-			
-				// if (this.$route.name != "create ad")
-				this.$router.push({ name: "create ad" });
+				if (this.$route.name != "create ad")
+					this.$router.push({ name: "create ad" });
 			}
 
 			// else if (
@@ -48,7 +45,7 @@ export default {
 };
 </script>
 <template>
-	<div @click="SET_ALERT_MSG({})" class="successful">
+	<div @click="SET_ALERT_MSG({})" class="overlay">
 		<div class="card">
 			<div :class="['card-header', alert.type]">
 				<h3 class="sub-title text-light">{{ alert.title }}</h3>
@@ -69,10 +66,9 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.successful {
+.overlay {
 	position: absolute;
-	display: grid;
-	place-items: center;
+	padding: 10em 1.5em;
 	background: rgba(5, 5, 5, 0.438);
 	top: 0;
 	left: 0;
@@ -120,15 +116,22 @@ export default {
 .close {
 	cursor: pointer;
 }
-.card {
+.overlay {
 	@include breakpoint(tablet) {
-		width: 60%;
+		display: grid;
+		place-items: center;
+		padding-top: 0em;
+		.card {
+			width: 60%;
+		}
 		.custom-btn {
 			width: 50%;
 		}
 	}
 	@include breakpoint(desktop) {
-		width: 30%;
+		.card {
+			width: 30%;
+		}
 		.custom-btn {
 			width: 30%;
 		}

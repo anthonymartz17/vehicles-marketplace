@@ -21,15 +21,16 @@ export default {
 				this.SET_ALERT_MSG({
 					title: "WARNING",
 					type: "warning",
-					id:'exit-edit',
+					id: "exit-edit",
 					msg: "Are you sure you want exit editing?",
 				});
+			} else {
+				if (this.$route.name != "create ad")
+					this.$router.push({ name: "create ad" });
 			}
 			// localStorage.removeItem("vehicle_id");
 			// localStorage.removeItem("vehicle_images");
 			// this.$store.dispatch("adsCrud/updateVehiclePost", {});
-			// // if (this.$route.name != "create ad")
-			// this.$router.push({ name: "create ad" });
 		},
 	},
 };
@@ -67,6 +68,7 @@ export default {
 	width: 100%;
 	display: flex;
 	justify-content: center;
+	cursor: pointer;
 }
 
 .button {
@@ -74,19 +76,9 @@ export default {
 	background: $primary;
 	font: $font-text-bold;
 	text-align: center;
-	transition: all 250ms ease-in-out;
 	border: 1px solid $light;
-
 	color: $light;
 	padding: 1em;
-	&:hover {
-		transform: scale(1.01);
-	}
-	a {
-		color: $light;
-		padding: 0.8em;
-		display: block;
-	}
 }
 
 .dashboard-sidebar {
@@ -102,6 +94,15 @@ export default {
 		}
 		.button {
 			margin: 0.5em;
+			transition: all 250ms ease-in-out;
+			&:hover {
+				transform: scale(1.01);
+			}
+			a {
+				color: $light;
+				padding: 0.8em;
+				display: block;
+			}
 		}
 	}
 }

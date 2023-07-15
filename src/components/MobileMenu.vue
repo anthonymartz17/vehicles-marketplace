@@ -1,11 +1,13 @@
 <script>
-import { mapGetters, mapMutations, mapState } from "vuex";
+import { mapGetters, mapMutations, mapState, mapActions } from "vuex";
 export default {
 	props: ["navItems"],
 
 	methods: {
-		...mapMutations("vehicles", ["UPDATE_FILTERS", "TOGGLE_MOBILE_MENUE"]),
-		// ...mapMutations("auth", ["TOGGLE_LINK_VISIBILITY"]),
+		...mapMutations("vehicles", ["TOGGLE_MOBILE_MENUE"]),
+		...mapMutations("auth", ["TOGGLE_IS_LOADING"]),
+		...mapActions("auth", ["signOutUser"]),
+		...mapActions("vehicles", ["filterVehicles", "updateFilters"]),
 		shouldShowNavs(link) {
 			let showNav = true;
 			if (
@@ -16,6 +18,25 @@ export default {
 				showNav = false;
 			}
 			return showNav;
+		},
+		getCars(link) {
+			if (link == "Vehicles") {
+				this.updateFilters(null);
+				this.filterVehicles();
+			}
+		},
+		async signOut(link) {
+			if (link == "Log Out" && this.$route.name !== "joinUs") {
+				this.TOGGLE_IS_LOADING();
+				try {
+					await this.signOutUser();
+					this.$router.replace({ name: "joinUs" });
+				} catch (error) {
+					throw error;
+				} finally {
+					this.TOGGLE_IS_LOADING();
+				}
+			}
 		},
 	},
 	computed: {
@@ -48,10 +69,10 @@ export default {
 						:key="key"
 						@click="
 							TOGGLE_MOBILE_MENUE();
-							UPDATE_FILTERS();
+							getCars(link.link);
+							signOut(link.link);
 						"
 					>
-						<!-- link.link === 'Vehicles' ? clearFilters() : null; -->
 						<router-link :to="{ name: link.routename }" class="tabs">
 							<i :class="link.icon"></i>
 							<p>{{ link.link }}</p>
@@ -65,8 +86,8 @@ export default {
 
 <style lang="scss" scoped>
 a.active {
-background: $lightDark;
-border-bottom: 1px solid $lightestDark;
+	background: $lightDark;
+	border-bottom: 1px solid $lightestDark;
 }
 .tabs {
 	color: $light;

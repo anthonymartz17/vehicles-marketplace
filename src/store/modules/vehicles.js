@@ -59,12 +59,15 @@ export default {
 					color: "",
 					dealerId: "",
 				};
+
+				console.log(state.filters ,'state')
 			} else {
 				state.filters = { ...state.filters, ...payload };
 			}
 		},
 		FILTER_VEHICLES(state) {
 			let results = state.vehicles;
+			console.log(results, "klk");
 			if (
 				state.filters.carCondition !== "" &&
 				state.filters.carCondition !== "New/Used"
@@ -308,6 +311,14 @@ export default {
 				// turns loading to false
 				// commit("SWITCH_LOADING");
 			}
+		},
+
+		updateFilters({ commit }, payload) {
+			console.log('is firing')
+			commit("UPDATE_FILTERS", payload);
+		},
+		filterVehicles({ commit }) {
+			commit("FILTER_VEHICLES");
 		},
 	},
 };

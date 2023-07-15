@@ -2,6 +2,7 @@
 import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
 import PopupProfile from "./popUp-profile.vue";
 export default {
+	props: ["navItems"],
 	components: {
 		PopupProfile,
 	},
@@ -10,13 +11,9 @@ export default {
 			showPopup: false,
 		};
 	},
-	props: ["navItems"],
 	methods: {
-		...mapMutations("vehicles", [
-			"TOGGLE_MOBILE_MENUE",
-			"UPDATE_FILTERS",
-			"FILTER_VEHICLES",
-		]),
+		...mapMutations("vehicles", ["TOGGLE_MOBILE_MENUE"]),
+		...mapActions("vehicles", ["filterVehicles", "updateFilters"]),
 		...mapMutations("auth", ["TOGGLE_IS_LOADING"]),
 		...mapActions("auth", ["signOutUser"]),
 		togglePopup() {
@@ -39,26 +36,21 @@ export default {
 			return showNav;
 		},
 		getCars(link) {
-			if (link == "searchResults") {
-				this.UPDATE_FILTERS(null);
-				this.FILTER_VEHICLES();
-			} else if (link == "Electric") {
-				//clear filters first, in case filters where set somewhere else and are still active
-				this.UPDATE_FILTERS(null);
-				this.UPDATE_FILTERS({ fuel: "Electric" });
-				this.FILTER_VEHICLES();
+			if (link == "Vehicles") {
+				this.updateFilters(null);
+				this.filterVehicles();
 			}
 		},
 		async signOut(link) {
 			if (link == "Log Out" && this.$route.name !== "joinUs") {
-				this.TOGGLE_IS_LOADING()
+				this.TOGGLE_IS_LOADING();
 				try {
 					await this.signOutUser();
 					this.$router.replace({ name: "joinUs" });
 				} catch (error) {
 					throw error;
 				} finally {
-					this.TOGGLE_IS_LOADING()
+					this.TOGGLE_IS_LOADING();
 				}
 			}
 		},
@@ -97,29 +89,15 @@ export default {
 					</li>
 				</ul>
 			</nav>
-			<!-- <div class="searchIcon">
-				<router-link
-					@click="clearFilters()"
-					:to="{ name: 'advance' }"
-					tag="div"
-				>
-					<i class="fas fa-search"></i>
-				</router-link>
-			</div> -->
+
 			<div @click="togglePopup()" class="user-logo-container">
 				<div v-if="isLoggedIn" class="user-logo">
 					<img src="/images/icons/logo.png" alt="" />
 				</div>
-				<!-- <p>{{ user ? user.username : null }}</p> -->
 			</div>
 			<div @click.self="togglePopup()" class="popup-overlay" v-show="showPopup">
 				<PopupProfile @closeModal="togglePopup()" />
 			</div>
-
-			<!-- <div class="sMedia">
-				<div><i class="fab fa-facebook sMedia-icons"></i></div>
-				<div><i class="fab fa-instagram sMedia-icons"></i></div>
-			</div> -->
 		</div>
 	</header>
 </template>

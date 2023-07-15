@@ -19,12 +19,15 @@ export default {
 	},
 
 	mutations: {
-		SET_MODEL_OPTIONS(state, { list, make }) {
-			if (make) {
+		SET_MODEL_OPTIONS(state, payload) {
+		
+			if (payload != null) {
 				state.modelOptions = [
-					`All ${make}S`,
-					...list.filter((x) => x.make == make).map((x) => x.model),
+					`All ${payload.make}S`,
+					...payload.list.filter((x) => x.make == payload.make).map((x) => x.model),
 				];
+			} else {
+				state.modelOptions = []
 			}
 		},
 		SET_FILTERS_OPTIONS(state, payload) {
@@ -72,6 +75,14 @@ export default {
 			].sort();
 		},
 	},
+	actions: {
+		setModelOptions({ commit }, payload) {
+			commit("SET_MODEL_OPTIONS", payload);
+		},
+		setFiltersOptions({ commit }, payload) {
+			commit("SET_FILTERS_OPTIONS", payload);
+		},
+	},
 	getters: {
 		makeOptions: (state) => state.makeOptions,
 		modelOptions: (state) => state.modelOptions,
@@ -83,7 +94,7 @@ export default {
 		priceOptions: (state) => {
 			let from = [];
 			let to = [];
-//  prepares data to be used in vue multiselect with a custom label attribute, to display currency format in dropdown, but send num type in v-model.
+			//  prepares data to be used in vue multiselect with a custom label attribute, to display currency format in dropdown, but send num type in v-model.
 			state.priceFromOptions.forEach((price) => {
 				let formatted = price.toLocaleString("en-US", {
 					style: "currency",
@@ -92,7 +103,7 @@ export default {
 				from.push({ fromFormatted: formatted, fromNumType: price });
 				to.push({ toFormatted: formatted, toNumType: price });
 			});
-			return {from,to}
+			return { from, to };
 		},
 
 		transmissionOptions: (state) => state.transmissionOptions,

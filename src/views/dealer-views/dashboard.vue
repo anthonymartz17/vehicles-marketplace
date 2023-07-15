@@ -49,7 +49,8 @@ export default {
 			<div class="menu-btn" v-if="!isDesktop">
 				<MartzIcons icon="downArrow" :size="40" @click.native="toggleSideBar" />
 			</div>
-			<div v-if="!isDesktop">
+			<div v-if="!isDesktop" >
+			<div v-if="showSidebar" class="overlay"></div>
 				<transition
 					enter-active-class="animate__animated animate__slideInDown animate__faster"
 					leave-active-class="animate__animated animate__slideOutUp animate__faster"
@@ -77,6 +78,15 @@ export default {
 .dashboard-container {
 	position: relative;
 }
+
+.overlay {
+	backdrop-filter: blur(5px);
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 8;
+}
 .mobile-dashboard-sidebar {
 	background: $dark;
 	width: 100%;
@@ -91,6 +101,7 @@ export default {
 	width: 100%;
 	display: flex;
 	justify-content: center;
+	cursor: pointer;
 }
 
 .clear-btn {

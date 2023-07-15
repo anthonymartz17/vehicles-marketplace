@@ -10,52 +10,51 @@ export default {
 
 	data() {
 		return {
-			filtersSelected: {},
+			// filters: {},
 		};
 	},
 	created() {
 		this.fetchDealers();
 
 		//keeps local filter object updated with the state main object filters
-		Object.assign(this.filtersSelected, this.filteredObject);
+		// Object.assign(this.filters, this.filteredObject);
 	},
 
 	methods: {
-		...mapMutations("filterOptions", ["SET_MODEL_OPTIONS"]),
-
 		...mapMutations("vehicles", ["UPDATE_FILTERS", "FILTER_VEHICLES"]),
 		...mapActions("vehicles", ["fetchDealers"]),
+		...mapActions("filterOptions", ["setModelOptions"]),
 
 		fireSearch() {
-			this.UPDATE_FILTERS(this.filtersSelected);
+			// this.UPDATE_FILTERS(this.filters);
 			this.FILTER_VEHICLES();
 			if (this.$route.name !== "searchResults") {
 				this.$router.replace({ name: "searchResults" });
 			}
 		},
+
 		clearFilters() {
-			console.log('klk')
-			this.filtersSelected = {};
+			// this.filters = {};
 			this.UPDATE_FILTERS(null);
 			this.FILTER_VEHICLES();
 		},
 		removeFilter({ id }) {
 			switch (id) {
 				case "year":
-					this.filtersSelected.yearFrom = null;
-					this.filtersSelected.yearTo = null;
+					this.filters.yearFrom = null;
+					this.filters.yearTo = null;
 					break;
 				case "price":
-					this.filtersSelected.priceFrom = null;
-					this.filtersSelected.priceTo = null;
+					this.filters.priceFrom = null;
+					this.filters.priceTo = null;
 					break;
 				case "make":
-					this.filtersSelected.make = "";
-					this.filtersSelected.model = "";
+					this.filters.make = "";
+					this.filters.model = "";
 					break;
 
 				default:
-					this.filtersSelected[id] = "";
+					this.filters[id] = "";
 			}
 			if (this.$route.name !== "advance") this.fireSearch();
 		},
@@ -66,7 +65,16 @@ export default {
 			"dealersList",
 			"appliedFilters",
 		]),
-		...mapState("vehicles", ["filters"]),
+		// ...mapState("vehicles", ["filters"]),
+
+		filters: {
+			get() {
+				return this.$store.state.vehicles.filters;
+			},
+			set(newValue) {
+				this.$store.dispatch("vehicles/updateFilters", newValue);
+			},
+		},
 
 		...mapGetters("filterOptions", [
 			"makeOptions",
@@ -83,28 +91,26 @@ export default {
 			"colorOptions",
 		]),
 
-		filteredObject() {
-			return Object.keys(this.filters).reduce((acc, key) => {
-				const value = this.filters[key];
-				if (value !== "" && value !== 0 && value !== null) {
-					acc[key] = value;
-				}
-				return acc;
-			}, {});
-		},
+		// filteredObject() {
+		// 	return Object.keys(this.filters).reduce((acc, key) => {
+		// 		const value = this.filters[key];
+		// 		if (value !== "" && value !== 0 && value !== null) {
+		// 			acc[key] = value;
+		// 		}
+		// 		return acc;
+		// 	}, {});
+		// },
 		yearOptionsDynamic() {
 			let list = {};
-			if (this.filtersSelected.yearTo) {
+			if (this.filters.yearTo) {
 				list.from = this.yearOptions.from.filter(
-					(x) => x <= this.filtersSelected.yearTo
+					(x) => x <= this.filters.yearTo
 				);
 			} else {
 				list.from = this.yearOptions.from;
 			}
-			if (this.filtersSelected.yearFrom) {
-				list.to = this.yearOptions.to.filter(
-					(x) => x >= this.filtersSelected.yearFrom
-				);
+			if (this.filters.yearFrom) {
+				list.to = this.yearOptions.to.filter((x) => x >= this.filters.yearFrom);
 			} else {
 				list.to = this.yearOptions.to;
 			}
@@ -114,16 +120,16 @@ export default {
 			// controls from price is not greater than to price and to price not less than from price.
 			let list = {};
 
-			if (this.filtersSelected.priceTo) {
+			if (this.filters.priceTo) {
 				list.from = this.priceOptions.from.filter(
-					(x) => x.fromNumType <= this.filtersSelected.priceTo
+					(x) => x.fromNumType <= this.filters.priceTo
 				);
 			} else {
 				list.from = this.priceOptions.from;
 			}
-			if (this.filtersSelected.priceFrom) {
+			if (this.filters.priceFrom) {
 				list.to = this.priceOptions.to.filter(
-					(x) => x.toNumType >= this.filtersSelected.priceFrom
+					(x) => x.toNumType >= this.filters.priceFrom
 				);
 			} else {
 				list.to = this.priceOptions.to;
@@ -142,28 +148,40 @@ export default {
 					<router-link class="flat-btn" :to="{ name: 'searchResults' }"
 						>Cancel</router-link
 					>
-					<div @click="clearFilters" class="flat-btn">
+					<div
+						@click="
+							clearFilters();
+							setModelOptions(null);
+						"
+						class="flat-btn"
+					>
 						<span>Clear</span>
-						{{ appliedFilters.length }} filter<span
-							v-show="appliedFilters.length > 1"
-							>s</span
-						>
+						<span>
+							{{ appliedFilters.length }} filter<span
+								v-show="appliedFilters.length > 1"
+								>s</span
+							>
+						</span>
 					</div>
 					<div class="btn-search" @click="fireSearch()">Apply</div>
 				</div>
 				<div>
+					<p>{{ filters }}</p>
+					<p>{{ modelOptions }}</p>
 					<div class="field">
-						<label for="condition">Condition:</label>
-						<span
-							v-if="filtersSelected.carCondition"
-							class="eliminate-filter"
-							@click="removeFilter({ id: 'carCondition' })"
-							>(Eliminate)</span
-						>
+						<div class="label-container">
+							<label for="condition">Condition:</label>
+							<span
+								v-if="filters.carCondition"
+								class="eliminate-filter"
+								@click="removeFilter({ id: 'carCondition' })"
+								>(Eliminate)</span
+							>
+						</div>
 						<multiselect
 							@input="$route.name == 'searchResults' ? fireSearch() : null"
 							class="dropdown"
-							v-model="filtersSelected.carCondition"
+							v-model="filters.carCondition"
 							:options="carConditionOptions"
 							:searchable="false"
 							:show-labels="false"
@@ -171,25 +189,30 @@ export default {
 						></multiselect>
 					</div>
 					<div class="field">
-						<label for="condition">Make:</label
-						><span
-							v-if="filtersSelected.make"
-							class="eliminate-filter"
-							@click="removeFilter({ id: 'make' })"
-							>(Eliminate)</span
-						>
+						<div class="label-container">
+							<label for="condition">Make:</label
+							><span
+								v-if="filters.make"
+								class="eliminate-filter"
+								@click="
+									removeFilter({ id: 'make' });
+									setModelOptions(null);
+								"
+								>(Eliminate)</span
+							>
+						</div>
 						<multiselect
 							class="dropdown"
-							v-model="filtersSelected.make"
+							v-model="filters.make"
 							:options="makeOptions"
 							:searchable="false"
 							:show-labels="false"
 							placeholder="All makes"
 							@input="
-								filtersSelected.model ? (filtersSelected.model = '') : null;
-								SET_MODEL_OPTIONS({
+								filters.model ? (filters.model = '') : null;
+								setModelOptions({
 									list: vehiclesList,
-									make: filtersSelected.make,
+									make: filters.make,
 								});
 								$route.name == 'searchResults' ? fireSearch() : null;
 							"
@@ -197,23 +220,25 @@ export default {
 					</div>
 				</div>
 				<div class="field">
-					<label for="condition">Model:</label
-					><span
-						v-if="filtersSelected.model"
-						class="eliminate-filter"
-						@click="removeFilter({ id: 'model' })"
-						>(Eliminate)</span
-					>
+					<div class="label-container">
+						<label for="condition">Model:</label
+						><span
+							v-if="filters.model"
+							class="eliminate-filter"
+							@click="removeFilter({ id: 'model' })"
+							>(Eliminate)</span
+						>
+					</div>
 					<multiselect
 						@input="$route.name == 'searchResults' ? fireSearch() : null"
 						class="dropdown"
-						v-model="filtersSelected.model"
+						v-model="filters.model"
 						:options="modelOptions"
 						:searchable="false"
 						:show-labels="false"
 						:placeholder="
-							filtersSelected.make && filtersSelected.make !== 'All Makes'
-								? `All ${filtersSelected.make}S`
+							filters.make && filters.make !== 'All Makes'
+								? `All ${filters.make}S`
 								: 'All Models'
 						"
 					></multiselect>
@@ -223,17 +248,19 @@ export default {
 				<h5 class="sub-title">Price and Type</h5>
 
 				<div class="field">
-					<label for="condition">Type of Car:</label
-					><span
-						v-if="filtersSelected.carType"
-						class="eliminate-filter"
-						@click="removeFilter({ id: 'carType' })"
-						>(Eliminate)</span
-					>
+					<div class="label-container">
+						<label for="condition">Type of Car:</label
+						><span
+							v-if="filters.carType"
+							class="eliminate-filter"
+							@click="removeFilter({ id: 'carType' })"
+							>(Eliminate)</span
+						>
+					</div>
 					<multiselect
 						@input="$route.name == 'searchResults' ? fireSearch() : null"
 						class="dropdown"
-						v-model="filtersSelected.carType"
+						v-model="filters.carType"
 						:options="carTypeOptions"
 						:searchable="false"
 						:show-labels="false"
@@ -241,19 +268,21 @@ export default {
 					></multiselect>
 				</div>
 				<div class="field">
-					<label for="condition">Year:</label>
-					<span
-						v-if="filtersSelected.yearFrom || filtersSelected.yearTo"
-						class="eliminate-filter"
-						@click="removeFilter({ id: 'year' })"
-						>(Eliminate)</span
-					>
+					<div class="label-container">
+						<label for="condition">Year:</label>
+						<span
+							v-if="filters.yearFrom || filters.yearTo"
+							class="eliminate-filter"
+							@click="removeFilter({ id: 'year' })"
+							>(Eliminate)</span
+						>
+					</div>
 
 					<div class="double-input-container">
 						<multiselect
 							@input="$route.name == 'searchResults' ? fireSearch() : null"
 							class="dropdown"
-							v-model="filtersSelected.yearFrom"
+							v-model="filters.yearFrom"
 							:options="yearOptionsDynamic.from"
 							:searchable="false"
 							:show-labels="false"
@@ -262,7 +291,7 @@ export default {
 						<multiselect
 							@input="$route.name == 'searchResults' ? fireSearch() : null"
 							class="dropdown"
-							v-model="filtersSelected.yearTo"
+							v-model="filters.yearTo"
 							:options="yearOptionsDynamic.to"
 							:searchable="false"
 							:show-labels="false"
@@ -271,18 +300,20 @@ export default {
 					</div>
 				</div>
 				<div class="field">
-					<label for="condition">Price:</label>
-					<span
-						v-if="filtersSelected.priceFrom || filtersSelected.priceTo"
-						class="eliminate-filter"
-						@click="removeFilter({ id: 'price' })"
-						>(Eliminate)</span
-					>
+					<div class="label-container">
+						<label for="condition">Price:</label>
+						<span
+							v-if="filters.priceFrom || filters.priceTo"
+							class="eliminate-filter"
+							@click="removeFilter({ id: 'price' })"
+							>(Eliminate)</span
+						>
+					</div>
 					<div class="double-input-container">
 						<multiselect
 							@input="$route.name == 'searchResults' ? fireSearch() : null"
 							class="dropdown"
-							v-model="filtersSelected.priceFrom"
+							v-model="filters.priceFrom"
 							:options="priceOptionsDynamic.from.map((x) => x.fromNumType)"
 							:custom-label="
 								(opt) => {
@@ -299,7 +330,7 @@ export default {
 						<multiselect
 							@input="$route.name == 'searchResults' ? fireSearch() : null"
 							class="dropdown"
-							v-model="filtersSelected.priceTo"
+							v-model="filters.priceTo"
 							:options="priceOptionsDynamic.to.map((x) => x.toNumType)"
 							:custom-label="
 								(opt) => {
@@ -319,17 +350,19 @@ export default {
 			<div class="blocks-container">
 				<h5 class="sub-title">More Options</h5>
 				<div class="field">
-					<label for="condition">Fuel:</label
-					><span
-						v-if="filtersSelected.fuel"
-						class="eliminate-filter"
-						@click="removeFilter({ id: 'fuel' })"
-						>(Eliminate)</span
-					>
+					<div class="label-container">
+						<label for="condition">Fuel:</label
+						><span
+							v-if="filters.fuel"
+							class="eliminate-filter"
+							@click="removeFilter({ id: 'fuel' })"
+							>(Eliminate)</span
+						>
+					</div>
 					<multiselect
 						@input="$route.name == 'searchResults' ? fireSearch() : null"
 						class="dropdown"
-						v-model="filtersSelected.fuel"
+						v-model="filters.fuel"
 						:options="fuelOptions"
 						:searchable="false"
 						:show-labels="false"
@@ -337,17 +370,19 @@ export default {
 					></multiselect>
 				</div>
 				<div class="field">
-					<label for="condition">Transmission:</label>
-					<span
-						v-if="filtersSelected.transmission"
-						class="eliminate-filter"
-						@click="removeFilter({ id: 'transmission' })"
-						>(Eliminate)</span
-					>
+					<div class="label-container">
+						<label for="condition">Transmission:</label>
+						<span
+							v-if="filters.transmission"
+							class="eliminate-filter"
+							@click="removeFilter({ id: 'transmission' })"
+							>(Eliminate)</span
+						>
+					</div>
 					<multiselect
 						@input="$route.name == 'searchResults' ? fireSearch() : null"
 						class="dropdown"
-						v-model="filtersSelected.transmission"
+						v-model="filters.transmission"
 						:options="transmissionOptions"
 						:searchable="false"
 						:show-labels="false"
@@ -355,17 +390,19 @@ export default {
 					></multiselect>
 				</div>
 				<div class="field">
-					<label for="drivetrain">Traction:</label>
-					<span
-						v-if="filtersSelected.driveTrain"
-						class="eliminate-filter"
-						@click="removeFilter({ id: 'driveTrain' })"
-						>(Eliminate)</span
-					>
+					<div class="label-container">
+						<label for="drivetrain">Traction:</label>
+						<span
+							v-if="filters.driveTrain"
+							class="eliminate-filter"
+							@click="removeFilter({ id: 'driveTrain' })"
+							>(Eliminate)</span
+						>
+					</div>
 					<multiselect
 						@input="$route.name == 'searchResults' ? fireSearch() : null"
 						class="dropdown"
-						v-model="filtersSelected.driveTrain"
+						v-model="filters.driveTrain"
 						:options="drivetrainOptions"
 						:searchable="false"
 						:show-labels="false"
@@ -373,17 +410,19 @@ export default {
 					></multiselect>
 				</div>
 				<div class="field">
-					<label for="condition">Engine:</label>
-					<span
-						v-if="filtersSelected.engine"
-						class="eliminate-filter"
-						@click="removeFilter({ id: 'engine' })"
-						>(Eliminate)</span
-					>
+					<div class="label-container">
+						<label for="condition">Engine:</label>
+						<span
+							v-if="filters.engine"
+							class="eliminate-filter"
+							@click="removeFilter({ id: 'engine' })"
+							>(Eliminate)</span
+						>
+					</div>
 					<multiselect
 						@input="$route.name == 'searchResults' ? fireSearch() : null"
 						class="dropdown"
-						v-model="filtersSelected.engine"
+						v-model="filters.engine"
 						:options="engineOptions"
 						:searchable="false"
 						:show-labels="false"
@@ -391,17 +430,19 @@ export default {
 					></multiselect>
 				</div>
 				<div class="field">
-					<label for="condition">Color:</label>
-					<span
-						v-if="filtersSelected.color"
-						class="eliminate-filter"
-						@click="removeFilter({ id: 'color' })"
-						>(Eliminate)</span
-					>
+					<div class="label-container">
+						<label for="condition">Color:</label>
+						<span
+							v-if="filters.color"
+							class="eliminate-filter"
+							@click="removeFilter({ id: 'color' })"
+							>(Eliminate)</span
+						>
+					</div>
 					<multiselect
 						@input="$route.name == 'searchResults' ? fireSearch() : null"
 						class="dropdown"
-						v-model="filtersSelected.color"
+						v-model="filters.color"
 						:options="colorOptions"
 						:searchable="false"
 						:show-labels="false"
@@ -409,17 +450,19 @@ export default {
 					></multiselect>
 				</div>
 				<div class="field">
-					<label for="condition">Seller:</label>
-					<span
-						v-if="filtersSelected.dealerId"
-						class="eliminate-filter"
-						@click="removeFilter({ id: 'dealerId' })"
-						>(Eliminate)</span
-					>
+					<div class="label-container">
+						<label for="condition">Seller:</label>
+						<span
+							v-if="filters.dealerId"
+							class="eliminate-filter"
+							@click="removeFilter({ id: 'dealerId' })"
+							>(Eliminate)</span
+						>
+					</div>
 					<multiselect
 						@input="$route.name == 'searchResults' ? fireSearch() : null"
 						class="dropdown"
-						v-model="filtersSelected.dealerId"
+						v-model="filters.dealerId"
 						:options="dealersList.map((x) => x.id)"
 						:custom-label="
 							(opt) => {
@@ -467,15 +510,22 @@ export default {
 	// background: $dark;
 	padding-inline: 0.5em;
 }
-
+.label-container {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 0.5em;
+}
 .eliminate-filter {
-	color: $primary;
+	color: $light;
+	border: 1px solid $primary;
+	border-radius: 10px;
 	cursor: pointer;
 	font: $font-text;
 }
 
 .btn-container {
 	height: 3em;
+	margin: 1.5em 0 2em;
 	display: flex;
 	gap: 1em;
 	justify-content: space-around;

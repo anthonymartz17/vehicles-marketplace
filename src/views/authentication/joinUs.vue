@@ -17,11 +17,12 @@ export default {
 	},
 	methods: {
 		checkLoginOption(id) {
+			console.log(id,'h')
 			switch (id) {
-				case "forgotPassword":
+				case "Forgot your password?":
 					this.$router.replace({ name: "forgot-password" });
 					break;
-				case "login":
+				case "Login instead":
 					this.activeComponent = "Login";
 					break;
 				case "register":
@@ -32,6 +33,9 @@ export default {
 	},
 	computed: {
 		...mapState("auth", ["alert"]),
+		toggleLinkText() {
+			return this.activeComponent == "Login" ? "Forgot your password?" : "Login instead"
+		}
 	},
 };
 </script>
@@ -72,12 +76,10 @@ export default {
 			</div>
 			<a
 				href="#"
-				@click.prevent="checkLoginOption('forgotPassword')"
+				@click.prevent="checkLoginOption(toggleLinkText)"
 				class="text-muted forgot-pwd"
 			>
-				{{
-					activeComponent == "Login" ? "Forgot your password?" : "Login instead"
-				}}
+				{{ toggleLinkText }}
 			</a>
 		</div>
 	</div>

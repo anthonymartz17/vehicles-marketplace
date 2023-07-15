@@ -62,13 +62,12 @@ export default {
 	created() {
 		initializeFirebase;
 		this.fetchVehicles().then((data) => {
-			this.SET_FILTERS_OPTIONS(data);
+			this.setFiltersOptions(data);
 		});
 	},
 	methods: {
 		...mapActions("vehicles", ["fetchVehicles", "fetchVehiclesImages"]),
-
-		...mapMutations("filterOptions", ["SET_FILTERS_OPTIONS"]),
+		...mapActions("filterOptions", ["setFiltersOptions"]),
 	},
 	computed: {
 		...mapState("vehicles", ["showSearchMenu"]),
@@ -101,16 +100,14 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-
-.loading{
+.loading {
 	position: absolute;
-	background:rgba(0, 0, 0, 0.705);
+	background: rgba(0, 0, 0, 0.705);
 	width: 100%;
 	height: 100vh;
 	display: grid;
 	place-items: center;
 	z-index: 100;
-
 }
 .page-container {
 	// min-height: 100%;
