@@ -9,15 +9,10 @@ export default {
 	},
 
 	data() {
-		return {
-			// filters: {},
-		};
+		return {};
 	},
 	created() {
 		this.fetchDealers();
-
-		//keeps local filter object updated with the state main object filters
-		// Object.assign(this.filters, this.filteredObject);
 	},
 
 	methods: {
@@ -26,7 +21,6 @@ export default {
 		...mapActions("filterOptions", ["setModelOptions"]),
 
 		fireSearch() {
-			// this.UPDATE_FILTERS(this.filters);
 			this.FILTER_VEHICLES();
 			if (this.$route.name !== "searchResults") {
 				this.$router.replace({ name: "searchResults" });
@@ -34,7 +28,6 @@ export default {
 		},
 
 		clearFilters() {
-			// this.filters = {};
 			this.UPDATE_FILTERS(null);
 			this.FILTER_VEHICLES();
 		},
@@ -65,7 +58,6 @@ export default {
 			"dealersList",
 			"appliedFilters",
 		]),
-		// ...mapState("vehicles", ["filters"]),
 
 		filters: {
 			get() {
@@ -91,15 +83,6 @@ export default {
 			"colorOptions",
 		]),
 
-		// filteredObject() {
-		// 	return Object.keys(this.filters).reduce((acc, key) => {
-		// 		const value = this.filters[key];
-		// 		if (value !== "" && value !== 0 && value !== null) {
-		// 			acc[key] = value;
-		// 		}
-		// 		return acc;
-		// 	}, {});
-		// },
 		yearOptionsDynamic() {
 			let list = {};
 			if (this.filters.yearTo) {
@@ -166,8 +149,6 @@ export default {
 					<div class="btn-search" @click="fireSearch()">Apply</div>
 				</div>
 				<div>
-					<p>{{ filters }}</p>
-					<p>{{ modelOptions }}</p>
 					<div class="field">
 						<div class="label-container">
 							<label for="condition">Condition:</label>

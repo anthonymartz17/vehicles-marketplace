@@ -99,14 +99,7 @@ export default {
 				throw error;
 			}
 		},
-		// async uploadImages(_, data) {
-		// 	try {
-		// 		const response = await apiAds.uploadImages(data);
-		// 		console.log(response, "images uploaded, state");
-		// 	} catch (error) {
-		// 		throw error;
-		// 	}
-		// },
+	
 		async fetchImageUrlListById(_, imagePaths) {
 			try {
 				const imgUrlList = await apiAds.getImagesById(imagePaths);

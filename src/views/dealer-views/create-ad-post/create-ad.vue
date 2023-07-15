@@ -7,12 +7,10 @@ export default {
 	components: {
 		FormProgress,
 		NavigationBtn,
-	
 	},
 	data() {
 		return {
 			stepsRoutes: ["create ad", "step-2", "step-3", "step-4"],
-			
 		};
 	},
 
@@ -131,23 +129,7 @@ export default {
 		text-align: center;
 	}
 }
-.button {
-	cursor: pointer;
-	background: $primary;
-	font: $font-text-bold;
-	text-align: center;
-	transition: all 250ms ease-in-out;
-	border: 1px solid $light;
-	margin: 0.5em;
-	&:hover {
-		transform: scale(1.01);
-	}
-	a {
-		color: $light;
-		padding: 0.8em;
-		display: block;
-	}
-}
+
 .form-wrapper {
 	padding: 0 1em;
 	display: flex;

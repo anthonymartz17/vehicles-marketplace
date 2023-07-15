@@ -1,5 +1,5 @@
 <script>
-import { mapGetters, mapMutations, mapState } from "vuex";
+import { mapGetters, mapMutations, mapState, mapActions } from "vuex";
 
 export default {
 	data() {
@@ -15,6 +15,9 @@ export default {
 
 	methods: {
 		...mapMutations("vehicles", ["TOGGLE_SEARCH_MENU"]),
+		...mapMutations("vehicles", ["TOGGLE_SEARCH_MENU"]),
+		...mapActions("adsCrud", ["fetchAds"]),
+
 		selectPageTitle(name) {
 			let titles = [
 				{ routeName: "Vehicles", title: "Vehicles" },
@@ -30,20 +33,27 @@ export default {
 				}
 			});
 		},
-		// 	toggleSearchMenue() {
-		// 	this.showSearchMenue = !this.showSearchMenue
-		// }
+	},
+	props: {
+		inventory: { type: Array },
 	},
 	computed: {
 		...mapGetters("vehicles", ["vehiclesList"]),
 		...mapState("vehicles", ["vehiclesToDisplay"]),
-
+		showAdjustSearchBtn() {
+			return this.$route.name !== "home" &&
+				this.$route.name !== "dealerInventory"
+				? true
+				: false;
+		},
 		vehiclesToDisplayList() {
 			let list;
 			if (this.$route.name == "home") {
 				// shuffles the list
 				const shuffledArray = this.vehiclesList.sort(() => Math.random() - 0.5);
 				list = shuffledArray.slice(0, 8);
+			} else if (this.$route.name == "dealerInventory") {
+				if (this.inventory.length > 0) list = this.inventory;
 			} else {
 				list = this.vehiclesToDisplay;
 			}
@@ -70,7 +80,7 @@ export default {
 					></i>
 				</h4>
 				<router-link :to="{ name: 'advance' }">
-					<div v-show="$route.name !== 'home'" class="btn-adjustSearch">
+					<div v-show="showAdjustSearchBtn" class="btn-adjustSearch">
 						Adjust Search
 					</div>
 				</router-link>
@@ -78,11 +88,11 @@ export default {
 
 			<div
 				v-if="vehiclesToDisplayList && vehiclesToDisplayList.length > 0"
-				:class="[
-					'vehicles-display',
-					{ 'space-even': vehiclesToDisplayList.length > 4 },
-					{ 'vehicles-display-height-flow ': $route.name == 'searchResults' },
-				]"
+				:class="{
+					'vehicles-display': true,
+					'space-even': vehiclesToDisplayList.length > 4,
+					'vehicles-display-height-flow ': $route.name == 'searchResults',
+				}"
 			>
 				<div
 					class="vehicles-display-car"
@@ -170,18 +180,9 @@ export default {
 }
 
 .vehicles-display {
-	&-car {
-		// background: blue;
-		display: flex;
-		// justify-content: space-around;
-		gap: 0.5em;
-		padding-block: 0.3em;
-	}
-
 	&-img {
-		// width: 15em;
-		// height: 12em;
 		flex: 1;
+		width: 100%;
 		border: 2px solid $lightestDark;
 
 		img {
@@ -236,7 +237,7 @@ export default {
 }
 
 .vehicles-container {
-	padding-inline: .5em;
+	padding-inline: 0.5em;
 	@include breakpoint(tablet) {
 		.vehicles-display {
 			display: grid;
@@ -249,10 +250,9 @@ export default {
 		}
 	}
 	@include breakpoint(desktop) {
-
-.title-container{
-	margin-top: 0;
-}
+		.title-container {
+			margin-top: 0;
+		}
 		.vehicles-display {
 			grid-template-columns: repeat(4, 1fr);
 		}

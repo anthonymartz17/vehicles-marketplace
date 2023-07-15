@@ -212,10 +212,6 @@ export default {
 		display: block;
 	}
 }
-.profile-wrapper {
-	padding: 0 1em;
-	display: flex;
-}
 
 .invalid-feedback {
 	color: red;

@@ -52,8 +52,10 @@ export default {
 					routename: "dashboard",
 					icon: "fas fa-phone-volume",
 				},
+				//added none to routename here cause im routing programatically, if no routename is added,the link to log out in mobile menue, shows as an exact active route and styles the logout link all the time as if it was the current route.
 				{
 					link: "Log Out",
+					routename: "none",
 					icon: "fas fa-phone-volume",
 				},
 			],
@@ -63,6 +65,7 @@ export default {
 		initializeFirebase;
 		this.fetchVehicles().then((data) => {
 			this.setFiltersOptions(data);
+			console.log('getting cars from app',data)
 		});
 	},
 	methods: {

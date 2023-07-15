@@ -19,7 +19,6 @@ export default {
 	},
 
 	methods: {
-		
 		tryNextStep() {
 			this.submitted = true;
 			if (this.$v.$invalid) {
@@ -46,48 +45,47 @@ export default {
 	<div class="profile-wrapper">
 		<div class="profile-container">
 			<form class="form" @submit.prevent="tryActivateAccount">
-		
-					<div class="form-field-container form-field-size">
-						<label for="fuel" class="form-label">Fuel</label>
-						<input
-							id="fuel"
-							v-model="vehiclePost.fuel"
-							type="text"
-							placeholder="Enter fuel"
-							:class="[
-								'form-input',
-								{ 'is-invalid ': submitted && !$v.vehiclePost.fuel.required },
-							]"
-						/>
-						<div
-							v-if="submitted && !$v.vehiclePost.fuel.required"
-							class="invalid-feedback"
-						>
-							Fuel is required.
-						</div>
+				<div class="form-field-container form-field-size">
+					<label for="fuel" class="form-label">Fuel</label>
+					<input
+						id="fuel"
+						v-model="vehiclePost.fuel"
+						type="text"
+						placeholder="Enter fuel"
+						:class="[
+							'form-input',
+							{ 'is-invalid ': submitted && !$v.vehiclePost.fuel.required },
+						]"
+					/>
+					<div
+						v-if="submitted && !$v.vehiclePost.fuel.required"
+						class="invalid-feedback"
+					>
+						Fuel is required.
 					</div>
-					<div class="form-field-container form-field-size">
-						<label for="carType" class="form-label">Car Type</label>
-						<input
-							id="carType"
-							v-model="vehiclePost.carType"
-							type="text"
-							placeholder="Enter Type"
-							:class="[
-								'form-input',
-								{
-									'is-invalid ': submitted && !$v.vehiclePost.carType.required,
-								},
-							]"
-						/>
-						<div
-							v-if="submitted && !$v.vehiclePost.carType.required"
-							class="invalid-feedback"
-						>
-							Type is required.
-						</div>
+				</div>
+				<div class="form-field-container form-field-size">
+					<label for="carType" class="form-label">Car Type</label>
+					<input
+						id="carType"
+						v-model="vehiclePost.carType"
+						type="text"
+						placeholder="Enter Type"
+						:class="[
+							'form-input',
+							{
+								'is-invalid ': submitted && !$v.vehiclePost.carType.required,
+							},
+						]"
+					/>
+					<div
+						v-if="submitted && !$v.vehiclePost.carType.required"
+						class="invalid-feedback"
+					>
+						Type is required.
 					</div>
-		
+				</div>
+
 				<div class="field-flex">
 					<div class="form-field-container form-field-size">
 						<label for="carCondition" class="form-label">Car Condition</label>
@@ -212,10 +210,6 @@ export default {
 		display: block;
 	}
 }
-.profile-wrapper {
-	padding: 0 1em;
-	display: flex;
-}
 
 .invalid-feedback {
 	color: red;
@@ -251,7 +245,6 @@ export default {
 }
 .form-input {
 	height: 3em;
-	// border-radius: 5px;
 	padding-inline: 0.5em;
 	border: 1px solid $lightestDark;
 	outline: none;
@@ -263,7 +256,7 @@ export default {
 	position: relative;
 	flex-direction: column;
 	margin-bottom: 1em;
-	padding-block: .5em;
+	padding-block: 0.5em;
 }
 
 .profile-wrapper {
@@ -291,17 +284,8 @@ export default {
 			width: 30%;
 		}
 		.form-field-container {
-			// flex-direction: row;
 			justify-content: space-between;
 			align-content: center;
-			// padding-right: 18em;
-
-			label {
-				// flex: 1;
-			}
-			input {
-				// flex: 1;
-			}
 		}
 	}
 	@include breakpoint(desktop) {

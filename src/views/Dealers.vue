@@ -7,25 +7,42 @@ export default {
 		VehiclesDisplay,
 	},
 
-	created() {
-		this.dealerId = this.$route.query.dealerId;
-		if (this.dealerId) {
-			this.fetchDealerById(this.dealerId).then((dealer) => {
-				this.dealer = dealer;
-			});
-		}
-	},
-
 	data() {
 		return {
 			dealer: {},
 			dealerId: null,
+			inventory: [],
 		};
 	},
-
+	mounted() {
+		this.dealerId = this.$route.query.dealerId;
+		if (this.dealerId) {
+			this.fetchDealerById(this.dealerId).then((dealer) => {
+				console.log("getting dealer by id from dealer");
+				this.dealer = dealer;
+				this.fetchAds(this.dealerId).then((data) => {
+					this.inventory = data;
+				});
+				this.getCarsByDealer(this.dealerId);
+			});
+		}
+	},
 	methods: {
+		...mapActions("vehicles", [
+			"fetchDealerById",
+			"updateFilters",
+			"filterVehicles",
+		]),
 		...mapActions("vehicles", ["fetchDealerById"]),
-		// ...mapMutations("vehicles", ["UPDATE_FILTERS", "FILTER_VEHICLES"]),
+		...mapActions("adsCrud", ["fetchAds"]),
+
+		getCarsByDealer() {
+			console.log(this.dealerId, "kllklklklk");
+			// resets filters first in case there were some set
+			this.updateFilters(null);
+			this.updateFilters({ dealerId: this.dealerId });
+			this.filterVehicles();
+		},
 	},
 	computed: {
 		...mapGetters("vehicles", ["dealersList"]),
@@ -53,7 +70,7 @@ export default {
 			</div>
 		</div>
 		<div class="vehicles">
-			<VehiclesDisplay />
+			<VehiclesDisplay :inventory="inventory"/>
 		</div>
 	</div>
 </template>
@@ -140,7 +157,7 @@ export default {
 		.vehicles {
 		}
 	}
-	@include breakpoint(lg-device){
+	@include breakpoint(lg-device) {
 		padding-inline: 5em;
 	}
 }

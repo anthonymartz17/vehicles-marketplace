@@ -50,22 +50,6 @@ export default {
 
 	computed: {
 		...mapGetters("vehicles", ["appliedFilters"]),
-		// appliedFilters() {
-		// 	let list = Object.keys(this.filters).reduce((acc, key) => {
-		// 		const value = this.filters[key];
-		// 		if (value !== "" && value !== 0 && value !== null) {
-		// 			acc[key] = value;
-		// 		}
-		// 		return acc;
-		// 	}, {});
-		// 	// only keeps first word that s before cap lette. so priceFrom,priceto become price and its only one word in the array reffereing to the price. same with year.
-		// 	let finalList = Object.keys(list).map((one) => {
-		// 		const match = one.match(/[A-Z]/);
-		// 		return one.split(match)[0];
-		// 	});
-		// 	//get rid of duplicate elements in the array
-		// 	return [...new Set(finalList)];
-		// },
 	},
 };
 </script>
@@ -93,7 +77,8 @@ export default {
 					@click="fireClearFilters"
 					v-show="appliedFilters.length > 0"
 					class="clear-btn"
-				>	Clear	{{ appliedFilters.length }} filter<span
+				>
+					Clear {{ appliedFilters.length }} filter<span
 						v-show="appliedFilters.length > 1"
 						>s</span
 					>
@@ -101,7 +86,7 @@ export default {
 			</div>
 		</div>
 		<div class="sideSearch">
-			<!-- <SideSearch /> -->
+		
 			<FullSearchForm ref="removeFilter" />
 		</div>
 

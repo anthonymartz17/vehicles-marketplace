@@ -114,16 +114,7 @@ export default {
 				},
 			];
 		},
-		getCarsByDealer() {
-			// resets filters first in case there were some set
-			this.UPDATE_FILTERS(null);
-			this.UPDATE_FILTERS({ dealerId: this.vehicle.dealerId });
-			this.FILTER_VEHICLES();
-			this.$router.replace({
-				name: "dealerInventory",
-				query: { dealerId: this.vehicle.dealerId },
-			});
-		},
+
 		updateHeroImg(img) {
 			this.heroImg = img;
 		},
@@ -188,9 +179,15 @@ export default {
 					</p>
 				</div>
 				<div v-if="$route.name != 'dealerInventory'">
-					<div @click="getCarsByDealer" class="btn btn-local">
+					<router-link
+						class="btn btn-local"
+						:to="{
+							name: 'dealerInventory',
+							query: { dealerId: this.vehicle.dealerId },
+						}"
+					>
 						Visit Our Inventory
-					</div>
+					</router-link>
 				</div>
 			</div>
 		</div>
@@ -386,6 +383,7 @@ export default {
 
 .carToView {
 	@include breakpoint(tablet) {
+		padding-inline: 1em;
 		&-title-price {
 			display: flex;
 			height: 3em;
@@ -411,11 +409,10 @@ export default {
 		.carToView-img-display {
 			display: flex;
 			gap: 0.2em;
+			max-height: 40em;
+			width: 100%;
 		}
-		.carToView-img-display {
-			// border-bottom: 1px solid lighten($lightestDark, 30);
-			padding-block: 2em;
-		}
+
 		.main-display {
 			flex: 3;
 			max-width: 100%;
@@ -429,6 +426,8 @@ export default {
 
 		.carToView-images-list {
 			flex: 1;
+			max-height: 40em;
+			overflow: auto;
 		}
 		.carToView-history-detailWrap {
 			display: flex;
@@ -483,7 +482,7 @@ export default {
 			display: flex;
 			gap: 1em;
 		}
-			
+
 		.carToview-display-section {
 			flex: 1;
 		}
@@ -499,10 +498,9 @@ export default {
 			flex: 1;
 			display: flex;
 			gap: 0.1em;
-		
 		}
 	}
-	@include breakpoint(lg-device){
+	@include breakpoint(lg-device) {
 		padding-inline: 5%;
 	}
 }
