@@ -19,11 +19,28 @@ const routes = [
 		path: "/advance",
 		name: "advance",
 		component: () => import("../views/AdvanceSearch.vue"),
+		beforeEnter: (to, from, next) => {
+			const isDesktop = store.getters["auth/isDesktop"];
+
+			if (isDesktop === true) {
+				next({ name: "notFound" });
+			} else {
+				next();
+			}
+		},
 	},
 	{
 		path: "/cartToView",
 		name: "carToView",
 		component: () => import("../views/CarToView.vue"),
+		beforeEnter: (to, _, next) => {
+			let carId = to.query.id;
+			if (carId) {
+				next();
+			} else {
+				next({ name: "notFound" });
+			}
+		},
 	},
 	{
 		path: "/searchResults",
@@ -34,18 +51,26 @@ const routes = [
 		path: "/dealerInventory",
 		name: "dealerInventory",
 		component: () => import("../views/Dealers"),
+		beforeEnter: (to, _, next) => {
+			let dealerId = to.query.dealerId;
+			if (dealerId) {
+				next();
+			} else {
+				next({ name: "notFound" });
+			}
+		},
 	},
 	{
 		path: "/joinUs",
 		name: "joinUs",
 		component: () => import("../views/authentication/joinUs"),
 	},
-	{
-		path: "/activationform",
-		name: "activationForm",
-		meta: { requiresAuth: true },
-		component: () => import("../views/authentication/activationform.vue"),
-	},
+	// {
+	// 	path: "/activationform",
+	// 	name: "activationForm",
+	// 	meta: { requiresAuth: true },
+	// 	component: () => import("../views/authentication/activationform.vue"),
+	// },
 	{
 		path: "/dashboard",
 		meta: { requiresAuth: true },
@@ -90,7 +115,7 @@ const routes = [
 					},
 				],
 			},
-		
+
 			{
 				path: "profile",
 				name: "profile",
@@ -105,6 +130,7 @@ const routes = [
 	},
 	{
 		path: "/:notFound(.*)",
+		name: "notFound",
 		component: () => import("../views/Not-found.vue"),
 	},
 ];

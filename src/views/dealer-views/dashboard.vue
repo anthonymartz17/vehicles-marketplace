@@ -1,5 +1,5 @@
 <script>
-// import { mapGetters, mapMutations, mapState } from "vuex";
+import { mapGetters } from "vuex";
 import LoggedInUserLinks from "../../components/dashboard/Loggedin-user-links.vue";
 import MartzIcons from "../../components/martz-icons.vue";
 import DashboadSidebar from "./dashboard-sidebar.vue";
@@ -9,12 +9,9 @@ export default {
 	data() {
 		return {
 			showSidebar: false,
-			isDesktop: false,
 		};
 	},
-	mounted() {
-		this.isDesktop = window.innerWidth > 768;
-	},
+
 	methods: {
 		toggleSideBar() {
 			this.showSidebar = !this.showSidebar;
@@ -22,6 +19,8 @@ export default {
 	},
 
 	computed: {
+		...mapGetters("auth", ["isDesktop"]),
+
 		title() {
 			let title;
 			switch (this.$route.name) {
@@ -49,8 +48,8 @@ export default {
 			<div class="menu-btn" v-if="!isDesktop">
 				<MartzIcons icon="downArrow" :size="40" @click.native="toggleSideBar" />
 			</div>
-			<div v-if="!isDesktop" >
-			<div v-if="showSidebar" class="overlay"></div>
+			<div v-if="!isDesktop">
+				<div v-if="showSidebar" class="overlay"></div>
 				<transition
 					enter-active-class="animate__animated animate__slideInDown animate__faster"
 					leave-active-class="animate__animated animate__slideOutUp animate__faster"
@@ -88,6 +87,7 @@ export default {
 	z-index: 8;
 }
 .mobile-dashboard-sidebar {
+	
 	background: $dark;
 	width: 100%;
 	position: absolute;

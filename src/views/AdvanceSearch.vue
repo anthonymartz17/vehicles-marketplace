@@ -1,4 +1,5 @@
 <script>
+import store from "@/store";
 import FullSearchForm from "../components/full-search-form.vue";
 export default {
 	components: {

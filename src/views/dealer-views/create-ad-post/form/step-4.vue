@@ -18,6 +18,7 @@ export default {
 				url: "https://httpbin.org/post",
 				thumbnailWidth: 150,
 				thumbnailHeight: 150,
+				maxFiles: 4,
 				// maxFilesize: 0.5,
 				acceptedFiles: ".jpg, .jpeg, .png",
 				headers: { "My-Awesome-Header": "header value" },
@@ -70,7 +71,12 @@ export default {
 			drivetrain: { required },
 			accesories: { required },
 		},
-		vehiclePostImages: { required },
+		vehiclePostImages: {
+			required,
+			maxLength: (value) => {
+				return value.length <= 4;
+			},
+		},
 	},
 
 	// mounted() {
@@ -96,7 +102,6 @@ export default {
 			this.vehiclePostImages = this.vehiclePostImages.filter(
 				(img) => img.dataURL != file.dataURL
 			);
-			console.log(this.vehiclePostImages);
 		},
 		async uploadImgManually() {
 			if (this.vehicleImages.length > 0) {
@@ -116,12 +121,13 @@ export default {
 					if (this.vehiceId) {
 						console.log("updatinging", this.vehiclePost);
 						delete this.vehiclePost.carPicsUrls;
-						console.log(this.vehiclePostImages, "images en el momemnto");
 						await this.updateAd({
 							vehicleData: this.vehiclePost,
 							vehicleImages: this.vehiclePostImages,
 							vehicleId: this.vehiceId,
 						});
+						localStorage.removeItem("vehicle_id");
+						localStorage.removeItem("vehicle_images");
 					} else {
 						await this.createAd({
 							vehicleData: this.vehiclePost,
@@ -180,7 +186,9 @@ export default {
 						id="dropzone"
 						:options="dropzoneOptions"
 						:class="{
-							'is-invalid ': submitted && !$v.vehiclePostImages.required,
+							'is-invalid ':
+								(submitted && !$v.vehiclePostImages.required) ||
+								!$v.vehiclePostImages.maxLength,
 						}"
 					></vue2Dropzone>
 					<div
@@ -188,6 +196,12 @@ export default {
 						class="invalid-feedback"
 					>
 						Photos are required.
+					</div>
+					<div
+						v-else-if="submitted && !$v.vehiclePostImages.maxLength"
+						class="invalid-feedback"
+					>
+						Limit exceeded, max 4 images.
 					</div>
 				</div>
 				<div class="field-flex">

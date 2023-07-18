@@ -7,6 +7,7 @@ import {
 	EmailAuthProvider,
 	reauthenticateWithCredential,
 	updatePassword,
+	sendPasswordResetEmail,
 } from "firebase/auth";
 import apiProfile from "../../helpers/apiProfile";
 
@@ -18,8 +19,12 @@ export default {
 		user: null,
 		alert: {},
 		isLoading: false,
+		viewportSize: window.innerWidth,
 	},
 	mutations: {
+		SET_VIEWPORT_SIZE(state, payload) {
+			state.viewportSize = payload;
+		},
 		SET_USER(state, payload) {
 			state.user = payload;
 		},
@@ -44,7 +49,6 @@ export default {
 	},
 	actions: {
 		async signUp({ commit }, { email, password }) {
-		
 			try {
 				let response = await createUserWithEmailAndPassword(
 					auth,
@@ -62,10 +66,9 @@ export default {
 				return response.user;
 			} catch (error) {
 				throw error;
-			} 
+			}
 		},
 		async signIn({ commit, dispatch }, { email, password }) {
-			
 			try {
 				let response = await signInWithEmailAndPassword(auth, email, password);
 
@@ -79,7 +82,7 @@ export default {
 
 				clearTimeout(timer);
 				timer = setTimeout(() => {
-					dispatch("singOutUser");
+					dispatch("signOutUser");
 					//expects timer in miliseconds
 				}, expiresIn * 1000);
 
@@ -110,7 +113,6 @@ export default {
 				}
 		},
 		async signOutUser({ commit }) {
-			
 			try {
 				await signOut(auth);
 				localStorage.removeItem("currentUserDealer");
@@ -121,7 +123,6 @@ export default {
 			}
 		},
 		async changePassword(_, { currentPassword, newPassword }) {
-	
 			try {
 				const user = auth.currentUser;
 
@@ -138,12 +139,23 @@ export default {
 				await updatePassword(user, newPassword);
 			} catch (error) {
 				throw error;
-			} 
+			}
+		},
+		async handleForgotPassword(_, email) {
+			try {
+				await sendPasswordResetEmail(auth, email);
+			} catch (error) {
+				throw error;
+			}
+		},
+
+		setViewportSize({ commit }, payload) {
+			commit("SET_VIEWPORT_SIZE", payload);
 		},
 	},
 	getters: {
 		isLoggedIn: (state) => !!state.user,
 		showAlert: (state) => !!Object.keys(state.alert).length,
-	
+		isDesktop: (state) => state.viewportSize > 1024,
 	},
 };

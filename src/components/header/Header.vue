@@ -95,9 +95,18 @@ export default {
 					<img src="/images/icons/logo.png" alt="" />
 				</div>
 			</div>
-			<div @click.self="togglePopup()" class="popup-overlay" v-show="showPopup">
-				<PopupProfile @closeModal="togglePopup()" />
-			</div>
+			<transition
+				enter-active-class="animate__animated animate__bounceIn"
+				leave-active-class="animate__animated animate__bounceOut"
+			>
+			<div
+			@click.self="togglePopup()"
+			class="popup-overlay"
+			v-show="showPopup"
+			>
+					<PopupProfile @closeModal="togglePopup()" />
+				</div>
+			</transition>
 		</div>
 	</header>
 </template>

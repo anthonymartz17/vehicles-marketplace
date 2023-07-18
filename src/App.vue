@@ -65,12 +65,29 @@ export default {
 		initializeFirebase;
 		this.fetchVehicles().then((data) => {
 			this.setFiltersOptions(data);
-			console.log('getting cars from app',data)
+			console.log("getting cars from app", data);
 		});
+		window.addEventListener("resize", this.updateViewportSize);
+	},
+	beforeDestroy() {
+		window.removeEventListener("resize", this.updateViewportSize);
+		this.signOut();
 	},
 	methods: {
 		...mapActions("vehicles", ["fetchVehicles", "fetchVehiclesImages"]),
 		...mapActions("filterOptions", ["setFiltersOptions"]),
+		...mapActions("auth", ["setViewportSize", "signOutUser"]),
+		updateViewportSize() {
+			const width = window.innerWidth;
+			this.setViewportSize(width);
+		},
+		async signOut() {
+			try {
+				await this.signOutUser();
+			} catch (error) {
+				throw error;
+			}
+		},
 	},
 	computed: {
 		...mapState("vehicles", ["showSearchMenu"]),
@@ -84,6 +101,7 @@ export default {
 		<div class="loading" v-if="isLoading">
 			<Loading />
 		</div>
+
 		<AlertMsg v-show="showAlert" />
 
 		<MobileMenu :navItems="navItems" />

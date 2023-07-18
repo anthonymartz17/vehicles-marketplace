@@ -1,5 +1,5 @@
 <script>
-// import { mapGetters, mapMutations, mapState } from "vuex";
+
 import LoggedInUserLinks from "../../components/dashboard/Loggedin-user-links.vue";
 import MartzIcons from "../../components/martz-icons.vue";
 import "animate.css";
@@ -7,7 +7,6 @@ import { mapMutations } from "vuex";
 export default {
 	components: { LoggedInUserLinks, MartzIcons },
 
-	props: ["isDesktop"],
 	methods: {
 		...mapMutations("auth", ["SET_ALERT_MSG"]),
 		emitToggle() {
@@ -28,11 +27,9 @@ export default {
 				if (this.$route.name != "create ad")
 					this.$router.push({ name: "create ad" });
 			}
-			// localStorage.removeItem("vehicle_id");
-			// localStorage.removeItem("vehicle_images");
-			// this.$store.dispatch("adsCrud/updateVehiclePost", {});
 		},
 	},
+	
 };
 </script>
 <template>

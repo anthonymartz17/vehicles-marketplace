@@ -6,6 +6,7 @@ export default {
 	components: {
 		Dealers,
 	},
+
 	created() {
 		this.fetchVehicleById(this.$route.query.id).then((vehicle) => {
 			this.vehicle = vehicle;
@@ -159,26 +160,46 @@ export default {
 				</div>
 			</div>
 			<div class="dealer-wrapper">
-				<div class="car-seller-title-logo-wrapper">
-					<h3 class="carToView-red-title carToView-titles">Seller</h3>
-					<p class="car-seller-logo">{{ dealer.name }}</p>
+				<div class="popup-header">
+					<div class="user-logo">
+						<img
+							v-if="dealer.logo_Img"
+							:src="dealer.logo_Img"
+							alt="logo image of seller"
+						/>
+						<img
+							v-else
+							src="/images/icons/userIcon.png"
+							alt="logo image of seller"
+						/>
+					</div>
+					<div class="popup-title-container">
+						<h4 class="popup-title">{{ dealer.name }}</h4>
+						<p class="popup-email">{{ dealer.email }}</p>
+					</div>
 				</div>
-				<div class="seller-container">
-					<h4 class="">{{ dealer.name }}</h4>
-					<p>
-						<span class="carToView-details-bold">Tel:</span>
-						<span class="carToView-details-text">{{ dealer.tel }}</span>
-					</p>
-					<p>
-						<span class="carToView-details-bold">E-mail:</span>
-						<span class="carToView-details-text">{{ dealer.email }}</span>
-					</p>
-					<p>
-						<span class="carToView-details-bold">Address:</span>
-						<span class="carToView-details-text">{{ dealer.address }}</span>
-					</p>
+
+				<div class="seller-info-container">
+					<h3 class="carToView-red-title carToView-titles">Seller info:</h3>
+
+					<div class="seller-info-field">
+						<p class="carToView-details-bold">Name:</p>
+						<p class="carToView-details-text">{{ dealer.name }}</p>
+					</div>
+					<div class="seller-info-field">
+						<p class="carToView-details-bold">Tel:</p>
+						<p class="carToView-details-text">{{ dealer.tel }}</p>
+					</div>
+					<div class="seller-info-field">
+						<p class="carToView-details-bold">E-mail:</p>
+						<p class="carToView-details-text">{{ dealer.email }}</p>
+					</div>
+					<div class="seller-info-field">
+						<p class="carToView-details-bold">Address:</p>
+						<p class="carToView-details-text">{{ dealer.address }}</p>
+					</div>
 				</div>
-				<div v-if="$route.name != 'dealerInventory'">
+				<div v-if="$route.name != 'dealerInventory'" class="btn-container">
 					<router-link
 						class="btn btn-local"
 						:to="{
@@ -263,6 +284,41 @@ export default {
 	overflow: hidden;
 	height: 40vh;
 }
+.user-logo {
+	height: 3em;
+	width: 3em;
+	border: 1px solid;
+	border-radius: 50px;
+	display: grid;
+	place-items: center;
+	cursor: pointer;
+	transition: all 250ms ease-in-out;
+	box-shadow: 0 2px 4px rgba(160, 158, 158, 0.5);
+	&:hover {
+		box-shadow: 0 3px 4px rgba(254, 254, 254, 0.551);
+	}
+	img {
+		max-width: 100%;
+		object-fit: cover;
+	}
+}
+.popup-header {
+	display: flex;
+	padding: 0.5em;
+
+	align-items: center;
+	border-bottom: 1px solid $lightDark;
+	padding-block: 1em;
+	gap: 1em;
+	margin-bottom: 1em;
+}
+.popup-title {
+	justify-self: flex-end;
+	font: $font-text-bold;
+}
+.popup-email {
+	font: $font-text;
+}
 
 .carToView-history {
 	margin-block: 1em;
@@ -300,9 +356,8 @@ export default {
 	}
 }
 .carToView-titles {
-	border-bottom: 2px solid $lightestDark;
+	// border-bottom: 2px solid $lightestDark;
 	padding-block: 0.5em;
-	margin-bottom: 1em;
 	font: $font-mobile-xl;
 }
 
@@ -332,6 +387,7 @@ export default {
 		max-width: 100%;
 	}
 }
+
 .main-display {
 	display: none;
 }
@@ -368,10 +424,14 @@ export default {
 		font: $font-mobile-m;
 	}
 }
-.seller-container {
-	padding-block: 1em;
+.seller-info-container {
+	padding: 1em;
 	display: grid;
 	gap: 0.5em;
+}
+.seller-info-field{
+	display: flex;
+	gap: 1em;
 }
 .sub-title {
 	font: $font-mobile-l;
@@ -464,13 +524,14 @@ export default {
 		}
 	}
 	@include breakpoint(desktop) {
-		// border-top: 1px solid lighten($lightestDark, 20);
 		margin-block: 1em;
 		padding: 0;
 		gap: 1em;
 		background: $light;
-		padding: 0.5em;
-
+		padding-inline: 10em;
+.btn-container{
+	padding-inline: 1em;
+}
 		.carToView-titles {
 			border-bottom: none;
 			color: $primary;
@@ -499,6 +560,7 @@ export default {
 			display: flex;
 			gap: 0.1em;
 		}
+	
 	}
 	@include breakpoint(lg-device) {
 		padding-inline: 5%;

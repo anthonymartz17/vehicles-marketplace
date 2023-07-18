@@ -1,14 +1,16 @@
 <script>
 import Login from "../authentication/login-page";
 import Register from "../authentication/register-page";
-import SuccessConfirmation from "../../components/utilities/alert-msg.vue";
+import ForgotPassword from "../authentication/forgot-password";
+// import SuccessConfirmation from "../../components/utilities/alert-msg.vue";
 import { mapState } from "vuex";
 
 export default {
 	components: {
 		Login,
 		Register,
-		SuccessConfirmation,
+		ForgotPassword,
+		// SuccessConfirmation,
 	},
 	data() {
 		return {
@@ -17,10 +19,10 @@ export default {
 	},
 	methods: {
 		checkLoginOption(id) {
-			console.log(id,'h')
+			console.log(id);
 			switch (id) {
 				case "Forgot your password?":
-					this.$router.replace({ name: "forgot-password" });
+					this.activeComponent = "ForgotPassword";
 					break;
 				case "Login instead":
 					this.activeComponent = "Login";
@@ -34,24 +36,26 @@ export default {
 	computed: {
 		...mapState("auth", ["alert"]),
 		toggleLinkText() {
-			return this.activeComponent == "Login" ? "Forgot your password?" : "Login instead"
-		}
+			return this.activeComponent == "Login"
+				? "Forgot your password?"
+				: "Login instead";
+		},
 	},
 };
 </script>
 <template>
 	<div class="joinus-wrapper">
-		<SuccessConfirmation
+		<!-- <SuccessConfirmation
 			v-show="alert.type"
 			@CheckLoginOptionEvent="checkLoginOption($event)"
 			alert="error"
 			title="Error"
 			msg="somehting went wrong"
-		/>
+		/> -->
 		<div class="joinus-container">
 			<div class="component-tabs-container">
 				<button
-					@click="checkLoginOption('login')"
+					@click="checkLoginOption('Login instead')"
 					:class="[
 						'component-switch-btn',
 						{ 'active-component': activeComponent == 'Login' },
