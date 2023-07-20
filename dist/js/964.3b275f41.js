@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkvehicles_marketplace"]=self["webpackChunkvehicles_marketplace"]||[]).push([[964],{1964:function(e,n,t){t.r(n),t.d(n,{default:function(){return f}});var u=function(){var e=this;e._self._c;return e._m(0)},c=[function(){var e=this,n=e._self._c;return n("div",{staticClass:"notFound"},[n("h2",[e._v("Page not found")])])}],s={},l=s,r=t(1001),a=(0,r.Z)(l,u,c,!1,null,"041fc928",null),f=a.exports}}]);
+//# sourceMappingURL=964.3b275f41.js.map
