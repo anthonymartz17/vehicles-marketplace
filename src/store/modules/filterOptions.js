@@ -22,6 +22,7 @@ export default {
 		SET_MODEL_OPTIONS(state, payload) {
 			if (payload != null) {
 				state.modelOptions = [
+					//controls what will display once models dropdown is open
 					payload.make != "All Makes" ? `All ${payload.make}S` : "All Models",
 					...payload.list
 						.filter((x) => x.make == payload.make)
