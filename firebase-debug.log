@@ -1,0 +1,71 @@
+[debug] [2023-07-19T13:22:49.709Z] ----------------------------------------------------------------------
+[debug] [2023-07-19T13:22:49.711Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\anton\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2023-07-19T13:22:49.712Z] CLI Version:   9.16.6
+[debug] [2023-07-19T13:22:49.712Z] Platform:      win32
+[debug] [2023-07-19T13:22:49.712Z] Node Version:  v14.17.3
+[debug] [2023-07-19T13:22:49.717Z] Time:          Wed Jul 19 2023 09:22:49 GMT-0400 (Eastern Daylight Time)
+[debug] [2023-07-19T13:22:49.717Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-07-19T13:22:49.719Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2023-07-19T13:22:49.781Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-07-19T13:22:49.781Z] > authorizing via signed-in user (anthonymartz17@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  D:\Cursos programacion\Projects Only\vehicles-marketplace
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+
+[debug] [2023-07-19T13:22:49.894Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2023-07-19T13:22:49.895Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[info] i  .firebaserc already has a default project, using vehicles-marketplace. 
+[debug] [2023-07-19T13:23:04.411Z] > refreshing access token with scopes: []
+[debug] [2023-07-19T13:23:04.412Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2023-07-19T13:23:04.615Z] <<< HTTP RESPONSE 200 {"pragma":"no-cache","date":"Wed, 19 Jul 2023 13:23:03 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","expires":"Mon, 01 Jan 1990 00:00:00 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2023-07-19T13:23:04.636Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/vehicles-marketplace [none]
+[debug] [2023-07-19T13:23:04.978Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/vehicles-marketplace 200
+[debug] [2023-07-19T13:23:04.978Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/vehicles-marketplace {"projectId":"vehicles-marketplace","projectNumber":"775154818578","displayName":"vehicles marketplace","name":"projects/vehicles-marketplace","resources":{"hostingSite":"vehicles-marketplace","storageBucket":"vehicles-marketplace.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_6cc36d44-6206-4fde-8ffd-a56d88cc1816"}
+[info] 
+=== Hosting Setup
+[info] 
+[info] Your public directory is the folder (relative to your project directory) that
+[info] will contain Hosting assets to be uploaded with firebase deploy. If you
+[info] have a build process for your assets, use your build's output directory.
+[info] 
+[debug] [2023-07-19T13:23:18.246Z] >>> [apiv2][query] GET https://www.gstatic.com/firebasejs/releases.json [none]
+[debug] [2023-07-19T13:23:18.329Z] <<< [apiv2][status] GET https://www.gstatic.com/firebasejs/releases.json 200
+[debug] [2023-07-19T13:23:18.329Z] <<< [apiv2][body] GET https://www.gstatic.com/firebasejs/releases.json {"current":{"version":"10.0.0","browserURL":"https://www.gstatic.com/firebasejs/10.0.0/firebase.js","packageURL":"https://www.gstatic.com/firebasejs/10.0.0/firebase.tgz"},"live":{"version":"10.0","browserURL":"https://www.gstatic.com/firebasejs/live/10.0/firebase.js","packageURL":"https://www.gstatic.com/firebasejs/live/10.0/firebase.tgz"},"components":{"analytics":"https://www.gstatic.com/firebasejs/10.0.0/firebase-analytics.js","app":"https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js","app-check":"https://www.gstatic.com/firebasejs/10.0.0/firebase-app-check.js","auth":"https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js","auth/cordova":"https://www.gstatic.com/firebasejs/10.0.0/firebase-auth/cordova.js","functions":"https://www.gstatic.com/firebasejs/10.0.0/firebase-functions.js","firestore":"https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js","firestore/lite":"https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore/lite.js","installations":"https://www.gstatic.com/firebasejs/10.0.0/firebase-installations.js","storage":"https://www.gstatic.com/firebasejs/10.0.0/firebase-storage.js","performance":"https://www.gstatic.com/firebasejs/10.0.0/firebase-performance.js","remote-config":"https://www.gstatic.com/firebasejs/10.0.0/firebase-remote-config.js","messaging":"https://www.gstatic.com/firebasejs/10.0.0/firebase-messaging.js","messaging/sw":"https://www.gstatic.com/firebasejs/10.0.0/firebase-messaging/sw.js","database":"https://www.gstatic.com/firebasejs/10.0.0/firebase-database.js","firestore.memory":"https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.memory.js"}}
+[info] +  Wrote dist/index.html 
+[info] 
+[info] i  Detected a .git folder at D:\Cursos programacion\Projects Only\vehicles-marketplace 
+[info] i  Authorizing with GitHub to upload your service account to a GitHub repository's secrets store. 
+[info] 
+[info] Visit this URL on this device to log in:
+[info] https://github.com/login/oauth/authorize?client_id=89cf50f02ac6aaed3484&state=2714575&redirect_uri=http%3A%2F%2Flocalhost%3A9005&scope=read%3Auser%20repo%20public_repo
+[info] 
+[info] Waiting for authentication...
+[debug] [2023-07-19T13:23:26.470Z] >>> HTTP REQUEST POST https://github.com/login/oauth/access_token  
+ {"client_id":"89cf50f02ac6aaed3484","client_secret":"3330d14abc895d9a74d5f17cd7a00711fa2c5bf0","code":"1ea214d2c178ca57dd96","redirect_uri":"http://localhost:9005","state":"2714575"}
+[debug] [2023-07-19T13:23:26.612Z] <<< HTTP RESPONSE 200 {"server":"GitHub.com","date":"Wed, 19 Jul 2023 13:23:25 GMT","content-type":"application/json; charset=utf-8","transfer-encoding":"chunked","vary":"X-PJAX, X-PJAX-Container, Turbo-Visit, Turbo-Frame, Accept-Encoding, Accept, X-Requested-With","etag":"W/\"2b771087efbed7f9fb647042f010ff9b\"","cache-control":"max-age=0, private, must-revalidate","strict-transport-security":"max-age=31536000; includeSubdomains; preload","x-frame-options":"deny","x-content-type-options":"nosniff","x-xss-protection":"0","referrer-policy":"origin-when-cross-origin, strict-origin-when-cross-origin","content-security-policy":"default-src 'none'; base-uri 'self'; child-src github.com/assets-cdn/worker/ gist.github.com/assets-cdn/worker/; connect-src 'self' uploads.github.com objects-origin.githubusercontent.com www.githubstatus.com collector.github.com raw.githubusercontent.com api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com cdn.optimizely.com logx.optimizely.com/v1/events *.actions.githubusercontent.com productionresultssa0.blob.core.windows.net/ productionresultssa1.blob.core.windows.net/ productionresultssa2.blob.core.windows.net/ productionresultssa3.blob.core.windows.net/ productionresultssa4.blob.core.windows.net/ wss://*.actions.githubusercontent.com github-production-repository-image-32fea6.s3.amazonaws.com github-production-release-asset-2e65be.s3.amazonaws.com insights.github.com wss://alive.github.com; font-src github.githubassets.com; form-action 'self' github.com gist.github.com objects-origin.githubusercontent.com; frame-ancestors 'none'; frame-src viewscreen.githubusercontent.com notebooks.githubusercontent.com; img-src 'self' data: github.githubassets.com media.githubusercontent.com camo.githubusercontent.com identicons.github.com avatars.githubusercontent.com github-cloud.s3.amazonaws.com objects.githubusercontent.com objects-origin.githubusercontent.com secured-user-images.githubusercontent.com/ user-images.githubusercontent.com/ private-user-images.githubusercontent.com opengraph.githubassets.com github-production-user-asset-6210df.s3.amazonaws.com customer-stories-feed.github.com spotlights-feed.github.com *.githubusercontent.com; manifest-src 'self'; media-src github.com user-images.githubusercontent.com/ secured-user-images.githubusercontent.com/ private-user-images.githubusercontent.com; script-src github.githubassets.com; style-src 'unsafe-inline' github.githubassets.com; worker-src github.com/assets-cdn/worker/ gist.github.com/assets-cdn/worker/","x-github-request-id":"F508:1D29:14E3468:1DDA9CC:64B7E3CD"}
+[debug] [2023-07-19T13:23:26.620Z] >>> [apiv2][query] GET https://api.github.com/user [none]
+[debug] [2023-07-19T13:23:26.804Z] <<< [apiv2][status] GET https://api.github.com/user 200
+[debug] [2023-07-19T13:23:26.804Z] <<< [apiv2][body] GET https://api.github.com/user {"login":"anthonymartz17","id":73434724,"node_id":"MDQ6VXNlcjczNDM0NzI0","avatar_url":"https://avatars.githubusercontent.com/u/73434724?v=4","gravatar_id":"","url":"https://api.github.com/users/anthonymartz17","html_url":"https://github.com/anthonymartz17","followers_url":"https://api.github.com/users/anthonymartz17/followers","following_url":"https://api.github.com/users/anthonymartz17/following{/other_user}","gists_url":"https://api.github.com/users/anthonymartz17/gists{/gist_id}","starred_url":"https://api.github.com/users/anthonymartz17/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/anthonymartz17/subscriptions","organizations_url":"https://api.github.com/users/anthonymartz17/orgs","repos_url":"https://api.github.com/users/anthonymartz17/repos","events_url":"https://api.github.com/users/anthonymartz17/events{/privacy}","received_events_url":"https://api.github.com/users/anthonymartz17/received_events","type":"User","site_admin":false,"name":"Antonio Martinez","company":null,"blog":"","location":"Long Island, NY","email":null,"hireable":null,"bio":"Self-taught front-end dev. I was an English teacher for many years in the DR. However, I have fallen in love with coding for the mental challenges it brings.","twitter_username":null,"public_repos":15,"public_gists":0,"followers":0,"following":0,"created_at":"2020-10-25T15:20:34Z","updated_at":"2023-07-18T16:58:00Z","private_gists":0,"total_private_repos":0,"owned_private_repos":0,"disk_usage":76739,"collaborators":0,"two_factor_authentication":false,"plan":{"name":"free","space":976562499,"collaborators":0,"private_repos":10000}}
+[info] 
+[info] +  Success! Logged into GitHub as anthonymartz17 
+[info] 
