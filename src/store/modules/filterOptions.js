@@ -20,14 +20,15 @@ export default {
 
 	mutations: {
 		SET_MODEL_OPTIONS(state, payload) {
-		
 			if (payload != null) {
 				state.modelOptions = [
-					`All ${payload.make}S`,
-					...payload.list.filter((x) => x.make == payload.make).map((x) => x.model),
+					payload.make != "All Makes" ? `All ${payload.make}S` : "All Models",
+					...payload.list
+						.filter((x) => x.make == payload.make)
+						.map((x) => x.model),
 				];
 			} else {
-				state.modelOptions = []
+				state.modelOptions = [];
 			}
 		},
 		SET_FILTERS_OPTIONS(state, payload) {

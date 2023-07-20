@@ -60,14 +60,13 @@ export default {
 					dealerId: "",
 				};
 
-				console.log(state.filters ,'state')
+				console.log(state.filters, "state");
 			} else {
 				state.filters = { ...state.filters, ...payload };
 			}
 		},
 		FILTER_VEHICLES(state) {
 			let results = state.vehicles;
-			console.log(state.vehicles,'a ve klk')
 			if (
 				state.filters.carCondition !== "" &&
 				state.filters.carCondition !== "New/Used"
@@ -159,6 +158,7 @@ export default {
 			}
 			// the following condition ensures to show selected make, and in case all makes is selected, it doesnt get into the condition which makes the program run as if nothing was selected and shows all makes avalables.
 			if (state.filters.make !== "" && state.filters.make !== "All Makes") {
+				console.log("entro makes");
 				results = results.filter((one) =>
 					one.make
 						.toLowerCase()
@@ -168,7 +168,7 @@ export default {
 
 			if (
 				state.filters.model != "" &&
-				state.filters.model != `All ${state.filters.make}`
+				state.filters.model != `All ${state.filters.make}S`
 			) {
 				results = results.filter((one) =>
 					one.model
@@ -314,7 +314,7 @@ export default {
 		},
 
 		updateFilters({ commit }, payload) {
-			console.log('is firing')
+			console.log("is firing");
 			commit("UPDATE_FILTERS", payload);
 		},
 		filterVehicles({ commit }) {

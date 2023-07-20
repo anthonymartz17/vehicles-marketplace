@@ -67,6 +67,11 @@ export default {
 				this.$store.dispatch("vehicles/updateFilters", newValue);
 			},
 		},
+		modelPlaceholder() {
+			return this.filters.make && this.filters.make !== "All Makes"
+				? `All ${this.filters.make}S`
+				: "All Models";
+		},
 
 		...mapGetters("filterOptions", [
 			"makeOptions",
@@ -217,11 +222,7 @@ export default {
 						:options="modelOptions"
 						:searchable="false"
 						:show-labels="false"
-						:placeholder="
-							filters.make && filters.make !== 'All Makes'
-								? `All ${filters.make}S`
-								: 'All Models'
-						"
+						:placeholder="modelPlaceholder"
 					></multiselect>
 				</div>
 			</div>
