@@ -67,7 +67,6 @@ export default {
 		},
 		FILTER_VEHICLES(state) {
 			let results = state.vehicles;
-			console.log(state.vehicles,'a ve klk')
 			if (
 				state.filters.carCondition !== "" &&
 				state.filters.carCondition !== "New/Used"

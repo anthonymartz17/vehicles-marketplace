@@ -1,6 +1,6 @@
 {
-  "appId": "com.example.app",
-  "appName": "dealership-project",
-  "webDir": "dist",
-  "bundledWebRuntime": false
+	"appId": "com.example.app",
+	"appName": "vehicles-marketplace",
+	"webDir": "dist",
+	"bundledWebRuntime": false
 }
