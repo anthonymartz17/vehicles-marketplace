@@ -13,7 +13,6 @@
 		"@capacitor/android": "^4.1.0",
 		"@capacitor/core": "^4.1.0",
 		"animate.css": "^4.1.1",
-		"bootstrap": "^4.5.3",
 		"core-js": "^3.6.5",
 		"firebase": "^9.15.0",
 		"json": "^11.0.0",
@@ -46,7 +45,6 @@
 		"node-sass": "^8.0.0",
 		"sass": "^1.26.11",
 		"sass-loader": "^10.0.5",
-		"vue-cli-plugin-bootstrap-vue": "^0.8.2",
 		"vue-template-compiler": "^2.6.14"
 	}
 }
