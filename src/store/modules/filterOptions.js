@@ -20,10 +20,9 @@ export default {
 
 	mutations: {
 		SET_MODEL_OPTIONS(state, payload) {
-			if (payload != null) {
+			if (payload != null && payload.make != "All Makes") {
 				state.modelOptions = [
-					//controls what will display once models dropdown is open
-					payload.make != "All Makes" ? `All ${payload.make}S` : "All Models",
+					`All ${payload.make}S`,
 					...payload.list
 						.filter((x) => x.make == payload.make)
 						.map((x) => x.model),
