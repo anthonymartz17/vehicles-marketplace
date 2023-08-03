@@ -1,4 +1,4 @@
-import { auth } from "../../firebaseConfig";
+import { auth } from "@/firebaseConfig";
 
 import {
 	createUserWithEmailAndPassword,
@@ -55,14 +55,10 @@ export default {
 					email,
 					password
 				);
-				const currentUser = response._tokenResponse.email;
-				const token = response._tokenResponse.idToken;
-				const expiresIn = response._tokenResponse.expiresIn;
-				// const userProfile = await apiProfile.getByAuthId(response.user.uid);
-				// const username = userProfile[0].name;
-				// const dealerId = userProfile[0].id;
-				// const isActive = userProfile[0].active;
-				console.log(currentUser, token, expiresIn, "ESTA LOGEADO");
+				// const currentUser = response._tokenResponse.email;
+				// const token = response._tokenResponse.idToken;
+				// const expiresIn = response._tokenResponse.expiresIn;
+
 				return response.user;
 			} catch (error) {
 				throw error;
@@ -133,7 +129,7 @@ export default {
 
 				// Re-authenticate the user with their current password
 				const test = await reauthenticateWithCredential(user, credential);
-				console.log(test, "test");
+			
 
 				// // Change the password
 				await updatePassword(user, newPassword);

@@ -6,10 +6,9 @@ import AppHeader from "./components/header/Header.vue";
 import AppMain from "./components/Main.vue";
 import AppFooter from "./components/Footer.vue";
 import MobileMenu from "./components/MobileMenu.vue";
-import initializeFirebase from "./firebaseConfig";
 import AlertMsg from "./components/utilities/alert-msg.vue";
 import Loading from "./components/utilities/loading.vue";
-import { mapActions, mapState, mapMutations, mapGetters } from "vuex";
+import { mapActions, mapState, mapGetters } from "vuex";
 
 export default {
 	components: {
@@ -62,16 +61,16 @@ export default {
 		};
 	},
 	created() {
-		initializeFirebase;
+		window.addEventListener("beforeunload", this.signOutUser);
+
 		this.fetchVehicles().then((data) => {
 			this.setFiltersOptions(data);
-			console.log("getting cars from app", data);
 		});
 		window.addEventListener("resize", this.updateViewportSize);
 	},
 	beforeDestroy() {
 		window.removeEventListener("resize", this.updateViewportSize);
-		this.signOut();
+		window.removeEventListener("beforeunload", this.signOutUser);
 	},
 	methods: {
 		...mapActions("vehicles", ["fetchVehicles", "fetchVehiclesImages"]),
@@ -80,13 +79,6 @@ export default {
 		updateViewportSize() {
 			const width = window.innerWidth;
 			this.setViewportSize(width);
-		},
-		async signOut() {
-			try {
-				await this.signOutUser();
-			} catch (error) {
-				throw error;
-			}
 		},
 	},
 	computed: {

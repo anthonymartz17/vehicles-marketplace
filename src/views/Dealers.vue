@@ -18,7 +18,7 @@ export default {
 		this.dealerId = this.$route.query.dealerId;
 		if (this.dealerId) {
 			this.fetchDealerById(this.dealerId).then((dealer) => {
-				console.log("getting dealer by id from dealer");
+				
 				this.dealer = dealer;
 				this.fetchAds(this.dealerId).then((data) => {
 					this.inventory = data;
@@ -37,7 +37,7 @@ export default {
 		...mapActions("adsCrud", ["fetchAds"]),
 
 		getCarsByDealer() {
-			console.log(this.dealerId, "kllklklklk");
+		
 			// resets filters first in case there were some set
 			this.updateFilters(null);
 			this.updateFilters({ dealerId: this.dealerId });

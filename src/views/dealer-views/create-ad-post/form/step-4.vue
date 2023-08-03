@@ -19,7 +19,6 @@ export default {
 				thumbnailWidth: 150,
 				thumbnailHeight: 150,
 				maxFiles: 4,
-				// maxFilesize: 0.5,
 				acceptedFiles: ".jpg, .jpeg, .png",
 				headers: { "My-Awesome-Header": "header value" },
 				dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>UPLOAD IMAGE",
@@ -119,7 +118,7 @@ export default {
 				try {
 					this.TOGGLE_IS_LOADING();
 					if (this.vehiceId) {
-						console.log("updatinging", this.vehiclePost);
+				
 						delete this.vehiclePost.carPicsUrls;
 						await this.updateAd({
 							vehicleData: this.vehiclePost,

@@ -9,7 +9,6 @@ export default {
 				await this.deleteAd(this.alert.vehicleId);
 			}
 			if (this.alert.id == "exit-edit") {
-				console.log(this.alert, "dfsfs");
 				localStorage.removeItem("vehicle_id");
 				localStorage.removeItem("vehicle_images");
 				this.$store.dispatch("adsCrud/updateVehiclePost", null);
