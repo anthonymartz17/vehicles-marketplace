@@ -11,7 +11,6 @@ export default {
 	},
 	mutations: {
 		UPDATE_VEHICLEPOST(state, newValue) {
-			console.log(newValue, "update vacio");
 			if (newValue) {
 				state.vehiclePost = { ...state.vehiclePost, ...newValue };
 			} else {
@@ -54,7 +53,6 @@ export default {
 				let data = await apiAds.getAds(dealerId);
 				// fetch images url in firestore storage & adds each corresponding list of urls to the proper car in cars list.
 				let dataUrl = await apiCarsImages.getCarsImages(data);
-				console.log(dataUrl);
 
 				data.forEach((one) => {
 					let imagesUrl = dataUrl.find((x) => x.id == one.id).imagesUrl;
@@ -99,7 +97,7 @@ export default {
 				throw error;
 			}
 		},
-	
+
 		async fetchImageUrlListById(_, imagePaths) {
 			try {
 				const imgUrlList = await apiAds.getImagesById(imagePaths);
@@ -140,8 +138,7 @@ export default {
 
 				//make accessories an array
 				vehicleData.accesories = vehicleData.accesories.split(",");
-				const response = await apiAds.updateAd({ vehicleData, vehicleId });
-				console.log(response, "images uploaded, state");
+				await apiAds.updateAd({ vehicleData, vehicleId });
 			} catch (error) {
 				throw error;
 			}
@@ -153,9 +150,8 @@ export default {
 				await apiAds.deleteImages(vehicle.pics);
 				//End delete images firebase storage
 				//delete data firebase database
-				const response = await apiAds.deleteAd(vehicleId);
+				await apiAds.deleteAd(vehicleId);
 				commit("DELETE", vehicleId);
-				console.log(response, "images uploaded, state");
 			} catch (error) {
 				throw error;
 			}

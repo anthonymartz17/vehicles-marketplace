@@ -79,7 +79,7 @@ export default {
 			return this.stepsRoutes[this.stepsRoutes.indexOf(this.$route.name) - 1];
 		},
 		nextRoute() {
-			console.log(this.$refs.currentView.vehicle);
+		
 			return this.stepsRoutes[this.stepsRoutes.indexOf(this.$route.name) + 1];
 		},
 		submitButton() {

@@ -50,7 +50,7 @@ export default {
 			
 				} catch (error) {
 					this.SET_ALERT_MSG({ type: "error", title: "Error", msg: error });
-					console.log(error);
+			
 				} finally {
 					this.TOGGLE_IS_LOADING()
 				}

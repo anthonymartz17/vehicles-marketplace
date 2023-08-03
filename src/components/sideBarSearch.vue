@@ -18,7 +18,6 @@ export default {
 	mounted() {
 		this.scrollSelectedMakeOrModelIntoView();
 		this.updateInputTextUser();
-		// console.log(this.inputTextUser, 'i fired')
 	},
 	destroyed() {
 		this.clearFilters();

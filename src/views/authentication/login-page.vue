@@ -55,8 +55,7 @@ export default {
 						password: this.user.password,
 					});
 					//checks user status to see if active, if not redirect to activate account
-					// const profile = await this.fetchByAuthId(response.uid);
-					console.log(this.isLoggedIn,'isLOGIN')
+				
 					this.isLoggedIn
 						? this.$router.push({ name: "dashboard" })
 						: this.$router.push({

@@ -25,7 +25,6 @@ export default {
 		// 	if (this.$route.name !== route) this.$router.push({ name: route });
 		// },
 		closeModal() {
-			console.log('work')
 			this.$emit('closeModal')
 		}
 	},

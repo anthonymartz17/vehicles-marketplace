@@ -42,7 +42,7 @@ export default {
 						dealerId: this.userProfile.id,
 						profileData: this.userProfile,
 					});
-					console.log(userUpdated, "EL ACTUALIZADO");
+					
 					//updates currentUserDealer.isActive if account hadnt been activated to immediatelly show active account views when autologin fires.
 					if (userUpdated.active) {
 						const currentUserDealer = JSON.parse(

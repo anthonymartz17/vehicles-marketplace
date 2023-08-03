@@ -65,12 +65,7 @@ const routes = [
 		name: "joinUs",
 		component: () => import("../views/authentication/joinUs"),
 	},
-	// {
-	// 	path: "/activationform",
-	// 	name: "activationForm",
-	// 	meta: { requiresAuth: true },
-	// 	component: () => import("../views/authentication/activationform.vue"),
-	// },
+
 	{
 		path: "/dashboard",
 		meta: { requiresAuth: true },
@@ -84,8 +79,7 @@ const routes = [
 			},
 			{
 				path: "create-ad",
-				// props: (route) => ({ id: route.query.id ? route.query.id : null }),
-				// preserveQueryParams: true,
+
 				component: () =>
 					import("../views/dealer-views/create-ad-post/create-ad"),
 				children: [
@@ -146,13 +140,10 @@ router.beforeEach((to, from, next) => {
 	// Check the authentication status or any other condition
 	store.dispatch("auth/autoLogIn");
 	const isLoggedIn = store.getters["auth/isLoggedIn"];
-	console.log(isLoggedIn);
-	// const isUserActive = store.state["auth"].user.isActive;
 
 	if (to.matched.some((record) => record.meta.requiresAuth)) {
 		// Route requires authentication
 		if (!isLoggedIn) {
-			console.log("not loggedin");
 			// User is not authenticated, redirect to login or appropriate route
 			next("/joinUs");
 		} else {

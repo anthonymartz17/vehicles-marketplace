@@ -19,7 +19,7 @@ export default {
 	},
 	methods: {
 		checkLoginOption(id) {
-			console.log(id);
+	
 			switch (id) {
 				case "Forgot your password?":
 					this.activeComponent = "ForgotPassword";

@@ -1,5 +1,6 @@
+import { db, storage } from "@/firebaseConfig.js";
+
 import {
-	getFirestore,
 	collection,
 	doc,
 	getDoc,
@@ -11,7 +12,6 @@ import {
 	where,
 } from "firebase/firestore";
 import {
-	getStorage,
 	ref,
 	getDownloadURL,
 	getMetadata,
@@ -19,11 +19,6 @@ import {
 	deleteObject,
 } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
-// Create a reference to the storage service
-const storage = getStorage();
-
-//initialize service
-const db = getFirestore();
 
 export default {
 	async getAds(dealerId) {
@@ -60,7 +55,6 @@ export default {
 	},
 	async createAd(vehicleData) {
 		try {
-			console.log(vehicleData, "api");
 			const colRef = collection(db, "cars");
 
 			const response = await addDoc(colRef, vehicleData);
@@ -75,7 +69,6 @@ export default {
 
 	async uploadImages({ vehicleImages, vehicleId }) {
 		try {
-			console.log(vehicleImages,'images api ')
 			// const urlsUploaded = await Promise.all(
 			//uploads each image to firebase storage and returns array with url from each one
 			const imgPathsPromised = vehicleImages.map(async (img) => {
@@ -90,9 +83,8 @@ export default {
 
 				return imageName;
 			});
-			console.log(imgPathsPromised,'promised')
 			const imgPaths = await Promise.all(imgPathsPromised);
-			console.log(imgPaths, "from api");
+
 			return imgPaths;
 		} catch (error) {
 			throw error;
@@ -143,7 +135,6 @@ export default {
 		}
 	},
 	async updateAd({ vehicleData, vehicleId }) {
-		console.log(vehicleId, "elid");
 		try {
 			const vehicleDocRef = doc(db, "cars", vehicleId);
 
@@ -193,7 +184,6 @@ export default {
 		}
 	},
 	async getDealerById(dealerId) {
-		console.log(dealerId, "el dealer");
 		try {
 			const dealerDocRef = doc(db, "dealers", dealerId);
 			const dealerDocSnapshot = await getDoc(dealerDocRef);

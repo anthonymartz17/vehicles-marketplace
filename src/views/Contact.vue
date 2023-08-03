@@ -6,9 +6,7 @@ export default {
 		Multiselect,
 	},
 	created() {
-		this.$getLocation(this.myCoordinates).then((coordinates) => {
-			console.log(coordinates);
-		});
+		this.$getLocation(this.myCoordinates).then((coordinates) => {});
 	},
 	data() {
 		return {
