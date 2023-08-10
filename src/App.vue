@@ -61,7 +61,7 @@ export default {
 		};
 	},
 	created() {
-		window.addEventListener("beforeunload", this.signOutUser);
+		window.addEventListener("unload", this.signOutUser);
 
 		this.fetchVehicles().then((data) => {
 			this.setFiltersOptions(data);
@@ -70,7 +70,7 @@ export default {
 	},
 	beforeDestroy() {
 		window.removeEventListener("resize", this.updateViewportSize);
-		window.removeEventListener("beforeunload", this.signOutUser);
+		window.removeEventListener("unload", this.signOutUser);
 	},
 	methods: {
 		...mapActions("vehicles", ["fetchVehicles", "fetchVehiclesImages"]),
