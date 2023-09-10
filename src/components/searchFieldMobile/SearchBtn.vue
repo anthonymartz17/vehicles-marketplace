@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
 <router-link class="routerLink" :to="{name:'searchResults'}" >
     <div class="btn btn-search"
       @click="searchVehicles($route.name)"
@@ -39,4 +39,4 @@ export default {
 } 
    
 
-</style>
+</style> -->

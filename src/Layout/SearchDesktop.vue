@@ -1,9 +1,9 @@
 <script>
 import { mapGetters, mapMutations } from "vuex";
-import SearchBtn from "./searchFieldMobile/SearchBtn.vue";
-import HomeSearchForm from "./homeSearchForm.vue";
+import SearchBtn from "../components/searchFieldMobile/SearchBtn.vue";
+import HomeSearchForm from "../components/homeSearchForm.vue";
 import Multiselect from "vue-multiselect";
-import MartzIcons from "./martz-icons.vue";
+import MartzIcons from "../components/MartzIcons.vue";
 // import PriceYear from "./priceYearDesktop.vue";
 export default {
 	components: {

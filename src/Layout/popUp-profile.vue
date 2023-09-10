@@ -1,6 +1,6 @@
 <script>
 import { mapGetters, mapState } from "vuex";
-import LoggedInUserLinks from "../dashboard/Loggedin-user-links.vue";
+import LoggedInUserLinks from "../components/dashboard/Loggedin-user-links.vue";
 export default {
 	components: { LoggedInUserLinks },
 	data() {

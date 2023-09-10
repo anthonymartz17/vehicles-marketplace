@@ -1,6 +1,6 @@
 <script>
 import SearchMobile from "../components/searchFieldMobile/SearchMobile.vue";
-import SearchDesktop from "../components/SearchDesktop.vue";
+import SearchDesktop from "../Layout/SearchDesktop.vue";
 import VehiclesDisplay from "../components/VehiclesDisplay.vue";
 
 export default {

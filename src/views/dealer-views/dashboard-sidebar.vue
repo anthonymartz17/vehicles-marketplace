@@ -1,7 +1,6 @@
 <script>
-
 import LoggedInUserLinks from "../../components/dashboard/Loggedin-user-links.vue";
-import MartzIcons from "../../components/martz-icons.vue";
+import MartzIcons from "../../components/MartzIcons.vue";
 import "animate.css";
 import { mapMutations } from "vuex";
 export default {
@@ -29,7 +28,6 @@ export default {
 			}
 		},
 	},
-	
 };
 </script>
 <template>

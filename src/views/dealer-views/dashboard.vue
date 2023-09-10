@@ -1,7 +1,7 @@
 <script>
 import { mapGetters } from "vuex";
 import LoggedInUserLinks from "../../components/dashboard/Loggedin-user-links.vue";
-import MartzIcons from "../../components/martz-icons.vue";
+import MartzIcons from "../../components/MartzIcons.vue";
 import DashboadSidebar from "./dashboard-sidebar.vue";
 import "animate.css";
 export default {
@@ -87,7 +87,6 @@ export default {
 	z-index: 8;
 }
 .mobile-dashboard-sidebar {
-	
 	background: $dark;
 	width: 100%;
 	position: absolute;

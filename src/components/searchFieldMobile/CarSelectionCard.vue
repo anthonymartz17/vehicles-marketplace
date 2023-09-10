@@ -1,3 +1,50 @@
+  <!-- <script>
+  import {mapState,mapMutations,mapGetters} from 'vuex';
+  export default {
+  
+  
+  
+  computed:{
+  
+    ...mapState([
+      'make',
+      'fieldContent',
+      'models',
+      'makeSelected',
+      'carType',
+      'carCondition',
+      'priceUnavailable',
+      'yearsUnavailable',
+      'clickedFieldContent',
+     
+      
+      
+      
+  
+      ]),
+      ...mapGetters([
+        'carModelByMake',
+      ])
+  },
+  
+  
+  methods:{
+  
+   
+    ...mapMutations([
+      'closeSelectionCard',
+      'selectPriceAndYear',
+      'disablePriceAndYear',
+      'selectedFieldData',
+      'toggleOptionsCard'
+  
+    
+    ]),
+    
+  }
+  
+  }
+  </script>
 <template>
 
  <transition 
@@ -10,53 +57,6 @@
 
 </template>
 
-<script>
-import {mapState,mapMutations,mapGetters} from 'vuex';
-export default {
-
-
-
-computed:{
-
-  ...mapState([
-    'make',
-    'fieldContent',
-    'models',
-    'makeSelected',
-    'carType',
-    'carCondition',
-    'priceUnavailable',
-    'yearsUnavailable',
-    'clickedFieldContent',
-   
-    
-    
-    
-
-    ]),
-    ...mapGetters([
-      'carModelByMake',
-    ])
-},
-
-
-methods:{
-
- 
-  ...mapMutations([
-    'closeSelectionCard',
-    'selectPriceAndYear',
-    'disablePriceAndYear',
-    'selectedFieldData',
-    'toggleOptionsCard'
-
-  
-  ]),
-  
-}
-
-}
-</script>
 
 <style lang="scss" scoped>
 .disableOptions{
@@ -74,4 +74,4 @@ methods:{
  
 }
 
-</style>
+</style> -->

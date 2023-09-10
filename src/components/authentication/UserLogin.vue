@@ -64,6 +64,7 @@ export default {
 						  });
 				} catch (error) {
 					// const errorMsg = this.adjustErrorMsg(error);
+					console.log(error)
 					this.SET_ALERT_MSG({ type: "error", title: "Error", msg: error });
 				} finally {
 					this.TOGGLE_IS_LOADING()

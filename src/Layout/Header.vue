@@ -1,6 +1,6 @@
 <script>
 import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
-import PopupProfile from "./popUp-profile.vue";
+import PopupProfile from "@/Layout/popUp-profile.vue";
 export default {
 	props: ["navItems"],
 	components: {

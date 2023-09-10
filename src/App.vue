@@ -1,11 +1,11 @@
 <script>
-import AppModal from "./components/Modal.vue";
+import AppModal from "./Layout/Modal.vue";
 import CarSelectionCard from "./components/searchFieldMobile/CarSelectionCard.vue";
-import AppHeader from "./components/header/Header.vue";
+import AppHeader from "./Layout/Header.vue";
 // import HomeAd from './components/Advertisements.vue'
-import AppMain from "./components/Main.vue";
-import AppFooter from "./components/Footer.vue";
-import MobileMenu from "./components/MobileMenu.vue";
+import AppMain from "./Layout/Main.vue";
+import AppFooter from "./Layout/Footer.vue";
+import MobileMenu from "./Layout/MobileMenu.vue";
 import AlertMsg from "./components/utilities/alert-msg.vue";
 import Loading from "./components/utilities/loading.vue";
 import { mapActions, mapState, mapGetters } from "vuex";

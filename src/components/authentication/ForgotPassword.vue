@@ -1,6 +1,6 @@
 <script>
 import { required, email } from "vuelidate/lib/validators";
-import { mapActions, mapGetters, mapMutations } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 
 export default {
 	data() {

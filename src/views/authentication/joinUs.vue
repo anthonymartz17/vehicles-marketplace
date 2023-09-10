@@ -1,7 +1,7 @@
 <script>
-import Login from "../authentication/login-page";
-import Register from "../authentication/register-page";
-import ForgotPassword from "../authentication/forgot-password";
+import Login from "@/components/authentication/UserLogin";
+import Register from "@/components/authentication/UserRegistration";
+import ForgotPassword from "@/components/authentication/ForgotPassword";
 // import SuccessConfirmation from "../../components/utilities/alert-msg.vue";
 import { mapState } from "vuex";
 
@@ -19,7 +19,6 @@ export default {
 	},
 	methods: {
 		checkLoginOption(id) {
-	
 			switch (id) {
 				case "Forgot your password?":
 					this.activeComponent = "ForgotPassword";

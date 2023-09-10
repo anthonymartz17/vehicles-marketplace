@@ -93,7 +93,6 @@ export default {
 					"currentUserDealer",
 					JSON.stringify({ currentUser, token, isActive, dealerId, username })
 				);
-
 				return response.user;
 			} catch (error) {
 				throw error;

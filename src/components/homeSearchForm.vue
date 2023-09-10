@@ -2,7 +2,7 @@
 import { mapGetters, mapState, mapActions } from "vuex";
 import SearchBtn from "./searchFieldMobile/SearchBtn.vue";
 import Multiselect from "vue-multiselect";
-import MartzIcons from "./martz-icons.vue";
+import MartzIcons from "@/components/MartzIcons.vue";
 export default {
 	components: {
 		SearchBtn,

@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import Logo from './Logo.vue'
-import SocialMedia from './SocialMedia.vue'
+import Logo from '../components/Logo.vue'
+import SocialMedia from '../components/SocialMedia.vue'
 export default {
   components:{
     Logo,

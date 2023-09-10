@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
 	<div>
 		
 	</div>
@@ -71,4 +71,4 @@ export default {
 	grid-template-columns: 1fr 1fr;
 	column-gap: 0.2em;
 }
-</style>
+</style> -->

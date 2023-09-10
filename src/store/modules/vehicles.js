@@ -59,8 +59,6 @@ export default {
 					color: "",
 					dealerId: "",
 				};
-
-				
 			} else {
 				state.filters = { ...state.filters, ...payload };
 			}
@@ -158,7 +156,6 @@ export default {
 			}
 			// the following condition ensures to show selected make, and in case all makes is selected, it doesnt get into the condition which makes the program run as if nothing was selected and shows all makes avalables.
 			if (state.filters.make !== "" && state.filters.make !== "All Makes") {
-		
 				results = results.filter((one) =>
 					one.make
 						.toLowerCase()
@@ -314,7 +311,6 @@ export default {
 		},
 
 		updateFilters({ commit }, payload) {
-	
 			commit("UPDATE_FILTERS", payload);
 		},
 		filterVehicles({ commit }) {

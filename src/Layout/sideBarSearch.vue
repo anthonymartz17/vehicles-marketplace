@@ -1,7 +1,7 @@
 <script>
 import { mapMutations, mapState } from "vuex";
-import HomeSearchForm from "./homeSearchForm.vue";
-import FullSearchForm from "./full-search-form.vue";
+import HomeSearchForm from "../components/homeSearchForm.vue";
+import FullSearchForm from "../components/full-search-form.vue";
 export default {
 	data() {
 		return {
